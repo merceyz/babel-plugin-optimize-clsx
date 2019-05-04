@@ -1,6 +1,6 @@
 # babel-plugin-optimize-clsx
 
-Babel plugin to optimize clsx function calls
+Babel plugin to optimize `clsx` and `classNames` function calls
 
 ## Install
 

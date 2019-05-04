@@ -11,9 +11,10 @@
   "keywords": [
     "babel",
     "clsx",
+    "classNames",
     "optimize"
   ],
-  "description": "Babel plugin to optimize clsx function calls",
+  "description": "Babel plugin to optimize clsx and classNames function calls",
   "scripts": {
     "test": "jest",
     "release": "standard-version"
