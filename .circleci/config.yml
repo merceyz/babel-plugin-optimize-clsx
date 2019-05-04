@@ -1,0 +1,16 @@
+version: 2.1
+jobs:
+  build:
+    docker:
+      - image: circleci/node:8.15
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: yarn
+      - run:
+          name: Check formatting
+          command: yarn prettier --check "src/**/*.js"
+      - run:
+          name: Check tests pass
+          command: yarn test
