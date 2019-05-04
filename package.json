@@ -8,6 +8,12 @@
   "repository": "https://github.com/merceyz/babel-plugin-optimize-clsx.git",
   "author": "merceyz <merceyz@users.noreply.github.com>",
   "license": "MIT",
+  "keywords": [
+    "babel",
+    "clsx",
+    "optimize"
+  ],
+  "description": "Babel plugin to optimize clsx function calls",
   "scripts": {
     "test": "jest",
     "release": "standard-version"
