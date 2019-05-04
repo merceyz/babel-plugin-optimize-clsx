@@ -1,4 +1,6 @@
-module.exports = (t, args) => {
+const t = require('@babel/types');
+
+module.exports = args => {
   const newArguments = [];
 
   for (const argument of args) {
