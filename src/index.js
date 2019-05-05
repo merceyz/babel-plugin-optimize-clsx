@@ -1,4 +1,5 @@
 const extractArguments = require('./extractArguments');
+const combineArguments = require('./combineArguments');
 
 module.exports = () => {
   return {
@@ -10,6 +11,7 @@ module.exports = () => {
           try {
             let args = node.arguments;
             args = extractArguments(args);
+            args = combineArguments(args);
             node.arguments = args;
           } catch (err) {
             throw path.buildCodeFrameError(err);
