@@ -3,12 +3,17 @@ const extractArguments = require('./extractArguments');
 module.exports = () => {
   return {
     visitor: {
-      CallExpression: ({ node }) => {
-        if (
-          node.callee.type === 'Identifier' &&
-          (node.callee.name === 'clsx' || node.callee.name === 'classNames')
-        ) {
-          node.arguments = extractArguments(node.arguments);
+      CallExpression: path => {
+        const { node } = path;
+        const { callee: c } = node;
+        if (c.type === 'Identifier' && (c.name === 'clsx' || c.name === 'classNames')) {
+          try {
+            let args = node.arguments;
+            args = extractArguments(args);
+            node.arguments = args;
+          } catch (err) {
+            throw path.buildCodeFrameError(err);
+          }
         }
       },
     },
