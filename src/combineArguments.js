@@ -1,11 +1,13 @@
+const _ = require('lodash');
 const t = require('@babel/types');
 const compareNodes = require('./utils/compareNodes');
 const helpers = require('./utils/helpers');
 
 module.exports = args => {
-  const [match, noMatch] = helpers.filterArray(args, item => {
-    return t.isLogicalExpression(item) && helpers.isAllLogicalAndOperators(item);
-  });
+  const [match, noMatch] = _.partition(
+    args,
+    item => t.isLogicalExpression(item) && helpers.isAllLogicalAndOperators(item),
+  );
 
   // Not enough items to optimize
   if (match.length < 2) return args;

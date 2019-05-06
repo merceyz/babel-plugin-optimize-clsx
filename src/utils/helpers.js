@@ -21,21 +21,6 @@ function isAllLogicalAndOperators(node) {
   return true;
 }
 
-function filterArray(array, callback) {
-  const match = [];
-  const noMatch = [];
-
-  for (const item of array) {
-    if (callback(item) === true) {
-      match.push(item);
-    } else {
-      noMatch.push(item);
-    }
-  }
-
-  return [match, noMatch];
-}
-
 function getMostFrequentNode(operators) {
   let maxNode = null;
   let maxLength = 0;
@@ -78,7 +63,6 @@ function stringify(object) {
 module.exports = {
   flattenLogicalOperator,
   isAllLogicalAndOperators,
-  filterArray,
   getMostFrequentNode,
   stringify,
 };
