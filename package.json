@@ -17,7 +17,8 @@
   "description": "Babel plugin to optimize clsx and classNames function calls",
   "scripts": {
     "test": "jest",
-    "release": "standard-version"
+    "release": "standard-version",
+    "benchmark": "node benchmark/index.js"
   },
   "devDependencies": {
     "@babel/core": "^7.4.4",
@@ -26,6 +27,8 @@
     "@commitlint/config-conventional": "^7.5.0",
     "@types/jest": "^24.0.12",
     "babel-jest": "^24.7.1",
+    "benchmark": "^2.1.4",
+    "clsx": "^1.0.4",
     "husky": "^2.2.0",
     "jest": "^24.7.1",
     "prettier": "^1.17.0",

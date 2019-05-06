@@ -53,3 +53,7 @@ clsx(
   disabled && classes.disabled,
 );
 ```
+
+## Benchmarks
+
+Benchmarks can be found in the [`benchmark`](/benchmark) directory
