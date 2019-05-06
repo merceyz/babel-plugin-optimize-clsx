@@ -112,6 +112,7 @@ const testCases = [
     "clsx(classes.root,{[classes[`color${capitalize(color)}`]]: color !== 'default',[classes.clickable]: clickable,[classes[`clickableColor${capitalize(color)}`]]: clickable && color !== 'default',[classes.deletable]: onDelete,[classes[`deletableColor${capitalize(color)}`]]: onDelete && color !== 'default',[classes.outlined]: variant === 'outlined',[classes.outlinedPrimary]: variant === 'outlined' && color === 'primary',[classes.outlinedSecondary]: variant === 'outlined' && color === 'secondary',},classNameProp);",
     "clsx(classes.root,classNameProp,variant==='outlined'&&[color==='secondary'&&classes.outlinedSecondary,color==='primary'&&classes.outlinedPrimary,classes.outlined],color!=='default'&&[clickable&&classes[`clickableColor${capitalize(color)}`],onDelete&&classes[`deletableColor${capitalize(color)}`],classes[`color${capitalize(color)}`]],clickable&&classes.clickable,onDelete&&classes.deletable);",
   ],
+  ['clsx(a && b, c && d, e && f);', 'clsx(a&&b,c&&d,e&&f);'],
 ];
 
 it('transforms objects correctly', () => {

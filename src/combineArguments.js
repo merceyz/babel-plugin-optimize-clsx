@@ -13,6 +13,11 @@ module.exports = args => {
   const operators = match.map(helpers.flattenLogicalOperator);
 
   const node = helpers.getMostFrequentNode(operators);
+  // No nodes appear more than once
+  if (node === null) {
+    return args;
+  }
+
   const rootNode = combineOperators(operators, node);
 
   const newAST = convertToAST(rootNode);
