@@ -1,40 +1,7 @@
-module.exports = function compareNodes(a, b) {
-  if (typeof a !== typeof b) {
-    return false;
-  }
+const isEqualWith = require('lodash/isEqualWith');
 
-  if (typeof a !== 'object') {
-    return a === b;
-  }
-
-  for (const key in a) {
-    if (a.hasOwnProperty(key)) {
-      // Ignore location data
-      if (key === 'start' || key === 'end' || key === 'loc') {
-        continue;
-      }
-
-      if (b.hasOwnProperty(key) === false) {
-        return false;
-      }
-
-      if (typeof a[key] === 'object') {
-        if (typeof b[key] !== 'object') {
-          return false;
-        }
-
-        if (compareNodes(a[key], b[key]) === false) {
-          return false;
-        }
-
-        continue;
-      }
-
-      if (a[key] !== b[key]) {
-        return false;
-      }
-    }
-  }
-
-  return true;
+module.exports = (obj1, obj2) => {
+  return isEqualWith(obj1, obj2, (v1, v2, key) => {
+    return key === 'start' || key === 'end' || key === 'loc' ? true : undefined;
+  });
 };
