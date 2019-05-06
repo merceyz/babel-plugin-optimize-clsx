@@ -4,7 +4,7 @@ module.exports = args => {
   const newArguments = [];
 
   for (const argument of args) {
-    if (argument.type === 'ObjectExpression') {
+    if (t.isObjectExpression(argument)) {
       for (const p of argument.properties) {
         newArguments.push(t.LogicalExpression('&&', p.value, p.key));
       }

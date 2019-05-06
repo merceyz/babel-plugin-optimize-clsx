@@ -1,3 +1,4 @@
+const t = require('@babel/types');
 const extractArguments = require('./extractArguments');
 const combineArguments = require('./combineArguments');
 
@@ -7,7 +8,7 @@ module.exports = () => {
       CallExpression: path => {
         const { node } = path;
         const { callee: c } = node;
-        if (c.type === 'Identifier' && (c.name === 'clsx' || c.name === 'classNames')) {
+        if (t.isIdentifier(c) && (c.name === 'clsx' || c.name === 'classNames')) {
           try {
             let args = node.arguments;
             args = extractArguments(args);
