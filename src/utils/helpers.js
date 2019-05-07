@@ -28,25 +28,32 @@ function getMostFrequentNode(operators) {
   let maxNode = null;
   let maxLength = 0;
 
-  operators.forEach(row => {
-    for (let x = 0; x < row.length - 1; x++) {
-      const item = row[x];
+  operators.forEach((row, row_index) => {
+    row.forEach((col, col_index) => {
+      if (col_index === row.length - 1) return;
       let length = 0;
 
-      operators.forEach(row2 => {
-        for (let x2 = 0; x2 < row2.length - 1; x2++) {
-          const item2 = row2[x2];
-          if (compareNodes(item, item2) === true) {
-            length += item.end - item.start;
+      operators.forEach((row2, row2_index) => {
+        row2.forEach((col2, col2_index) => {
+          // Don't compare against the last item (class) or row, col
+          if (
+            col2_index === row2.length - 1 ||
+            (row_index === row2_index && col_index === col2_index)
+          ) {
+            return;
           }
-        }
+
+          if (compareNodes(col, col2)) {
+            length += col.end - col.start;
+          }
+        });
       });
 
       if (length > maxLength) {
-        maxNode = item;
+        maxNode = col;
         maxLength = length;
       }
-    }
+    });
   });
 
   return maxNode;

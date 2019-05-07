@@ -30,13 +30,13 @@ module.exports = [
       classes.bar,
       (variant === 'indeterminate' || variant === 'query') && classes.bar2Indeterminate,
       variant === 'buffer' && [
-        color === 'secondary' && classes.colorSecondary,
         color === 'primary' && classes.colorPrimary,
+        color === 'secondary' && classes.colorSecondary,
         classes.bar2Buffer,
       ],
       variant !== 'buffer' && [
-        color === 'secondary' && classes.barColorSecondary,
         color === 'primary' && classes.barColorPrimary,
+        color === 'secondary' && classes.barColorSecondary,
       ],
     );
   },

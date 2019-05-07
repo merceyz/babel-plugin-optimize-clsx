@@ -51,20 +51,20 @@ module.exports = [
       classes.root,
       classNameProp,
       variant === 'outlined' && [
-        color === 'secondary' && classes.outlinedSecondary,
-        color === 'primary' && classes.outlinedPrimary,
         classes.outlined,
+        color === 'primary' && classes.outlinedPrimary,
+        color === 'secondary' && classes.outlinedSecondary,
       ],
       color === 'secondary' && [
-        contained && classes.containedSecondary,
         text && classes.textSecondary,
+        contained && classes.containedSecondary,
       ],
-      color === 'primary' && [contained && classes.containedPrimary, text && classes.textPrimary],
-      color === 'inherit' && classes.colorInherit,
-      contained && classes.contained,
-      fullWidth && classes.fullWidth,
-      disabled && classes.disabled,
+      color === 'primary' && [text && classes.textPrimary, contained && classes.containedPrimary],
       text && classes.text,
+      contained && classes.contained,
+      disabled && classes.disabled,
+      fullWidth && classes.fullWidth,
+      color === 'inherit' && classes.colorInherit,
     );
   },
 ];
