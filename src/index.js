@@ -22,6 +22,12 @@ module.exports = () => {
           }
         });
       },
+      VariableDeclarator(path) {
+        const { node } = path;
+        if (!t.isCallExpression(node.init)) return;
+        if (node.init.callee.name !== 'require') return;
+        names.push(node.id.name);
+      },
       CallExpression: path => {
         const { node } = path;
         const { callee: c } = node;
