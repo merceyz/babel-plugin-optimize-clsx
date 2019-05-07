@@ -11,7 +11,7 @@ const testCases = [
   ],
   [
     "clsx({ foo:true }, { bar:false }, null, { '--foobar':'hello' });",
-    "clsx(null,'hello'&&'--foobar',false&&bar,true&&foo);",
+    "clsx(true&&foo,false&&bar,null,'hello'&&'--foobar');",
   ],
   // Snippets taken from https://github.com/mui-org/material-ui/tree/next/packages/material-ui/src
   [
@@ -36,7 +36,7 @@ const testCases = [
   ],
   [
     "clsx(classes.root,{[classes.extended]: variant === 'extended',[classes.primary]: color === 'primary',[classes.secondary]: color === 'secondary',[classes[`size${capitalize(size)}`]]: size !== 'large',[classes.disabled]: disabled,[classes.colorInherit]: color === 'inherit',},className,)",
-    "clsx(classes.root,className,variant==='extended'&&classes.extended,color==='secondary'&&classes.secondary,color==='primary'&&classes.primary,color==='inherit'&&classes.colorInherit,size!=='large'&&classes[`size${capitalize(size)}`],disabled&&classes.disabled);",
+    "clsx(classes.root,variant==='extended'&&classes.extended,color==='primary'&&classes.primary,color==='secondary'&&classes.secondary,size!=='large'&&classes[`size${capitalize(size)}`],disabled&&classes.disabled,color==='inherit'&&classes.colorInherit,className);",
   ],
   [
     "clsx(classes.bar, {[classes.barColorPrimary]: color === 'primary' && variant !== 'buffer',[classes.bar2Indeterminate]: variant === 'indeterminate' || variant === 'query',})",
@@ -44,7 +44,7 @@ const testCases = [
   ],
   [
     `clsx(classes.bar, {[classes.barColorPrimary]: color === 'primary' && variant !== 'buffer',[classes.colorPrimary]: color === 'primary' && variant === 'buffer',[classes.barColorSecondary]: color === 'secondary' && variant !== 'buffer',[classes.colorSecondary]: color === 'secondary' && variant === 'buffer',[classes.bar2Indeterminate]: variant === 'indeterminate' || variant === 'query',[classes.bar2Buffer]: variant === 'buffer',})`,
-    `clsx(classes.bar,(variant==='indeterminate'||variant==='query')&&classes.bar2Indeterminate,variant==='buffer'&&[color==='secondary'&&classes.colorSecondary,color==='primary'&&classes.colorPrimary,classes.bar2Buffer],variant!=='buffer'&&[color==='secondary'&&classes.barColorSecondary,color==='primary'&&classes.barColorPrimary]);`,
+    `clsx(classes.bar,(variant==='indeterminate'||variant==='query')&&classes.bar2Indeterminate,variant==='buffer'&&[color==='primary'&&classes.colorPrimary,color==='secondary'&&classes.colorSecondary,classes.bar2Buffer],variant!=='buffer'&&[color==='primary'&&classes.barColorPrimary,color==='secondary'&&classes.barColorSecondary]);`,
   ],
   [
     "clsx({[classes.head]: variant ? variant === 'head' : tablelvl2 && tablelvl2.variant === 'head'});",
@@ -60,7 +60,7 @@ const testCases = [
       text && color === "secondary" && classes.textSecondary
     );
     `,
-    'clsx(color==="primary"&&[text&&[true&&classes.text,classes.textPrimary]],color==="secondary"&&text&&classes.textSecondary,text&&classes.text,foo&&classes.text,bar&&classes.text);',
+    'clsx(color==="primary"&&[text&&[true&&classes.text,classes.textPrimary]],text&&[classes.text,color==="secondary"&&classes.textSecondary],foo&&classes.text,bar&&classes.text);',
   ],
   [
     `clsx(
@@ -81,7 +81,7 @@ const testCases = [
       },
       classNameProp,
     );`,
-    "clsx(classes.root,classNameProp,variant==='outlined'&&[color==='secondary'&&classes.outlinedSecondary,color==='primary'&&classes.outlinedPrimary,classes.outlined],color==='secondary'&&[contained&&classes.containedSecondary,text&&classes.textSecondary],color==='primary'&&[contained&&classes.containedPrimary,text&&classes.textPrimary],color==='inherit'&&classes.colorInherit,contained&&classes.contained,fullWidth&&classes.fullWidth,disabled&&classes.disabled,text&&classes.text);",
+    "clsx(classes.root,classNameProp,variant==='outlined'&&[classes.outlined,color==='primary'&&classes.outlinedPrimary,color==='secondary'&&classes.outlinedSecondary],color==='secondary'&&[text&&classes.textSecondary,contained&&classes.containedSecondary],color==='primary'&&[text&&classes.textPrimary,contained&&classes.containedPrimary],text&&classes.text,contained&&classes.contained,disabled&&classes.disabled,fullWidth&&classes.fullWidth,color==='inherit'&&classes.colorInherit);",
   ],
   [
     `clsx(
@@ -92,7 +92,7 @@ const testCases = [
       },
       className,
     )`,
-    'clsx(classes.root,className,!showLabel&&!selected&&classes.iconOnly,selected&&classes.selected);',
+    'clsx(classes.root,selected&&classes.selected,!showLabel&&!selected&&classes.iconOnly,className);',
   ],
   [
     `clsx(
@@ -112,9 +112,26 @@ const testCases = [
   ],
   [
     "clsx(classes.root,{[classes[`color${capitalize(color)}`]]: color !== 'default',[classes.clickable]: clickable,[classes[`clickableColor${capitalize(color)}`]]: clickable && color !== 'default',[classes.deletable]: onDelete,[classes[`deletableColor${capitalize(color)}`]]: onDelete && color !== 'default',[classes.outlined]: variant === 'outlined',[classes.outlinedPrimary]: variant === 'outlined' && color === 'primary',[classes.outlinedSecondary]: variant === 'outlined' && color === 'secondary',},classNameProp);",
-    "clsx(classes.root,classNameProp,variant==='outlined'&&[color==='secondary'&&classes.outlinedSecondary,color==='primary'&&classes.outlinedPrimary,classes.outlined],color!=='default'&&[clickable&&classes[`clickableColor${capitalize(color)}`],onDelete&&classes[`deletableColor${capitalize(color)}`],classes[`color${capitalize(color)}`]],clickable&&classes.clickable,onDelete&&classes.deletable);",
+    "clsx(classes.root,classNameProp,variant==='outlined'&&[classes.outlined,color==='primary'&&classes.outlinedPrimary,color==='secondary'&&classes.outlinedSecondary],color!=='default'&&[classes[`color${capitalize(color)}`],clickable&&classes[`clickableColor${capitalize(color)}`],onDelete&&classes[`deletableColor${capitalize(color)}`]],clickable&&classes.clickable,onDelete&&classes.deletable);",
   ],
   ['clsx(a && b, c && d, e && f);', 'clsx(a&&b,c&&d,e&&f);'],
+  [
+    "clsx(true && true && 'foo', {[bar]:true && true, [baz]: false && true});",
+    "clsx(true&&['foo',bar,false&&baz]);",
+  ],
+  [
+    `clsx(
+  classes.root,
+  {
+    [classes.head]: tablelvl2 && tablelvl2.variant === 'head',
+    [classes.footer]: tablelvl2 && tablelvl2.variant === 'footer',
+    [classes.hover]: hover,
+    [classes.selected]: selected,
+  },
+  className,
+)`,
+    `clsx(classes.root,className,tablelvl2&&[tablelvl2.variant==='head'&&classes.head,tablelvl2.variant==='footer'&&classes.footer],hover&&classes.hover,selected&&classes.selected);`,
+  ],
 ].map(x => x.map(y => `${importStatement}${y}`));
 
 it('transforms objects correctly', () => {
