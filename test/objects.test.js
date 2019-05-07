@@ -1,6 +1,8 @@
 import * as babel from '@babel/core';
 import path from 'path';
 
+const importStatement = `import clsx from'clsx';`;
+
 const testCases = [
   [
     // Examples from https://github.com/lukeed/clsx
@@ -113,7 +115,7 @@ const testCases = [
     "clsx(classes.root,classNameProp,variant==='outlined'&&[color==='secondary'&&classes.outlinedSecondary,color==='primary'&&classes.outlinedPrimary,classes.outlined],color!=='default'&&[clickable&&classes[`clickableColor${capitalize(color)}`],onDelete&&classes[`deletableColor${capitalize(color)}`],classes[`color${capitalize(color)}`]],clickable&&classes.clickable,onDelete&&classes.deletable);",
   ],
   ['clsx(a && b, c && d, e && f);', 'clsx(a&&b,c&&d,e&&f);'],
-];
+].map(x => x.map(y => `${importStatement}${y}`));
 
 it('transforms objects correctly', () => {
   for (let i = 0; i < testCases.length; i++) {
