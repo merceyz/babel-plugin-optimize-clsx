@@ -1,5 +1,8 @@
 const t = require('@babel/types');
+const fs = require('fs');
+const path = require('path');
 const compareNodes = require('./compareNodes');
+const generate = require('@babel/generator');
 
 function flattenLogicalOperator(node) {
   if (t.isLogicalExpression(node)) {
@@ -60,7 +63,27 @@ function stringify(object) {
   return JSON.stringify(object, replacer, 1);
 }
 
+// Used during testing and debugging,
+const counts = new Map();
+const rootPath = path.join(__dirname, '../../dumps');
+function dumpData(obj, name = 'dump', generateCode = false) {
+  const data = generateCode ? generate.default(obj).code : stringify(obj);
+
+  const count = counts.get(name) || 0;
+  counts.set(name, count + 1);
+
+  if (!fs.existsSync(rootPath)) {
+    fs.mkdirSync(rootPath);
+  }
+
+  fs.writeFileSync(
+    path.join(rootPath, name + '_' + count + (generateCode ? '.js' : '.json')),
+    data,
+  );
+}
+
 module.exports = {
+  dumpData,
   flattenLogicalOperator,
   isAllLogicalAndOperators,
   getMostFrequentNode,

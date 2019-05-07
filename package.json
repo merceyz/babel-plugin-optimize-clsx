@@ -36,6 +36,7 @@
     "standard-version": "^5.0.2"
   },
   "dependencies": {
+    "@babel/generator": "^7.4.4",
     "@babel/types": "^7.4.4",
     "lodash": "^4.17.11"
   },
