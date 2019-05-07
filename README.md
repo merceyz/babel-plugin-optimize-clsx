@@ -54,6 +54,12 @@ clsx(
 );
 ```
 
+## Options
+
+| Name           | Type                 | Required | Default | Description                                                                                                                                                                                                                                                           |
+| -------------- | -------------------- | -------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `defaultNames` | `array` of `strings` | no       | `[]`    | By default the plugin looks up if you `import` or `require` `classnames` or `clsx` within a file. If you prefer to re-export them you can provide an array of strings where a string is your name convention which should be transformed to a more performant syntax. |
+
 ## Benchmarks
 
 Benchmarks can be found in the [`benchmark`](/benchmark) directory

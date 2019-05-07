@@ -28,10 +28,11 @@ module.exports = () => {
         if (node.init.callee.name !== 'require') return;
         names.push(node.id.name);
       },
-      CallExpression: path => {
+      CallExpression: (path, state) => {
+        const defaultNames = state.opts.defaultNames || [];
         const { node } = path;
         const { callee: c } = node;
-        if (t.isIdentifier(c) && names.includes(c.name)) {
+        if (t.isIdentifier(c) && [...names, ...defaultNames].includes(c.name)) {
           try {
             let args = node.arguments;
             args = extractArguments(args);
