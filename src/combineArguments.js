@@ -42,11 +42,7 @@ module.exports = args => {
 
     if (node.next !== undefined) {
       const r = convertToAST(node.next);
-      if (r.push !== undefined) {
-        result.push(...r);
-      } else {
-        result.push(r);
-      }
+      _.isArray(r) ? result.push(...r) : result.push(r);
     }
 
     return result;
@@ -70,33 +66,36 @@ module.exports = args => {
     });
 
     newNode.next = checkSub(newNode.next);
-    newNode.child = checkSub(newNode.child);
+
+    const child = checkSub(newNode.child);
+    if (_.isArray(child)) {
+      newNode.child = child.length === 1 ? child[0] : t.arrayExpression(child);
+    } else {
+      newNode.child = child;
+    }
 
     return newNode;
 
     function checkSub(items) {
       if (items.length === 0) return undefined;
-      if (items.length === 1) {
-        const item = items[0];
 
-        if (item.length === 1) {
-          return item[0];
+      if (items.length > 1) {
+        const nextCheck = helpers.getMostFrequentNode(items);
+        if (nextCheck !== null) {
+          return combineOperators(items, nextCheck);
         }
+      }
 
-        let result = t.logicalExpression('&&', item.shift(), item.shift());
-        while (item.length > 0) {
-          result = t.logicalExpression('&&', result, item.shift());
+      return items.map(e => {
+        if (e.length === 1) return e[0];
+
+        let result = t.logicalExpression('&&', e.shift(), e.shift());
+        while (e.length > 0) {
+          result = t.logicalExpression('&&', result, e.shift());
         }
 
         return result;
-      }
-
-      const nextCheck = helpers.getMostFrequentNode(items);
-      if (nextCheck !== null) {
-        return combineOperators(items, nextCheck);
-      }
-
-      return t.arrayExpression(items.map(e => e[0]));
+      });
     }
   }
 };
