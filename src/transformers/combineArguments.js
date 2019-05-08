@@ -85,16 +85,7 @@ module.exports = path => {
         }
       }
 
-      return items.map(e => {
-        if (e.length === 1) return e[0];
-
-        let result = t.logicalExpression('&&', e.shift(), e.shift());
-        while (e.length > 0) {
-          result = t.logicalExpression('&&', result, e.shift());
-        }
-
-        return result;
-      });
+      return items.map(e => e.reduce((prev, curr) => t.logicalExpression('&&', prev, curr)));
     }
   }
 };
