@@ -1,30 +1,29 @@
 const _ = require('lodash');
 const t = require('@babel/types');
-const compareNodes = require('./utils/compareNodes');
-const helpers = require('./utils/helpers');
+const compareNodes = require('../utils/compareNodes');
+const helpers = require('../utils/helpers');
 
-module.exports = args => {
+module.exports = path => {
   const [match, noMatch] = _.partition(
-    args,
+    path.node.arguments,
     item => t.isLogicalExpression(item) && helpers.isAllLogicalAndOperators(item),
   );
 
   // Not enough items to optimize
-  if (match.length < 2) return args;
+  if (match.length < 2) return;
 
   const operators = match.map(helpers.flattenLogicalOperator);
 
   const node = helpers.getMostFrequentNode(operators);
   // No nodes appear more than once
-  if (node === null) {
-    return args;
-  }
+  if (node === null) return;
 
   const rootNode = combineOperators(operators, node);
 
   const newAST = convertToAST(rootNode);
 
-  return [...noMatch, ...newAST];
+  path.node.arguments = [...noMatch, ...newAST];
+  return;
 
   function convertToAST(node) {
     if (node.type !== 'rootNode') {
