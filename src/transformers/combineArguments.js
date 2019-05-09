@@ -4,12 +4,15 @@ const compareNodes = require('../utils/compareNodes');
 const helpers = require('../utils/helpers');
 
 module.exports = path => {
+  // Not enough arguments to optimize
+  if (path.node.arguments.length < 2) return;
+
   const [match, noMatch] = _.partition(
     path.node.arguments,
     item => t.isLogicalExpression(item) && helpers.isAllLogicalAndOperators(item),
   );
 
-  // Not enough items to optimize
+  // Not enough arguments to optimize
   if (match.length < 2) return;
 
   const operators = match.map(helpers.flattenLogicalOperator);
