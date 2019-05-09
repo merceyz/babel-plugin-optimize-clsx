@@ -1,6 +1,5 @@
 const _ = require('lodash');
 const t = require('@babel/types');
-const compareNodes = require('../utils/compareNodes');
 const helpers = require('../utils/helpers');
 
 module.exports = path => {
@@ -59,7 +58,7 @@ module.exports = path => {
     };
 
     operators.forEach(row => {
-      const filtered = row.filter(item => !compareNodes(item, node));
+      const filtered = row.filter(item => !helpers.compareNodes(item, node));
       if (filtered.length === row.length) {
         newNode.next.push(row);
       } else {

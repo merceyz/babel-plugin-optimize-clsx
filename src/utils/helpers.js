@@ -1,7 +1,6 @@
 const t = require('@babel/types');
 const fs = require('fs');
 const path = require('path');
-const compareNodes = require('./compareNodes');
 const generate = require('@babel/generator');
 
 function flattenLogicalOperator(node) {
@@ -89,7 +88,15 @@ function dumpData(obj, name = 'dump', generateCode = false) {
   );
 }
 
+const isEqualWith = require('lodash/isEqualWith');
+function compareNodes(obj1, obj2) {
+  return isEqualWith(obj1, obj2, (v1, v2, key) => {
+    return key === 'start' || key === 'end' || key === 'loc' ? true : undefined;
+  });
+}
+
 module.exports = {
+  compareNodes,
   dumpData,
   flattenLogicalOperator,
   isAllLogicalAndOperators,
