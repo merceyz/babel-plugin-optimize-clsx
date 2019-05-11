@@ -1,3 +1,6 @@
+# Fixtures used during debugging and testing
+test/dev_fixture
+
 # Data dumps from testing
 dumps
 
