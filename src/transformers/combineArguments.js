@@ -1,30 +1,31 @@
 const _ = require('lodash');
 const t = require('@babel/types');
-const compareNodes = require('./utils/compareNodes');
-const helpers = require('./utils/helpers');
+const helpers = require('../utils/helpers');
 
-module.exports = args => {
+module.exports = path => {
+  // Not enough arguments to optimize
+  if (path.node.arguments.length < 2) return;
+
   const [match, noMatch] = _.partition(
-    args,
+    path.node.arguments,
     item => t.isLogicalExpression(item) && helpers.isAllLogicalAndOperators(item),
   );
 
-  // Not enough items to optimize
-  if (match.length < 2) return args;
+  // Not enough arguments to optimize
+  if (match.length < 2) return;
 
   const operators = match.map(helpers.flattenLogicalOperator);
 
   const node = helpers.getMostFrequentNode(operators);
   // No nodes appear more than once
-  if (node === null) {
-    return args;
-  }
+  if (node === null) return;
 
   const rootNode = combineOperators(operators, node);
 
   const newAST = convertToAST(rootNode);
 
-  return [...noMatch, ...newAST];
+  path.node.arguments = [...noMatch, ...newAST];
+  return;
 
   function convertToAST(node) {
     if (node.type !== 'rootNode') {
@@ -34,8 +35,13 @@ module.exports = args => {
     const result = [];
 
     if (node.child.type === 'rootNode') {
-      const arr = t.arrayExpression(convertToAST(node.child));
-      result.push(t.logicalExpression('&&', node.node, arr));
+      let right = convertToAST(node.child);
+      if (right.length === 1) {
+        right = right[0];
+      } else {
+        right = t.arrayExpression(right);
+      }
+      result.push(t.logicalExpression('&&', node.node, right));
     } else {
       result.push(t.logicalExpression('&&', node.node, node.child));
     }
@@ -57,7 +63,7 @@ module.exports = args => {
     };
 
     operators.forEach(row => {
-      const filtered = row.filter(item => !compareNodes(item, node));
+      const filtered = row.filter(item => !helpers.compareNodes(item, node));
       if (filtered.length === row.length) {
         newNode.next.push(row);
       } else {
@@ -86,16 +92,7 @@ module.exports = args => {
         }
       }
 
-      return items.map(e => {
-        if (e.length === 1) return e[0];
-
-        let result = t.logicalExpression('&&', e.shift(), e.shift());
-        while (e.length > 0) {
-          result = t.logicalExpression('&&', result, e.shift());
-        }
-
-        return result;
-      });
+      return items.map(e => e.reduce((prev, curr) => t.logicalExpression('&&', prev, curr)));
     }
   }
 };

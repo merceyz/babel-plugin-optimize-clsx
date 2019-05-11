@@ -1,6 +1,10 @@
 const t = require('@babel/types');
-const extractArguments = require('./extractArguments');
-const combineArguments = require('./combineArguments');
+const _ = require('lodash');
+
+const transformers = [
+  require('./transformers/extractObjectProperties'),
+  require('./transformers/combineArguments'),
+];
 
 const LIBS = ['clsx', 'classnames'];
 
@@ -30,17 +34,13 @@ module.exports = () => {
       },
       CallExpression: (path, state) => {
         const defaultNames = state.opts.defaultNames || [];
-        const { node } = path;
-        const { callee: c } = node;
-        if (t.isIdentifier(c) && [...names, ...defaultNames].includes(c.name)) {
-          try {
-            let args = node.arguments;
-            args = extractArguments(args);
-            args = combineArguments(args);
-            node.arguments = args;
-          } catch (err) {
-            throw path.buildCodeFrameError(err);
-          }
+        const { callee: c } = path.node;
+        if (!(t.isIdentifier(c) && [...names, ...defaultNames].includes(c.name))) return;
+
+        try {
+          _.forEach(transformers, transformer => transformer(path));
+        } catch (err) {
+          throw path.buildCodeFrameError(err);
         }
       },
     },

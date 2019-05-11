@@ -1,6 +1,7 @@
 const t = require('@babel/types');
 
-module.exports = args => {
+module.exports = path => {
+  const args = path.node.arguments;
   const newArguments = [];
 
   for (const argument of args) {
@@ -13,5 +14,5 @@ module.exports = args => {
     }
   }
 
-  return newArguments;
+  path.node.arguments = newArguments;
 };

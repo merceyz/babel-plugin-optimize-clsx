@@ -1,7 +1,6 @@
 const t = require('@babel/types');
 const fs = require('fs');
 const path = require('path');
-const compareNodes = require('./compareNodes');
 const generate = require('@babel/generator');
 
 function flattenLogicalOperator(node) {
@@ -26,12 +25,12 @@ function isAllLogicalAndOperators(node) {
 
 function getMostFrequentNode(operators) {
   let maxNode = null;
-  let maxLength = 0;
+  let maxCount = 0;
 
   operators.forEach((row, row_index) => {
     row.forEach((col, col_index) => {
       if (col_index === row.length - 1) return;
-      let length = 0;
+      let count = 0;
 
       operators.forEach((row2, row2_index) => {
         row2.forEach((col2, col2_index) => {
@@ -44,14 +43,14 @@ function getMostFrequentNode(operators) {
           }
 
           if (compareNodes(col, col2)) {
-            length += col.end - col.start;
+            count += 1;
           }
         });
       });
 
-      if (length > maxLength) {
+      if (count > maxCount) {
         maxNode = col;
-        maxLength = length;
+        maxCount = count;
       }
     });
   });
@@ -89,7 +88,15 @@ function dumpData(obj, name = 'dump', generateCode = false) {
   );
 }
 
+const isEqualWith = require('lodash/isEqualWith');
+function compareNodes(obj1, obj2) {
+  return isEqualWith(obj1, obj2, (v1, v2, key) => {
+    return key === 'start' || key === 'end' || key === 'loc' ? true : undefined;
+  });
+}
+
 module.exports = {
+  compareNodes,
   dumpData,
   flattenLogicalOperator,
   isAllLogicalAndOperators,
