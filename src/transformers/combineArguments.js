@@ -35,8 +35,13 @@ module.exports = path => {
     const result = [];
 
     if (node.child.type === 'rootNode') {
-      const arr = t.arrayExpression(convertToAST(node.child));
-      result.push(t.logicalExpression('&&', node.node, arr));
+      let right = convertToAST(node.child);
+      if (right.length === 1) {
+        right = right[0];
+      } else {
+        right = t.arrayExpression(right);
+      }
+      result.push(t.logicalExpression('&&', node.node, right));
     } else {
       result.push(t.logicalExpression('&&', node.node, node.child));
     }
