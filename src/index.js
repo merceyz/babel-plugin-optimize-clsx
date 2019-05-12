@@ -1,6 +1,6 @@
 const t = require('@babel/types');
 const _ = require('lodash');
-const getOptions = require('./settings');
+const getOptions = require('./options');
 
 const transformers = [
   require('./transformers/extractObjectProperties'),
