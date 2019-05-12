@@ -1228,10 +1228,10 @@ babel-plugin-jest-hoist@^24.6.0:
   dependencies:
     "@types/babel__traverse" "^7.0.6"
 
-babel-plugin-tester@^6.1.0:
-  version "6.1.0"
-  resolved "https://registry.yarnpkg.com/babel-plugin-tester/-/babel-plugin-tester-6.1.0.tgz#92e5c266313ac461fbb6b00802822d6765cfdb82"
-  integrity sha512-+2GG3PYh32fMk4rgVR2jcUlfMUZEIQffyqa3itawMujWBJ9awL91NnMQ+jorj9xzuKq18YmTrjDIBYCzn1estQ==
+babel-plugin-tester@^6.2.0:
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/babel-plugin-tester/-/babel-plugin-tester-6.2.0.tgz#539dfa078f59bcc10d3cf5b2536dfee79d7bb974"
+  integrity sha512-x5b1z8nTImMwXC9QGdJoeD04fOZfjbA6oFBtBH9KLfHkX3CpoiMxWeRzrTFvQ6i35Pa08hW4hryEWeLGi8OAYA==
   dependencies:
     common-tags "^1.4.0"
     invariant "^2.2.2"
