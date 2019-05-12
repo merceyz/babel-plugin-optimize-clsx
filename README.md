@@ -64,7 +64,7 @@ Benchmarks can be found in the [`benchmark`](/benchmark) directory
 | ----------- | ---------- | ------------------------ |
 | `libraries` | `string[]` | `['clsx', 'classnames']` |
 
-By default the plugin looks for `import` and `require` statements for `clsx` and `classnames` and uses that to know which function calls to optimize. If you're using another library with the same API you can overwrite this option.
+By default the plugin looks for `import` and `require` statements for `clsx` and `classnames` and uses that to know which function calls to optimize. If you're using another library with a compatible API you can overwrite that with this option.
 
 ```json
 {
