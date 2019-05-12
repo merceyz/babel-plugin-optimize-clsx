@@ -26,7 +26,13 @@ module.exports = () => {
       },
       VariableDeclarator(path) {
         const { init, id } = path.node;
-        if (t.isCallExpression(init) && init.callee.name === 'require') {
+        if (
+          t.isCallExpression(init) &&
+          t.isIdentifier(init.callee, { name: 'require' }) &&
+          init.arguments.length === 1 &&
+          t.isLiteral(init.arguments[0]) &&
+          options.libraries.includes(init.arguments[0].value)
+        ) {
           options.functionNames.push(id.name);
         }
       },
