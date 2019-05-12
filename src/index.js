@@ -1,5 +1,4 @@
 const t = require('@babel/types');
-const _ = require('lodash');
 const getOptions = require('./options');
 
 const transformers = [
@@ -43,7 +42,7 @@ module.exports = () => {
         }
 
         try {
-          _.forEach(transformers, transformer => transformer(path));
+          transformers.forEach(transformer => transformer(path));
         } catch (err) {
           throw path.buildCodeFrameError(err);
         }
