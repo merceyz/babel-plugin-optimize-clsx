@@ -1,41 +1,40 @@
 const t = require('@babel/types');
 const _ = require('lodash');
+const getOptions = require('./settings');
 
 const transformers = [
   require('./transformers/extractObjectProperties'),
   require('./transformers/combineArguments'),
 ];
 
-const LIBS = ['clsx', 'classnames'];
-
 module.exports = () => {
-  let names = [];
+  let options = null;
   return {
     visitor: {
-      Program: {
-        enter() {
-          names = [];
-        },
+      Program(path, state) {
+        options = getOptions(state.opts);
       },
       ImportDeclaration(path) {
         const { node } = path;
-        if (!LIBS.includes(node.source.value)) return;
-        node.specifiers.forEach(spec => {
-          if (t.isImportDefaultSpecifier(spec)) {
-            names.push(spec.local.name);
-          }
-        });
+        if (options.libraries.includes(node.source.value)) {
+          node.specifiers.forEach(spec => {
+            if (t.isImportDefaultSpecifier(spec)) {
+              options.functionNames.push(spec.local.name);
+            }
+          });
+        }
       },
       VariableDeclarator(path) {
-        const { node } = path;
-        if (!t.isCallExpression(node.init)) return;
-        if (node.init.callee.name !== 'require') return;
-        names.push(node.id.name);
+        const { init, id } = path.node;
+        if (t.isCallExpression(init) && init.callee.name === 'require') {
+          options.functionNames.push(id.name);
+        }
       },
-      CallExpression: (path, state) => {
-        const defaultNames = state.opts.defaultNames || [];
+      CallExpression: path => {
         const { callee: c } = path.node;
-        if (!(t.isIdentifier(c) && [...names, ...defaultNames].includes(c.name))) return;
+        if (!t.isIdentifier(c) || !options.functionNames.includes(c.name)) {
+          return;
+        }
 
         try {
           _.forEach(transformers, transformer => transformer(path));
