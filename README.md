@@ -57,3 +57,45 @@ clsx(
 ## Benchmarks
 
 Benchmarks can be found in the [`benchmark`](/benchmark) directory
+
+## Options
+
+| Name        | Type       | Default value            |
+| ----------- | ---------- | ------------------------ |
+| `libraries` | `string[]` | `['clsx', 'classnames']` |
+
+By default the plugin looks for `import` and `require` statements for `clsx` and `classnames` and uses that to know which function calls to optimize. If you're using another library with a compatible API you can overwrite that with this option.
+
+```json
+{
+  "plugins": [
+    [
+      "babel-plugin-optimize-clsx",
+      {
+        "libraries": ["clsx", "classnames", "my-custom-library"]
+      }
+    ]
+  ]
+}
+```
+
+---
+
+| Name            | Type       | Default value |
+| --------------- | ---------- | ------------- |
+| `functionNames` | `string[]` | `[]`          |
+
+If you want the plugin to match on all functions with a specific name, no matter where it comes from you can specify them using this option. An example for this is if you have `clsx` as a global function and thus don't import it.
+
+```json
+{
+  "plugins": [
+    [
+      "babel-plugin-optimize-clsx",
+      {
+        "functionNames": ["myClsxImplementation"]
+      }
+    ]
+  ]
+}
+```
