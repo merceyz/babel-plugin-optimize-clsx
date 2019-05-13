@@ -1,3 +1,3 @@
 import myCustomFunction from 'my-custom-library';
 
-myCustomFunction(true && foo);
+myCustomFunction(true && 'foo');

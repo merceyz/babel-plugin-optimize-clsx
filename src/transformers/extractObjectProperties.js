@@ -7,7 +7,13 @@ module.exports = path => {
   for (const argument of args) {
     if (t.isObjectExpression(argument)) {
       for (const p of argument.properties) {
-        newArguments.push(t.LogicalExpression('&&', p.value, p.key));
+        newArguments.push(
+          t.LogicalExpression(
+            '&&',
+            p.value,
+            p.computed ? p.key : t.isStringLiteral(p.key) ? p.key : t.stringLiteral(p.key.name),
+          ),
+        );
       }
     } else {
       newArguments.push(argument);

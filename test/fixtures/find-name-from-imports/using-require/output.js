@@ -1,3 +1,3 @@
 const fooFunction = require('clsx');
 
-fooFunction(true && foo);
+fooFunction(true && 'foo');
