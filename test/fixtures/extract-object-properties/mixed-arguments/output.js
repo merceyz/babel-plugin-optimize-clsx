@@ -1,1 +1,1 @@
-clsx(foo && bar, true && baz);
+clsx(foo && bar, true && 'baz');
