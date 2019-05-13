@@ -12,7 +12,7 @@ npm install babel-plugin-optimize-clsx --save-dev
 
 ## Example
 
-### Extract objects
+### Extract object properties
 
 Transforms
 
@@ -31,6 +31,27 @@ to
 
 ```javascript
 clsx('foo', disabled && classes.disabled, focusVisible && !disabled && classes.focusVisible, 'bar');
+```
+
+### Extract and create conditional expression
+
+Transforms
+
+```javascript
+clsx(
+  'foo',
+  {
+    [classes.disabled]: disabled,
+    [classes.focusVisible]: focusVisible && !disabled,
+  },
+  'bar',
+);
+```
+
+to
+
+```javascript
+clsx('foo', 'bar', disabled ? classes.disabled : focusVisible && classes.focusVisible);
 ```
 
 ### Extract and combine

@@ -1,7 +1,7 @@
 clsx(
   text && [
-    color === 'primary' && [classes.text, classes.textPrimary],
     classes.text,
+    color === 'primary' && [classes.text, classes.textPrimary],
     color === 'secondary' && classes.textSecondary,
   ],
 );

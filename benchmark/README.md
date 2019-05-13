@@ -9,6 +9,10 @@ The code in the cases are extracted from https://github.com/mui-org/material-ui
 # Results
 
 ```
+# case_1-conditional.js:
+  before x 711,965 ops/sec ±0.54% (89 runs sampled)
+  after x 7,395,491 ops/sec ±0.49% (93 runs sampled)
+
 # case_1.js:
   before x 726,524 ops/sec ±0.68% (90 runs sampled)
   after x 6,596,720 ops/sec ±1.73% (88 runs sampled)

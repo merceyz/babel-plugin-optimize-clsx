@@ -4,6 +4,7 @@ const getOptions = require('./options');
 const transformers = [
   require('./transformers/extractObjectProperties'),
   require('./transformers/combineArguments'),
+  require('./transformers/createConditionalExpression'),
 ];
 
 module.exports = () => {
