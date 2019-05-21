@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+# [2.0.0](https://github.com/merceyz/babel-plugin-optimize-clsx/compare/v1.1.2...v2.0.0) (2019-05-21)
+
+### Bug Fixes
+
+- **combine:** don't create an arrayExpression with just one item ([699d6f5](https://github.com/merceyz/babel-plugin-optimize-clsx/commit/699d6f5))
+- **extract:** transform static keys into string literals ([#2](https://github.com/merceyz/babel-plugin-optimize-clsx/issues/2)) ([213ff5b](https://github.com/merceyz/babel-plugin-optimize-clsx/commit/213ff5b))
+- **helper:** use count instead of total length ([5ffec80](https://github.com/merceyz/babel-plugin-optimize-clsx/commit/5ffec80))
+
+### Features
+
+- add support for creating conditional expressions ([dab4b1a](https://github.com/merceyz/babel-plugin-optimize-clsx/commit/dab4b1a))
+- get function name from imports ([#1](https://github.com/merceyz/babel-plugin-optimize-clsx/issues/1)) ([0c18712](https://github.com/merceyz/babel-plugin-optimize-clsx/commit/0c18712))
+
+### Performance Improvements
+
+- **combine:** skip if argument length is less than 2 ([2bc0714](https://github.com/merceyz/babel-plugin-optimize-clsx/commit/2bc0714))
+
+### BREAKING CHANGES
+
+- No longer matches on all `clsx` and `classnames` function calls, instead looks for imports(and require) and uses the names specified there. If the file doesn't contain imports nothing will be done, to get the old behaviour back you can set the `functionNames` option to `['clsx', 'classnames']`
+
 ## [1.1.2](https://github.com/merceyz/babel-plugin-optimize-clsx/compare/v1.1.1...v1.1.2) (2019-05-07)
 
 ### Bug Fixes
