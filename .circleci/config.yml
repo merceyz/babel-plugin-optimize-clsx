@@ -10,7 +10,7 @@ jobs:
           command: yarn
       - run:
           name: Check formatting
-          command: yarn prettier --check "src/**/*.js"
+          command: yarn pretty-quick --check
       - run:
           name: Check tests pass
           command: yarn test
