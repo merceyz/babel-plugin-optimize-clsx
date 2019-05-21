@@ -1,53 +1,28 @@
-const t = require('@babel/types');
 const getOptions = require('./options');
 
-const transformers = [
-  require('./transformers/extractObjectProperties'),
-  require('./transformers/combineArguments'),
-  require('./transformers/createConditionalExpression'),
+const visitors = [
+  require('./visitors/findFunctionNames'),
+  require('./visitors/extractObjectProperties'),
+  require('./visitors/combineArguments'),
+  require('./visitors/createConditionalExpression'),
 ];
 
-module.exports = () => {
-  let options = null;
-  return {
-    visitor: {
-      Program(path, state) {
-        options = getOptions(state.opts);
-      },
-      ImportDeclaration(path) {
-        const { node } = path;
-        if (options.libraries.includes(node.source.value)) {
-          node.specifiers.forEach(spec => {
-            if (t.isImportDefaultSpecifier(spec)) {
-              options.functionNames.push(spec.local.name);
-            }
-          });
-        }
-      },
-      VariableDeclarator(path) {
-        const { init, id } = path.node;
-        if (
-          t.isCallExpression(init) &&
-          t.isIdentifier(init.callee, { name: 'require' }) &&
-          init.arguments.length === 1 &&
-          t.isLiteral(init.arguments[0]) &&
-          options.libraries.includes(init.arguments[0].value)
-        ) {
-          options.functionNames.push(id.name);
-        }
-      },
-      CallExpression: path => {
-        const { callee: c } = path.node;
-        if (!t.isIdentifier(c) || !options.functionNames.includes(c.name)) {
-          return;
-        }
+module.exports = () => ({
+  visitor: {
+    Program(path, state) {
+      const options = getOptions(state.opts);
 
-        try {
-          transformers.forEach(transformer => transformer(path));
-        } catch (err) {
-          throw path.buildCodeFrameError(err);
+      try {
+        for (const visitor of visitors) {
+          visitor(path, options);
+
+          if (options.functionNames.length === 0) {
+            return;
+          }
         }
-      },
+      } catch (err) {
+        throw path.buildCodeFrameError(err);
+      }
     },
-  };
-};
+  },
+});

@@ -1,0 +1,30 @@
+{
+  "Template of a visitor": {
+    "scope": "javascript",
+    "prefix": "visitor",
+    "body": [
+      "const t = require('@babel/types');",
+      "",
+      "const visitor = {",
+      "  CallExpression(path) {",
+      "    const c = path.node.callee;",
+      "    if (!t.isIdentifier(c) || !this.options.functionNames.includes(c.name)) {",
+      "      return;",
+      "    }",
+      "",
+      "    // Start here",
+      "  },",
+      "};",
+      "",
+      "module.exports = (path, options) => {",
+      "  if (!t.isProgram(path.node)) {",
+      "    throw new Error('Node has to be a program node');",
+      "  }",
+      "",
+      "  path.traverse(visitor, { options });",
+      "};",
+      ""
+    ],
+    "description": "Template of a basic visitor"
+  }
+}
