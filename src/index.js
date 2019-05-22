@@ -4,6 +4,7 @@ const visitors = [
   require('./visitors/findFunctionNames'),
   require('./visitors/extractObjectProperties'),
   require('./visitors/propTypes'),
+  require('./visitors/stripLiterals'),
   require('./visitors/combineArguments'),
   require('./visitors/createConditionalExpression'),
 ];
