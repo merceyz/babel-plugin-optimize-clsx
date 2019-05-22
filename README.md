@@ -75,6 +75,43 @@ clsx(
 );
 ```
 
+### Using proptypes
+
+Transforms
+
+```javascript
+import PropTypes from 'prop-types';
+import clsx from 'clsx';
+
+function foo(props) {
+  const { position: p } = props;
+  const x = clsx({
+    [classes.x]: p === 'top',
+    [classes.y]: p === 'bottom',
+  });
+}
+
+foo.propTypes = {
+  position: PropTypes.oneOf(['top', 'bottom']),
+};
+```
+
+to
+
+```javascript
+import PropTypes from 'prop-types';
+import clsx from 'clsx';
+
+function foo(props) {
+  const { position: p } = props;
+  const x = clsx(p === 'top' ? classes.x : classes.y);
+}
+
+foo.propTypes = {
+  position: PropTypes.oneOf(['top', 'bottom']),
+};
+```
+
 ## Benchmarks
 
 Benchmarks can be found in the [`benchmark`](/benchmark) directory

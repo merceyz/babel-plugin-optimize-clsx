@@ -3,6 +3,7 @@ const getOptions = require('./options');
 const visitors = [
   require('./visitors/findFunctionNames'),
   require('./visitors/extractObjectProperties'),
+  require('./visitors/propTypes'),
   require('./visitors/combineArguments'),
   require('./visitors/createConditionalExpression'),
 ];

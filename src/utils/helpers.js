@@ -90,6 +90,14 @@ function dumpData(obj, name = 'dump', generateCode = false) {
 
 const isEqualWith = require('lodash/isEqualWith');
 function compareNodes(obj1, obj2) {
+  if (t.isLiteral(obj1) && t.isLiteral(obj2)) {
+    return obj1.value === obj2.value;
+  } else if (t.isMemberExpression(obj1) && t.isMemberExpression(obj2)) {
+    return compareNodes(obj1.object, obj2.object) && compareNodes(obj1.property, obj2.property);
+  } else if (t.isIdentifier(obj1) && t.isIdentifier(obj2)) {
+    return obj1.name === obj2.name;
+  }
+
   return isEqualWith(obj1, obj2, (v1, v2, key) => {
     return key === 'start' || key === 'end' || key === 'loc' ? true : undefined;
   });
