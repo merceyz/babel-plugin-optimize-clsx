@@ -1,1 +1,1 @@
-clsx('foo', '--foobar');
+clsx('foo --foobar');
