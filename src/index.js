@@ -8,6 +8,7 @@ const visitors = [
   require('./visitors/combineStringLiterals'),
   require('./visitors/combineArguments'),
   require('./visitors/createConditionalExpression'),
+  require('./visitors/removeUnnecessaryCalls'),
 ];
 
 module.exports = () => ({

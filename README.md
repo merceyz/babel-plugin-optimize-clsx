@@ -157,3 +157,30 @@ If you want the plugin to match on all functions with a specific name, no matter
   ]
 }
 ```
+
+---
+
+| Name                     | Type      | Default value |
+| ------------------------ | --------- | ------------- |
+| `removeUnnecessaryCalls` | `boolean` | `true`        |
+
+By default the plugin will remove unnecessary function calls, if for some reason you need to keep them, you can set this option to false.
+
+Example of some unnecessary calls
+
+```javascript
+const x = clsx('foo', 'bar');
+const y = clsx({ classA: foo === 'a', classB: foo !== 'a' });
+const z = clsx({
+  classA: foo === 'a',
+  classB: foo !== 'a',
+  classC: bar === 'c',
+  classD: bar !== 'c',
+});
+
+// Transforms to
+
+const x = 'foo bar';
+const y = foo === 'a' ? 'classA' : 'classB';
+const z = (foo === 'a' ? 'classA ' : 'classB ') + (bar === 'c' ? 'classC' : 'classD');
+```

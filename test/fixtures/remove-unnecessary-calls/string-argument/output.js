@@ -1,0 +1,1 @@
+const baseClass = 'foo bar';
