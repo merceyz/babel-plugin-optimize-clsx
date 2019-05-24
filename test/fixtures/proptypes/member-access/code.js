@@ -6,5 +6,5 @@ function foo(props) {
 }
 
 foo.propTypes = {
-  position: PropTypes.oneOf(['top', 'bottom']),
+  position: PropTypes.oneOf(['top', 'bottom']).isRequired,
 };

@@ -10,6 +10,6 @@ function foo(props) {
 }
 
 foo.propTypes = {
-  position: PropTypes.oneOf(['top', 'bottom']),
-  anchor: PropTypes.oneOf(['left', 'right']),
+  position: PropTypes.oneOf(['top', 'bottom']).isRequired,
+  anchor: PropTypes.oneOf(['left', 'right']).isRequired,
 };

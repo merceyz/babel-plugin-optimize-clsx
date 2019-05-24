@@ -12,7 +12,9 @@ const replaceVisitor = {
     ) {
       const propType = this.types.find(obj =>
         obj.matches.some(
-          item => helper.compareNodes(node.left, item) || helper.compareNodes(node.right, item),
+          item =>
+            (obj.isRequired || item.hasDefaultValue) &&
+            (helper.compareNodes(node.left, item) || helper.compareNodes(node.right, item)),
         ),
       );
       if (propType === undefined) return;
@@ -69,6 +71,7 @@ const functionVisitor = {
               matchValue = item.value;
             } else if (t.isAssignmentPattern(item.value)) {
               matchValue = item.value.left;
+              matchValue.hasDefaultValue = true;
             } else {
               return;
             }
@@ -173,26 +176,35 @@ function getPropTypes(body) {
 
         if (t.isObjectExpression(expr.right)) {
           for (const prop of expr.right.properties) {
-            if (
-              t.isProperty(prop) &&
-              t.isCallExpression(prop.value) &&
-              t.isMemberExpression(prop.value.callee) &&
-              t.isIdentifier(prop.value.callee.object, { name: propTypeName }) &&
-              t.isIdentifier(prop.value.callee.property, { name: 'oneOf' }) &&
-              prop.value.arguments.length === 1
-            ) {
-              const value = prop.value.arguments[0];
+            getArrayElements(prop.value, false);
+
+            function getArrayElements(element, isRequired) {
               if (
-                t.isArrayExpression(value) &&
-                value.elements.length === 2 &&
-                t.isStringLiteral(value.elements[0]) &&
-                t.isStringLiteral(value.elements[1])
+                t.isMemberExpression(element) &&
+                t.isIdentifier(element.property, { name: 'isRequired' })
               ) {
-                propType.values.push({
-                  name: prop.key.name,
-                  optionA: value.elements[0].value,
-                  optionB: value.elements[1].value,
-                });
+                getArrayElements(element.object, true);
+              } else if (
+                t.isCallExpression(element) &&
+                t.isMemberExpression(element.callee) &&
+                t.isIdentifier(element.callee.object, { name: propTypeName }) &&
+                t.isIdentifier(element.callee.property, { name: 'oneOf' }) &&
+                element.arguments.length === 1
+              ) {
+                const value = element.arguments[0];
+                if (
+                  t.isArrayExpression(value) &&
+                  value.elements.length === 2 &&
+                  t.isStringLiteral(value.elements[0]) &&
+                  t.isStringLiteral(value.elements[1])
+                ) {
+                  propType.values.push({
+                    name: prop.key.name,
+                    isRequired: isRequired,
+                    optionA: value.elements[0].value,
+                    optionB: value.elements[1].value,
+                  });
+                }
               }
             }
           }
