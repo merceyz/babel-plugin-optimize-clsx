@@ -1,6 +1,6 @@
-const t = require('@babel/types');
-const helper = require('../utils/helpers');
-const _ = require('lodash');
+import * as t from '@babel/types';
+import * as helpers from '../utils/helpers';
+import _ from 'lodash';
 
 const replaceVisitor = {
   BinaryExpression(path) {
@@ -14,7 +14,7 @@ const replaceVisitor = {
         obj.matches.some(
           item =>
             (obj.isRequired || item.hasDefaultValue) &&
-            (helper.compareNodes(node.left, item) || helper.compareNodes(node.right, item)),
+            (helpers.compareNodes(node.left, item) || helpers.compareNodes(node.right, item)),
         ),
       );
       if (propType === undefined) return;
@@ -112,7 +112,7 @@ const functionVisitor = {
           if (t.isVariableDeclarator(item)) {
             if (
               t.isMemberExpression(item.init) &&
-              helper.compareNodes(item.init.object, matcher) &&
+              helpers.compareNodes(item.init.object, matcher) &&
               t.isIdentifier(item.init.property) &&
               t.isIdentifier(item.id)
             ) {
@@ -129,7 +129,7 @@ const functionVisitor = {
               });
             } else if (
               t.isIdentifier(item.init) &&
-              helper.compareNodes(item.init, matcher) &&
+              helpers.compareNodes(item.init, matcher) &&
               t.isObjectPattern(item.id)
             ) {
               return getObjectPattern(item.id, null);
@@ -224,7 +224,7 @@ function getPropTypesName(body) {
   }
 }
 
-module.exports = (path, options) => {
+export default (path, options) => {
   const propTypes = getPropTypes(path.node.body);
   if (propTypes.length === 0) return;
 

@@ -1,4 +1,4 @@
-const t = require('@babel/types');
+import * as t from '@babel/types';
 
 const visitor = {
   CallExpression(path) {
@@ -30,6 +30,6 @@ const visitor = {
   },
 };
 
-module.exports = (path, options) => {
+export default (path, options) => {
   path.traverse(visitor, { options });
 };

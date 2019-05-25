@@ -1,6 +1,6 @@
-const t = require('@babel/types');
+import * as t from '@babel/types';
 
-module.exports = (path, options) => {
+export default (path, options) => {
   if (options.libraries.length === 0) {
     return;
   }

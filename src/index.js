@@ -1,17 +1,25 @@
-const getOptions = require('./options');
+import { getOptions } from './options';
+import findFunctionNames from './visitors/findFunctionNames';
+import extractObjectProperties from './visitors/extractObjectProperties';
+import propTypes from './visitors/propTypes';
+import stripLiterals from './visitors/stripLiterals';
+import combineStringLiterals from './visitors/combineStringLiterals';
+import combineArguments from './visitors/combineArguments';
+import createConditionalExpression from './visitors/createConditionalExpression';
+import removeUnnecessaryCalls from './visitors/removeUnnecessaryCalls';
 
 const visitors = [
-  require('./visitors/findFunctionNames'),
-  require('./visitors/extractObjectProperties'),
-  require('./visitors/propTypes'),
-  require('./visitors/stripLiterals'),
-  require('./visitors/combineStringLiterals'),
-  require('./visitors/combineArguments'),
-  require('./visitors/createConditionalExpression'),
-  require('./visitors/removeUnnecessaryCalls'),
+  findFunctionNames,
+  extractObjectProperties,
+  propTypes,
+  stripLiterals,
+  combineStringLiterals,
+  combineArguments,
+  createConditionalExpression,
+  removeUnnecessaryCalls,
 ];
 
-module.exports = () => ({
+export default () => ({
   visitor: {
     Program(path, state) {
       const options = getOptions(state.opts);

@@ -1,6 +1,6 @@
-const t = require('@babel/types');
-const _ = require('lodash');
-const helpers = require('../utils/helpers');
+import * as t from '@babel/types';
+import _ from 'lodash';
+import * as helpers from '../utils/helpers';
 
 const visitor = {
   CallExpression(path) {
@@ -104,6 +104,6 @@ const visitor = {
   },
 };
 
-module.exports = (path, options) => {
+export default (path, options) => {
   path.traverse(visitor, { options });
 };
