@@ -1,17 +1,11 @@
 const t = require('@babel/types');
 
 module.exports = (path, options) => {
-  const node = path.node;
-
-  if (!t.isProgram(node)) {
-    throw new Error('Node has to be a program node');
-  }
-
   if (options.libraries.length === 0) {
     return;
   }
 
-  node.body.forEach(item => {
+  path.node.body.forEach(item => {
     // import x from 'y';
     if (t.isImportDeclaration(item)) {
       if (

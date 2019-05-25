@@ -143,17 +143,6 @@ const functionVisitor = {
   },
 };
 
-module.exports = (path, options) => {
-  if (!t.isProgram(path.node)) {
-    throw new Error('Node has to be a program node');
-  }
-
-  const propTypes = getPropTypes(path.node.body);
-  if (propTypes.length === 0) return;
-
-  path.traverse(functionVisitor, { options, propTypes });
-};
-
 function getPropTypes(body) {
   const propTypeName = getPropTypesName(body);
   if (propTypeName === undefined) return [];
@@ -234,3 +223,10 @@ function getPropTypesName(body) {
     }
   }
 }
+
+module.exports = (path, options) => {
+  const propTypes = getPropTypes(path.node.body);
+  if (propTypes.length === 0) return;
+
+  path.traverse(functionVisitor, { options, propTypes });
+};

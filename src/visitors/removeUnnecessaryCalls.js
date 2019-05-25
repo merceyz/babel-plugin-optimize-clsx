@@ -53,10 +53,6 @@ const visitor = {
 };
 
 module.exports = (path, options) => {
-  if (!t.isProgram(path.node)) {
-    throw new Error('Node has to be a program node');
-  }
-
   if (!options.removeUnnecessaryCalls) {
     return;
   }
