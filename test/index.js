@@ -41,6 +41,17 @@ if (process.env.DEV_MODE) {
     ...options,
     fixtures: devDir,
   });
+} else if (process.env.TEST_BUILD) {
+  const pluginPath = path.join(__dirname, '../dist/index.js');
+  if (!fs.existsSync(pluginPath)) {
+    throw new Error('File not found, run "yarn build" first');
+  }
+
+  pluginTester({
+    ...options,
+    pluginName: 'optimize-clsx-BUILD',
+    plugin: require(pluginPath),
+  });
 } else {
   pluginTester(options);
 }

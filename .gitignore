@@ -1,3 +1,6 @@
+# Rollup output folder
+dist
+
 # Fixtures used during debugging and testing
 test/dev_fixture
 

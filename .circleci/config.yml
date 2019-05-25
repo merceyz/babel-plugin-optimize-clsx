@@ -14,3 +14,9 @@ jobs:
       - run:
           name: Check tests pass
           command: yarn test
+      - run:
+          name: Build with rollup
+          command: yarn build
+      - run:
+          name: Check tests pass with build result
+          command: yarn test:build
