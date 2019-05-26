@@ -1,6 +1,6 @@
 # babel-plugin-optimize-clsx
 
-Babel plugin to optimize `clsx` and `classNames` function calls
+Babel plugin to optimize the use of [clsx](https://github.com/lukeed/clsx), [classnames](https://github.com/JedWatson/classnames), and all libraries with a compatible API
 
 ## Install
 
@@ -10,79 +10,50 @@ or
 npm install babel-plugin-optimize-clsx --save-dev
 ```
 
-## Example
+## Examples
 
-### Extract object properties
-
-Transforms
-
-```javascript
-clsx(
-  'foo',
-  {
-    [classes.disabled]: disabled,
-    [classes.focusVisible]: focusVisible && !disabled,
-  },
-  'bar',
-);
-```
-
-to
-
-```javascript
-clsx('foo', disabled && classes.disabled, focusVisible && !disabled && classes.focusVisible, 'bar');
-```
-
-### Extract and create conditional expression
-
-Transforms
-
-```javascript
-clsx(
-  'foo',
-  {
-    [classes.disabled]: disabled,
-    [classes.focusVisible]: focusVisible && !disabled,
-  },
-  'bar',
-);
-```
-
-to
-
-```javascript
-clsx('foo', 'bar', disabled ? classes.disabled : focusVisible && classes.focusVisible);
-```
-
-### Extract and combine
-
-Transforms
+### Object properties
 
 ```javascript
 clsx({
   [classes.disabled]: disabled,
+  [classes.focusVisible]: focusVisible && !disabled,
+});
+
+// Transforms to
+
+clsx(disabled && classes.disabled, focusVisible && !disabled && classes.focusVisible);
+```
+
+### Conditional expressions
+
+```javascript
+clsx({
+  [classes.disabled]: disabled,
+  [classes.focusVisible]: focusVisible && !disabled,
+});
+
+// Transforms to
+
+clsx(disabled ? classes.disabled : focusVisible && classes.focusVisible);
+```
+
+### Combine arguments
+
+```javascript
+clsx({
   [classes.focusVisible]: this.state.focusVisible,
   [focusVisibleClassName]: this.state.focusVisible,
 });
+
+// Transforms to
+
+clsx(this.state.focusVisible && [classes.focusVisible, focusVisibleClassName]);
 ```
 
-to
+### PropTypes
 
 ```javascript
-clsx(
-  this.state.focusVisible && [classes.focusVisible, focusVisibleClassName],
-  disabled && classes.disabled,
-);
-```
-
-### Using proptypes
-
-Transforms
-
-```javascript
-import PropTypes from 'prop-types';
-import clsx from 'clsx';
-
 function foo(props) {
   const { position: p } = props;
   const x = clsx({
@@ -94,13 +65,8 @@ function foo(props) {
 foo.propTypes = {
   position: PropTypes.oneOf(['top', 'bottom']),
 };
-```
 
-to
-
-```javascript
-import PropTypes from 'prop-types';
-import clsx from 'clsx';
+// Transforms to
 
 function foo(props) {
   const { position: p } = props;
@@ -110,6 +76,34 @@ function foo(props) {
 foo.propTypes = {
   position: PropTypes.oneOf(['top', 'bottom']),
 };
+```
+
+### String literals
+
+```javascript
+const x = clsx({
+  btn: true,
+  'col-md-1': true,
+  ['btn-primary']: true,
+});
+
+// Transforms to
+
+const x = 'btn col-md-1 btn-primary';
+```
+
+### Unnecessary function calls
+
+```javascript
+const x = clsx({
+  btn: true,
+  'btn-foo': isDisabled,
+  'btn-bar': !isDisabled,
+});
+
+// Transforms to
+
+const x = 'btn ' + (isDisabled ? 'btn-foo' : 'btn-bar');
 ```
 
 ## Benchmarks
