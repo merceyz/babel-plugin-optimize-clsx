@@ -26,8 +26,9 @@ const fullWidth = true;
 const disabled = false;
 
 module.exports = [
+  'Extract properties and combine arguments',
   () => {
-    clsx(
+    return clsx(
       classes.root,
       {
         [classes.text]: text,
@@ -47,21 +48,24 @@ module.exports = [
     );
   },
   () => {
-    clsx(
+    return clsx(
       classes.root,
       classNameProp,
+      text && [
+        classes.text,
+        color === 'primary' && classes.textPrimary,
+        color === 'secondary' && classes.textSecondary,
+      ],
+      contained && [
+        classes.contained,
+        color === 'primary' && classes.containedPrimary,
+        color === 'secondary' && classes.containedSecondary,
+      ],
       variant === 'outlined' && [
         classes.outlined,
         color === 'primary' && classes.outlinedPrimary,
         color === 'secondary' && classes.outlinedSecondary,
       ],
-      color === 'secondary' && [
-        text && classes.textSecondary,
-        contained && classes.containedSecondary,
-      ],
-      color === 'primary' && [text && classes.textPrimary, contained && classes.containedPrimary],
-      text && classes.text,
-      contained && classes.contained,
       disabled && classes.disabled,
       fullWidth && classes.fullWidth,
       color === 'inherit' && classes.colorInherit,

@@ -15,8 +15,9 @@ const variant = 'buffer';
 const color = 'secondary';
 
 module.exports = [
+  'Extract properties, combine arguments, and conditional expression',
   () => {
-    clsx(classes.bar, {
+    return clsx(classes.bar, {
       [classes.barColorPrimary]: color === 'primary' && variant !== 'buffer',
       [classes.colorPrimary]: color === 'primary' && variant === 'buffer',
       [classes.barColorSecondary]: color === 'secondary' && variant !== 'buffer',
@@ -26,18 +27,19 @@ module.exports = [
     });
   },
   () => {
-    clsx(
+    return clsx(
       classes.bar,
       (variant === 'indeterminate' || variant === 'query') && classes.bar2Indeterminate,
-      variant === 'buffer' && [
-        color === 'primary' && classes.colorPrimary,
-        color === 'secondary' && classes.colorSecondary,
-        classes.bar2Buffer,
-      ],
-      variant !== 'buffer' && [
-        color === 'primary' && classes.barColorPrimary,
-        color === 'secondary' && classes.barColorSecondary,
-      ],
+      variant === 'buffer'
+        ? [
+            classes.bar2Buffer,
+            color === 'primary' && classes.colorPrimary,
+            color === 'secondary' && classes.colorSecondary,
+          ]
+        : [
+            color === 'primary' && classes.barColorPrimary,
+            color === 'secondary' && classes.barColorSecondary,
+          ],
     );
   },
 ];
