@@ -1,6 +1,24 @@
-# Change Log
+# Changelog
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+## [2.1.0](https://github.com/merceyz/babel-plugin-optimize-clsx/compare/v2.0.0...v2.1.0) (2019-05-27)
+
+### Bug Fixes
+
+- **proptypes:** handle isRequired and default value ([aa244e3](https://github.com/merceyz/babel-plugin-optimize-clsx/commit/aa244e3))
+
+### Build System
+
+- use rollup, babel, and terser ([29e730f](https://github.com/merceyz/babel-plugin-optimize-clsx/commit/29e730f))
+
+### Features
+
+- combine string literals ([0bc7671](https://github.com/merceyz/babel-plugin-optimize-clsx/commit/0bc7671))
+- remove unnecessary function calls ([3ea3d85](https://github.com/merceyz/babel-plugin-optimize-clsx/commit/3ea3d85))
+- remove unused imports ([8d2ae5f](https://github.com/merceyz/babel-plugin-optimize-clsx/commit/8d2ae5f))
+- strip literals ([f206424](https://github.com/merceyz/babel-plugin-optimize-clsx/commit/f206424))
+- use proptypes to minimize expressions ([300b006](https://github.com/merceyz/babel-plugin-optimize-clsx/commit/300b006))
 
 # [2.0.0](https://github.com/merceyz/babel-plugin-optimize-clsx/compare/v1.1.2...v2.0.0) (2019-05-21)
 
