@@ -41,13 +41,33 @@ const visitor = {
     }
 
     function isSafeConditional(node) {
-      return (
-        t.isConditionalExpression(node) &&
-        t.isStringLiteral(node.consequent) &&
-        t.isStringLiteral(node.alternate) &&
-        node.consequent.value.length > 0 &&
-        node.alternate.value.length > 0
-      );
+      if (!t.isConditionalExpression(node)) {
+        return false;
+      }
+
+      const { consequent, alternate } = node;
+
+      if (
+        t.isStringLiteral(consequent) &&
+        t.isStringLiteral(alternate) &&
+        consequent.value.length > 0 &&
+        alternate.value.length > 0
+      ) {
+        return true;
+      }
+
+      if (
+        (t.isStringLiteral(consequent) &&
+          consequent.value.length > 0 &&
+          isSafeConditional(alternate)) ||
+        (t.isStringLiteral(alternate) &&
+          alternate.value.length > 0 &&
+          isSafeConditional(consequent))
+      ) {
+        return true;
+      }
+
+      return false;
     }
   },
 };
