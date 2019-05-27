@@ -1,1 +1,3 @@
-clsx({ foo: true });
+clsx({
+  foo: true,
+});

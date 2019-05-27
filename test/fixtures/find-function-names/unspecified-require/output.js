@@ -1,3 +1,5 @@
 const myFunction = require('foo-library');
 
-myFunction({ foo: true });
+myFunction({
+  foo: true,
+});

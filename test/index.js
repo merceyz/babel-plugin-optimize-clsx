@@ -19,7 +19,6 @@ const options = {
   babelOptions: {
     babelrc: false,
     configFile: false,
-    retainLines: true,
     compact: false,
   },
   formatResult: format,

@@ -1,1 +1,1 @@
-const x = 'foo foobaz ' + (fooValue ? 'bar baz' : 'foobar');
+const x = clsx('foo foobaz', fooValue ? 'bar baz' : 'foobar');
