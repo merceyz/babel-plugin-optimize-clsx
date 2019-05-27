@@ -17,6 +17,7 @@ const visitors = [
   combineArguments,
   createConditionalExpression,
   removeUnnecessaryCalls,
+  (path, options) => findFunctionNames(path, { ...options, _removeUnusedImports: true }),
 ];
 
 export default () => ({

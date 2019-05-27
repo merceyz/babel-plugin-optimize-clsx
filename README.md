@@ -158,11 +158,12 @@ If you want the plugin to match on all functions with a specific name, no matter
 | ------------------------ | --------- | ------------- |
 | `removeUnnecessaryCalls` | `boolean` | `true`        |
 
-By default the plugin will remove unnecessary function calls, if for some reason you need to keep them, you can set this option to false.
+By default the plugin will remove unnecessary function calls and if all calls are removed, imports. If you need to keep them, you can set this option to false.
 
 Example of some unnecessary calls
 
 ```javascript
+import clsx from 'clsx';
 const x = clsx('foo', 'bar');
 const y = clsx({ classA: foo === 'a', classB: foo !== 'a' });
 const z = clsx({
