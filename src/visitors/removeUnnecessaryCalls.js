@@ -1,4 +1,57 @@
 import * as t from '@babel/types';
+import { isSafeConditional } from '../utils/helpers';
+
+const transforms = [
+  function noArgumentsToString(args) {
+    if (args.length === 0) {
+      return t.stringLiteral('');
+    }
+  },
+
+  function singleStringLiteral(args) {
+    if (args.length === 1 && t.isStringLiteral(args[0])) {
+      return args[0];
+    }
+  },
+
+  function singleSafeConditional(args) {
+    if (args.length === 1 && isSafeConditional(args[0])) {
+      return args[0];
+    }
+  },
+
+  function multipleSafeConditionals(args) {
+    if (args.length !== 2) return;
+
+    const [arg1, arg2] = args;
+
+    if (isSafeConditional(arg1) && isSafeConditional(arg2)) {
+      const newCond = t.conditionalExpression(
+        arg1.test,
+        t.stringLiteral(arg1.consequent.value + ' '),
+        t.stringLiteral(arg1.alternate.value + ' '),
+      );
+
+      return t.binaryExpression('+', newCond, arg2);
+    }
+  },
+
+  function stringAndSafeConditional(args) {
+    if (args.length !== 2) return;
+
+    const [arg1, arg2] = args;
+
+    if (
+      (t.isStringLiteral(arg1) || t.isStringLiteral(arg2)) &&
+      (isSafeConditional(arg1) || isSafeConditional(arg2))
+    ) {
+      const string = t.isStringLiteral(arg1) ? arg1 : arg2;
+      const conditional = t.isStringLiteral(arg2) ? arg1 : arg2;
+
+      return t.binaryExpression('+', t.stringLiteral(string.value + ' '), conditional);
+    }
+  },
+];
 
 const visitor = {
   CallExpression(path) {
@@ -7,67 +60,13 @@ const visitor = {
       return;
     }
 
-    const argLength = path.node.arguments.length;
-    if (argLength > 0) {
-      let arg = path.node.arguments[0];
-      if (argLength === 1) {
-        if (t.isStringLiteral(arg)) {
-          path.replaceWith(arg);
-        } else if (isSafeConditional(arg)) {
-          path.replaceWith(arg);
-        }
-      } else if (argLength === 2) {
-        let arg2 = path.node.arguments[1];
-        if (isSafeConditional(arg) && isSafeConditional(arg2)) {
-          const newCond = t.conditionalExpression(
-            arg.test,
-            t.stringLiteral(arg.consequent.value + ' '),
-            t.stringLiteral(arg.alternate.value + ' '),
-          );
-          path.replaceWith(t.binaryExpression('+', newCond, arg2));
-        } else if (
-          (t.isStringLiteral(arg) || t.isStringLiteral(arg2)) &&
-          (isSafeConditional(arg) || isSafeConditional(arg2))
-        ) {
-          if (t.isStringLiteral(arg)) {
-            path.replaceWith(t.binaryExpression('+', t.stringLiteral(arg.value + ' '), arg2));
-          } else {
-            path.replaceWith(t.binaryExpression('+', t.stringLiteral(arg2.value + ' '), arg));
-          }
-        }
+    for (const t of transforms) {
+      const result = t(path.node.arguments);
+
+      if (result !== undefined) {
+        path.replaceWith(result);
+        break;
       }
-    } else if (argLength === 0) {
-      path.replaceWith(t.stringLiteral(''));
-    }
-
-    function isSafeConditional(node) {
-      if (!t.isConditionalExpression(node)) {
-        return false;
-      }
-
-      const { consequent, alternate } = node;
-
-      if (
-        t.isStringLiteral(consequent) &&
-        t.isStringLiteral(alternate) &&
-        consequent.value.length > 0 &&
-        alternate.value.length > 0
-      ) {
-        return true;
-      }
-
-      if (
-        (t.isStringLiteral(consequent) &&
-          consequent.value.length > 0 &&
-          isSafeConditional(alternate)) ||
-        (t.isStringLiteral(alternate) &&
-          alternate.value.length > 0 &&
-          isSafeConditional(consequent))
-      ) {
-        return true;
-      }
-
-      return false;
     }
   },
 };

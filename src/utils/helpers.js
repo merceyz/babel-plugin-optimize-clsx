@@ -102,3 +102,31 @@ export function compareNodes(obj1, obj2) {
     return key === 'start' || key === 'end' || key === 'loc' ? true : undefined;
   });
 }
+
+export function isSafeConditional(node) {
+  if (!t.isConditionalExpression(node)) {
+    return false;
+  }
+
+  const { consequent, alternate } = node;
+
+  if (
+    t.isStringLiteral(consequent) &&
+    t.isStringLiteral(alternate) &&
+    consequent.value.length > 0 &&
+    alternate.value.length > 0
+  ) {
+    return true;
+  }
+
+  if (
+    (t.isStringLiteral(consequent) &&
+      consequent.value.length > 0 &&
+      isSafeConditional(alternate)) ||
+    (t.isStringLiteral(alternate) && alternate.value.length > 0 && isSafeConditional(consequent))
+  ) {
+    return true;
+  }
+
+  return false;
+}
