@@ -63,6 +63,27 @@ const transforms = [
       return arg;
     }
   },
+
+  function stringAndLogicalExpression(args) {
+    if (args.length !== 2) return;
+
+    const [arg1, arg2] = args;
+    if (
+      t.isStringLiteral(arg1) &&
+      t.isLogicalExpression(arg2, { operator: '&&' }) &&
+      t.isStringLiteral(arg2.right)
+    ) {
+      return t.binaryExpression(
+        '+',
+        arg1,
+        t.conditionalExpression(
+          arg2.left,
+          t.stringLiteral(' ' + arg2.right.value),
+          t.stringLiteral(''),
+        ),
+      );
+    }
+  },
 ];
 
 const visitor = {
