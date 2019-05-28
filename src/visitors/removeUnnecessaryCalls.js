@@ -51,6 +51,18 @@ const transforms = [
       return t.binaryExpression('+', t.stringLiteral(string.value + ' '), conditional);
     }
   },
+
+  function singleLogicalExpression(args) {
+    if (args.length !== 1) return;
+
+    const [arg] = args;
+    if (t.isLogicalExpression(arg, { operator: '&&' }) && t.isStringLiteral(arg.right)) {
+      return t.conditionalExpression(arg.left, arg.right, t.stringLiteral(''));
+    } else if (t.isLogicalExpression(arg, { operator: '||' }) && t.isStringLiteral(arg.right)) {
+      // Assume that arg.left returns a string value
+      return arg;
+    }
+  },
 ];
 
 const visitor = {
