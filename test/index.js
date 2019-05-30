@@ -27,13 +27,18 @@ const options = {
 
 if (process.env.DEV_MODE) {
   const devDir = path.join(__dirname, 'dev_fixture');
+  const defaultFixture = path.join(devDir, 'default');
   if (fs.existsSync(devDir) === false) {
     // Setup a default test to make it easier to start debugging
-    const defaultFixture = path.join(devDir, 'default');
     fs.mkdirSync(devDir);
     fs.mkdirSync(defaultFixture);
     fs.writeFileSync(path.join(defaultFixture, 'code.js'), 'clsx(foo && bar);');
     process.exit(0);
+  }
+
+  const outputFile = path.join(defaultFixture, 'output.js');
+  if (fs.existsSync(outputFile)) {
+    fs.unlinkSync(outputFile);
   }
 
   pluginTester({
