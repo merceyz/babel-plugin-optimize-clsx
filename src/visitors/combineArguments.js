@@ -98,7 +98,7 @@ const visitor = {
           }
         }
 
-        return items.map(e => e.reduce((prev, curr) => t.logicalExpression('&&', prev, curr)));
+        return items.map(helpers.createLogicalAndOperator);
       }
     }
   },

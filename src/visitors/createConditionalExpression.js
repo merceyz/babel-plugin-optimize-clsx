@@ -74,12 +74,12 @@ const visitor = {
                   continue;
                 }
 
-                const left = row2
-                  .filter((e, index) => index !== col2_index)
-                  .reduce((prev, curr) => t.logicalExpression('&&', prev, curr));
-                const right = row
-                  .filter((e, index) => index !== col_index)
-                  .reduce((prev, curr) => t.logicalExpression('&&', prev, curr));
+                const left = helpers.createLogicalAndOperator(
+                  row2.filter((e, index) => index !== col2_index),
+                );
+                const right = helpers.createLogicalAndOperator(
+                  row.filter((e, index) => index !== col_index),
+                );
 
                 // isUnary: col2 is 1 char shorter (col2: foo vs col: !foo)
                 // isBinary: col2 has the === operator
@@ -97,10 +97,7 @@ const visitor = {
         }
       }
 
-      return [
-        ...result,
-        ...operators.map(e => e.reduce((prev, curr) => t.logicalExpression('&&', prev, curr))),
-      ];
+      return [...result, ...operators.map(helpers.createLogicalAndOperator)];
     }
   },
 };

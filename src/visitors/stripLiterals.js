@@ -43,7 +43,7 @@ const visitor = {
           : expression,
       )
       .filter(expression => expression.length !== 0)
-      .map(expression => expression.reduce((prev, curr) => t.logicalExpression('&&', prev, curr)));
+      .map(helpers.createLogicalAndOperator);
 
     path.node.arguments = [...noMatch, ...result];
   },
