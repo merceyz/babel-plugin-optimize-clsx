@@ -7,6 +7,7 @@ import combineStringLiterals from './visitors/combineStringLiterals';
 import combineArguments from './visitors/combineArguments';
 import createConditionalExpression from './visitors/createConditionalExpression';
 import removeUnnecessaryCalls from './visitors/removeUnnecessaryCalls';
+import createObjectKeyLookups from './visitors/createObjectKeyLookups';
 
 const visitors = [
   findFunctionNames,
@@ -17,6 +18,7 @@ const visitors = [
   combineStringLiterals,
   createConditionalExpression,
   removeUnnecessaryCalls,
+  createObjectKeyLookups,
   (path, options) => findFunctionNames(path, { ...options, _removeUnusedImports: true }),
 ];
 

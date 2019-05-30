@@ -3,6 +3,7 @@ import fs from 'fs';
 import path from 'path';
 import generate from '@babel/generator';
 import _ from 'lodash';
+import hash from 'object-hash';
 
 export function flattenLogicalOperator(node) {
   if (t.isLogicalExpression(node)) {
@@ -100,6 +101,13 @@ export function compareNodes(obj1, obj2) {
 
   return _.isEqualWith(obj1, obj2, (v1, v2, key) => {
     return key === 'start' || key === 'end' || key === 'loc' ? true : undefined;
+  });
+}
+
+export function hashNode(node) {
+  return hash(node, {
+    excludeKeys: key =>
+      key === 'start' || key === 'end' || key === 'loc' || key === 'extra' ? true : false,
   });
 }
 

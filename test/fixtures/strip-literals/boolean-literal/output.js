@@ -1,5 +1,7 @@
 clsx(
   classes.cellHide,
-  options.responsive === 'stacked' && classes.cellStacked,
   !print && 'datatables-noprint',
+  {
+    stacked: classes.cellStacked,
+  }[options.responsive],
 );
