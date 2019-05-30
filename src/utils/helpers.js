@@ -138,3 +138,7 @@ export function isSafeConditional(node) {
 
   return false;
 }
+
+export function createLogicalAndOperator(items) {
+  return items.reduce((prev, curr) => t.logicalExpression('&&', prev, curr));
+}

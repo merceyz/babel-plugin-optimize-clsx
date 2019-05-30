@@ -1,6 +1,12 @@
 import * as t from '@babel/types';
-import _ from 'lodash';
-import { hashNode } from '../utils/helpers';
+import _ from 'lodash/fp';
+import {
+  hashNode,
+  flattenLogicalOperator,
+  createLogicalAndOperator,
+  isAllLogicalAndOperators,
+  dumpData,
+} from '../utils/helpers';
 import generate from '@babel/generator';
 
 function matchLeftOrRight(node, check) {
@@ -9,58 +15,79 @@ function matchLeftOrRight(node, check) {
 
 function combineFromArray(arr) {
   // x === 'foo', 'foo' === x, x.y === 'foo', 'foo' === x.y
-  const [match, noMatch] = _.partition(arr, item => {
-    return (
-      t.isLogicalExpression(item, { operator: '&&' }) &&
-      t.isBinaryExpression(item.left, { operator: '===' }) &&
-      matchLeftOrRight(item.left, t.isStringLiteral) &&
-      (matchLeftOrRight(item.left, t.isMemberExpression) ||
-        matchLeftOrRight(item.left, t.isIdentifier))
-    );
-  });
+  const [match, noMatch] = _.partition(itm => {
+    return checkItem(itm);
+
+    function checkItem(item) {
+      if (t.isLogicalExpression(item) && isAllLogicalAndOperators(item)) {
+        return checkItem(item.left);
+      }
+
+      if (
+        t.isBinaryExpression(item, { operator: '===' }) &&
+        matchLeftOrRight(item, t.isStringLiteral) &&
+        (matchLeftOrRight(item, t.isMemberExpression) || matchLeftOrRight(item, t.isIdentifier))
+      ) {
+        return true;
+      }
+      return false;
+    }
+  }, arr);
 
   if (match.length === 0) {
     return arr;
   }
 
-  // Make sure the string is on the right side of ===
-  // Makes the rest of the code simpler
-  const rearranged = match.map(node => {
-    const tempNode = { ...node };
-    if (t.isStringLiteral(tempNode.left.left)) {
-      tempNode.left = t.binaryExpression('===', tempNode.left.right, tempNode.left.left);
-    }
-    return tempNode;
-  });
+  const newArgs = _.flow(
+    _.map(flattenLogicalOperator),
 
-  // Group on whatever the strings are compared to
-  const grouped = _.groupBy(rearranged, node => hashNode(node.left.left));
+    // Set the string to always be on the right side of ===
+    // Simplifies the rest of the code
+    _.map(row => {
+      let tempNode = { ...row[0] };
 
-  const newArgs = [];
-  _.forOwn(grouped, item => {
-    const result = item.reduce((acc, node) => {
-      let key = node.left.right;
-
-      // If possible, use a identifier as the key, saves 2 characters
-      if (/[^A-Za-z]/.test(node.left.right.value) === false) {
-        key = t.identifier(node.left.right.value);
+      if (t.isStringLiteral(tempNode.left)) {
+        tempNode = t.binaryExpression('===', tempNode.right, tempNode.left);
       }
 
-      acc.push(t.objectProperty(key, node.right));
-      return acc;
-    }, []);
+      return [tempNode, ...row.slice(1)];
+    }),
 
-    const output = t.memberExpression(t.objectExpression(result), item[0].left.left, true);
-    if (item.length > 1) {
-      newArgs.push(output);
-      return;
-    }
+    // Group on whatever the strings are compared to
+    _.groupBy(row => hashNode(row[0].left)),
 
-    // If the size is the same, use the original
-    const a = generate(item[0], { compact: true }).code;
-    const b = generate(output, { compact: true }).code;
-    newArgs.push(a.length <= b.length ? item[0] : output);
-  });
+    // Removes the key created by groupBy
+    _.values,
+
+    // Create the objects
+    _.map(group => {
+      const properties = group.reduce((acc, row) => {
+        let key = row[0].right;
+        // If possible, use a identifier as the key, saves 2 characters
+        if (/[^A-Za-z]/.test(row[0].right.value) === false) {
+          key = t.identifier(row[0].right.value);
+        }
+
+        acc.push(t.objectProperty(key, createLogicalAndOperator(row.slice(1))));
+        return acc;
+      }, []);
+
+      const lookupExpression = t.memberExpression(
+        t.objectExpression(properties),
+        group[0][0].left,
+        true,
+      );
+      if (group.length > 1) {
+        return lookupExpression;
+      }
+
+      // If the size is the same, use the original
+      const original = createLogicalAndOperator(group[0]);
+      const a = generate(original, { compact: true }).code;
+      const b = generate(lookupExpression, { compact: true }).code;
+      return a.length <= b.length ? original : lookupExpression;
+    }),
+  )(match);
 
   return [...noMatch, ...newArgs];
 }
