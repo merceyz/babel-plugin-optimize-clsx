@@ -5,9 +5,9 @@ import generate from '@babel/generator';
 import _ from 'lodash';
 import hash from 'object-hash';
 
-export function flattenLogicalOperator(node) {
+export function flattenLogicalExpression(node) {
   if (t.isLogicalExpression(node)) {
-    return [...flattenLogicalOperator(node.left), node.right];
+    return [...flattenLogicalExpression(node.left), node.right];
   }
 
   return [node];
@@ -116,7 +116,7 @@ export function hashNode(node) {
   });
 }
 
-export function isSafeConditional(node) {
+export function isSafeConditionalExpression(node) {
   if (!t.isConditionalExpression(node)) {
     return false;
   }
@@ -135,8 +135,10 @@ export function isSafeConditional(node) {
   if (
     (t.isStringLiteral(consequent) &&
       consequent.value.length > 0 &&
-      isSafeConditional(alternate)) ||
-    (t.isStringLiteral(alternate) && alternate.value.length > 0 && isSafeConditional(consequent))
+      isSafeConditionalExpression(alternate)) ||
+    (t.isStringLiteral(alternate) &&
+      alternate.value.length > 0 &&
+      isSafeConditionalExpression(consequent))
   ) {
     return true;
   }
@@ -144,6 +146,6 @@ export function isSafeConditional(node) {
   return false;
 }
 
-export function createLogicalAndOperator(items) {
+export function createLogicalAndExpression(items) {
   return items.reduce((prev, curr) => t.logicalExpression('&&', prev, curr));
 }

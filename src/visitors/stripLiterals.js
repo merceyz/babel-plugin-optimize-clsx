@@ -14,7 +14,7 @@ const visitor = {
     if (match.length === 0) return;
 
     const result = match
-      .map(helpers.flattenLogicalOperator)
+      .map(helpers.flattenLogicalExpression)
       .map(expression =>
         expression.filter((item, index) => {
           if (t.isBooleanLiteral(item, { value: true })) {
@@ -40,7 +40,7 @@ const visitor = {
           : expression,
       )
       .filter(expression => expression.length !== 0)
-      .map(helpers.createLogicalAndOperator);
+      .map(helpers.createLogicalAndExpression);
 
     path.node.arguments = [...noMatch, ...result];
   },

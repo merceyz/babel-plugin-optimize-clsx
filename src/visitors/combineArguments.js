@@ -17,7 +17,7 @@ const visitor = {
     // Not enough arguments to optimize
     if (match.length < 2) return;
 
-    const operators = match.map(helpers.flattenLogicalOperator);
+    const operators = match.map(helpers.flattenLogicalExpression);
 
     const node = helpers.getMostFrequentNode(operators);
     // No nodes appear more than once
@@ -95,7 +95,7 @@ const visitor = {
           }
         }
 
-        return items.map(helpers.createLogicalAndOperator);
+        return items.map(helpers.createLogicalAndExpression);
       }
     }
   },

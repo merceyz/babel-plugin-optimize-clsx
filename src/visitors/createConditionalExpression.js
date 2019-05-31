@@ -17,7 +17,7 @@ const visitor = {
       if (match.length === 0) return noMatch;
 
       let operators = match
-        .map(helpers.flattenLogicalOperator)
+        .map(helpers.flattenLogicalExpression)
         // If the last item in each row is an array, recursivly call ourself
         .map(row => {
           let col = row.pop();
@@ -71,10 +71,10 @@ const visitor = {
                   continue;
                 }
 
-                const left = helpers.createLogicalAndOperator(
+                const left = helpers.createLogicalAndExpression(
                   row2.filter((e, index) => index !== col2_index),
                 );
-                const right = helpers.createLogicalAndOperator(
+                const right = helpers.createLogicalAndExpression(
                   row.filter((e, index) => index !== col_index),
                 );
 
@@ -94,7 +94,7 @@ const visitor = {
         }
       }
 
-      return [...result, ...operators.map(helpers.createLogicalAndOperator)];
+      return [...result, ...operators.map(helpers.createLogicalAndExpression)];
     }
   },
 };

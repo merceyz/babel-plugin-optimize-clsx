@@ -2,8 +2,8 @@ import * as t from '@babel/types';
 import _ from 'lodash/fp';
 import {
   hashNode,
-  flattenLogicalOperator,
-  createLogicalAndOperator,
+  flattenLogicalExpression,
+  createLogicalAndExpression,
   isNestedLogicalAndExpression,
 } from '../utils/helpers';
 import generate from '@babel/generator';
@@ -38,7 +38,7 @@ function combineFromArray(arr) {
   }
 
   const newArgs = _.flow(
-    _.map(flattenLogicalOperator),
+    _.map(flattenLogicalExpression),
 
     // Set the string to always be on the right side of ===
     // Simplifies the rest of the code
@@ -67,7 +67,7 @@ function combineFromArray(arr) {
           key = t.identifier(row[0].right.value);
         }
 
-        acc.push(t.objectProperty(key, createLogicalAndOperator(row.slice(1))));
+        acc.push(t.objectProperty(key, createLogicalAndExpression(row.slice(1))));
         return acc;
       }, []);
 
@@ -81,7 +81,7 @@ function combineFromArray(arr) {
       }
 
       // If the size is the same, use the original
-      const original = createLogicalAndOperator(group[0]);
+      const original = createLogicalAndExpression(group[0]);
       const a = generate(original, { compact: true }).code;
       const b = generate(lookupExpression, { compact: true }).code;
       return a.length <= b.length ? original : lookupExpression;

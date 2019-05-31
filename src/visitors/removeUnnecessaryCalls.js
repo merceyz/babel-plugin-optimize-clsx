@@ -1,5 +1,5 @@
 import * as t from '@babel/types';
-import { isSafeConditional } from '../utils/helpers';
+import { isSafeConditionalExpression } from '../utils/helpers';
 
 const transforms = [
   function noArgumentsToString(args) {
@@ -15,7 +15,7 @@ const transforms = [
   },
 
   function singleSafeConditional(args) {
-    if (args.length === 1 && isSafeConditional(args[0])) {
+    if (args.length === 1 && isSafeConditionalExpression(args[0])) {
       return args[0];
     }
   },
@@ -25,7 +25,7 @@ const transforms = [
 
     const [arg1, arg2] = args;
 
-    if (isSafeConditional(arg1) && isSafeConditional(arg2)) {
+    if (isSafeConditionalExpression(arg1) && isSafeConditionalExpression(arg2)) {
       const newCond = t.conditionalExpression(
         arg1.test,
         t.stringLiteral(arg1.consequent.value + ' '),
@@ -43,7 +43,7 @@ const transforms = [
 
     if (
       (t.isStringLiteral(arg1) || t.isStringLiteral(arg2)) &&
-      (isSafeConditional(arg1) || isSafeConditional(arg2))
+      (isSafeConditionalExpression(arg1) || isSafeConditionalExpression(arg2))
     ) {
       const string = t.isStringLiteral(arg1) ? arg1 : arg2;
       const conditional = t.isStringLiteral(arg2) ? arg1 : arg2;
