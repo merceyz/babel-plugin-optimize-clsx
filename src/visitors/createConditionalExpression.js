@@ -12,10 +12,7 @@ const visitor = {
     path.node.arguments = combine(path.node.arguments);
 
     function combine(args) {
-      const [match, noMatch] = _.partition(
-        args,
-        item => t.isLogicalExpression(item) && helpers.isAllLogicalAndOperators(item),
-      );
+      const [match, noMatch] = _.partition(args, helpers.isNestedLogicalAndExpression);
 
       if (match.length === 0) return noMatch;
 

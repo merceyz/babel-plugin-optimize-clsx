@@ -13,13 +13,18 @@ export function flattenLogicalOperator(node) {
   return [node];
 }
 
-export function isAllLogicalAndOperators(node) {
-  if (t.isLogicalExpression(node)) {
-    if (node.operator !== '&&') {
+export function isNestedLogicalAndExpression(node) {
+  if (!t.isLogicalExpression(node, { operator: '&&' })) {
+    return false;
+  }
+
+  let temp = node.left;
+  while (t.isLogicalExpression(temp)) {
+    if (temp.operator !== '&&') {
       return false;
     }
 
-    return isAllLogicalAndOperators(node.left);
+    temp = temp.left;
   }
 
   return true;

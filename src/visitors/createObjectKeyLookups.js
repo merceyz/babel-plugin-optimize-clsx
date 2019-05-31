@@ -4,8 +4,7 @@ import {
   hashNode,
   flattenLogicalOperator,
   createLogicalAndOperator,
-  isAllLogicalAndOperators,
-  dumpData,
+  isNestedLogicalAndExpression,
 } from '../utils/helpers';
 import generate from '@babel/generator';
 
@@ -19,7 +18,7 @@ function combineFromArray(arr) {
     return checkItem(itm);
 
     function checkItem(item) {
-      if (t.isLogicalExpression(item) && isAllLogicalAndOperators(item)) {
+      if (isNestedLogicalAndExpression(item)) {
         return checkItem(item.left);
       }
 

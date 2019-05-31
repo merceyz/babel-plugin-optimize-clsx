@@ -12,10 +12,7 @@ const visitor = {
     // Not enough arguments to optimize
     if (path.node.arguments.length < 2) return;
 
-    const [match, noMatch] = _.partition(
-      path.node.arguments,
-      item => t.isLogicalExpression(item) && helpers.isAllLogicalAndOperators(item),
-    );
+    const [match, noMatch] = _.partition(path.node.arguments, helpers.isNestedLogicalAndExpression);
 
     // Not enough arguments to optimize
     if (match.length < 2) return;

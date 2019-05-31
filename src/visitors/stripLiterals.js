@@ -9,10 +9,7 @@ const visitor = {
       return;
     }
 
-    const [match, noMatch] = _.partition(
-      path.node.arguments,
-      item => t.isLogicalExpression(item) && helpers.isAllLogicalAndOperators(item),
-    );
+    const [match, noMatch] = _.partition(path.node.arguments, helpers.isNestedLogicalAndExpression);
 
     if (match.length === 0) return;
 
