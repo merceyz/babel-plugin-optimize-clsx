@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.2.0](https://github.com/merceyz/babel-plugin-optimize-clsx/compare/v2.1.0...v2.2.0) (2019-05-31)
+
+### Features
+
+- **createlookup:** handle multiple checks ([950dd82](https://github.com/merceyz/babel-plugin-optimize-clsx/commit/950dd82))
+- create object key lookups ([0630c91](https://github.com/merceyz/babel-plugin-optimize-clsx/commit/0630c91))
+- **combinestrings:** handle strings in arrays ([62c4ce9](https://github.com/merceyz/babel-plugin-optimize-clsx/commit/62c4ce9))
+- **removecalls:** handle nested conditional expressions ([2110589](https://github.com/merceyz/babel-plugin-optimize-clsx/commit/2110589))
+- **removecalls:** handle single logical expression ([0c453b3](https://github.com/merceyz/babel-plugin-optimize-clsx/commit/0c453b3))
+- **removecalls:** handle string and logical expression as argument ([2b59da8](https://github.com/merceyz/babel-plugin-optimize-clsx/commit/2b59da8))
+
+### Tests
+
+- remove retainLines ([07dcd92](https://github.com/merceyz/babel-plugin-optimize-clsx/commit/07dcd92))
+- test:dev should ignore output ([eea4081](https://github.com/merceyz/babel-plugin-optimize-clsx/commit/eea4081))
+
 ## [2.1.0](https://github.com/merceyz/babel-plugin-optimize-clsx/compare/v2.0.0...v2.1.0) (2019-05-27)
 
 ### Bug Fixes
