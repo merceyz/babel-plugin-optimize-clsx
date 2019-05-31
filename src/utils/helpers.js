@@ -5,12 +5,19 @@ import generate from '@babel/generator';
 import _ from 'lodash';
 import hash from 'object-hash';
 
-export function flattenLogicalExpression(node) {
-  if (t.isLogicalExpression(node)) {
-    return [...flattenLogicalExpression(node.left), node.right];
-  }
+export function flattenLogicalExpression(rootNode) {
+  const result = [];
+  checkNode(rootNode);
+  return result;
 
-  return [node];
+  function checkNode(node) {
+    if (t.isLogicalExpression(node)) {
+      checkNode(node.left);
+      result.push(node.right);
+    } else {
+      result.push(node);
+    }
+  }
 }
 
 export function isNestedLogicalAndExpression(node) {
