@@ -42,7 +42,15 @@ const visitor = {
       .filter(expression => expression.length !== 0)
       .map(helpers.createLogicalAndExpression);
 
-    path.node.arguments = [...noMatch, ...result];
+    const rest = noMatch.filter(item => {
+      if (t.isStringLiteral(item) && item.value.length === 0) {
+        return false;
+      }
+
+      return true;
+    });
+
+    path.node.arguments = [...rest, ...result];
   },
 };
 
