@@ -9,7 +9,7 @@ const transforms = [
   },
 
   function singleStringLiteral(args) {
-    if (args.length === 1 && t.isStringLiteral(args[0])) {
+    if (args.length === 1 && (t.isStringLiteral(args[0]) || t.isTemplateLiteral(args[0]))) {
       return args[0];
     }
   },
