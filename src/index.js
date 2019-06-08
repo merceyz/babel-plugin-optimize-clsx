@@ -8,9 +8,11 @@ import combineArguments from './visitors/combineArguments';
 import createConditionalExpression from './visitors/createConditionalExpression';
 import removeUnnecessaryCalls from './visitors/removeUnnecessaryCalls';
 import createObjectKeyLookups from './visitors/createObjectKeyLookups';
+import collectCalls from './visitors/collectCalls';
 
 const visitors = [
   findFunctionNames,
+  collectCalls,
   extractObjectProperties,
   propTypes,
   stripLiterals,

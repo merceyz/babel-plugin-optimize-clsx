@@ -179,3 +179,11 @@ const x = 'foo bar';
 const y = foo === 'a' ? 'classA' : 'classB';
 const z = (foo === 'a' ? 'classA ' : 'classB ') + (bar === 'c' ? 'classC' : 'classD');
 ```
+
+---
+
+| Name           | Type      | Default value |
+| -------------- | --------- | ------------- |
+| `collectCalls` | `boolean` | `false`       |
+
+Writes all function calls, before they are optimized, to a file. Used to help test the plugin on repositories.

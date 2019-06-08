@@ -3,6 +3,7 @@ export function getOptions(options) {
     libraries: ['clsx', 'classnames'],
     functionNames: [],
     removeUnnecessaryCalls: true,
+    collectCalls: false,
   };
   return { ...DefaultSettings, ...options };
 }
