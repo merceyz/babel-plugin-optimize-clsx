@@ -16,6 +16,7 @@ function format(code) {
 const options = {
   pluginName: 'optimize-clsx',
   plugin: optimizeClsx,
+  endOfLine: 'preserve',
   babelOptions: {
     babelrc: false,
     configFile: false,
