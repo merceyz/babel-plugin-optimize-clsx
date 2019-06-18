@@ -1,4 +1,5 @@
 clsx(
+  'foo',
   classes.root,
   !print && 'datatables-noprint',
   {
