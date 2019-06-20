@@ -1,6 +1,7 @@
 import * as t from '@babel/types';
 import _ from 'lodash';
 import * as helpers from '../utils/helpers';
+import { isStringLikeEmpty } from '../utils/strings';
 
 const visitor = {
   CallExpression(path) {
@@ -10,8 +11,6 @@ const visitor = {
     }
 
     const [match, noMatch] = _.partition(path.node.arguments, helpers.isNestedLogicalAndExpression);
-
-    if (match.length === 0) return;
 
     const result = match
       .map(helpers.flattenLogicalExpression)
@@ -42,13 +41,33 @@ const visitor = {
       .filter(expression => expression.length !== 0)
       .map(helpers.createLogicalAndExpression);
 
-    const rest = noMatch.filter(item => {
-      if (t.isStringLiteral(item) && item.value.length === 0) {
-        return false;
-      }
+    const rest = noMatch
+      .map(item => {
+        if (isStringLikeEmpty(item)) {
+          return false;
+        }
 
-      return true;
-    });
+        if (t.isConditionalExpression(item)) {
+          if (t.isNullLiteral(item.consequent)) {
+            item.consequent = t.stringLiteral('');
+          }
+
+          if (t.isNullLiteral(item.alternate)) {
+            item.alternate = t.stringLiteral('');
+          }
+
+          if (t.isIdentifier(item.consequent, { name: 'undefined' })) {
+            item.consequent = t.stringLiteral('');
+          }
+
+          if (t.isIdentifier(item.alternate, { name: 'undefined' })) {
+            item.alternate = t.stringLiteral('');
+          }
+        }
+
+        return item;
+      })
+      .filter(item => item !== false);
 
     path.node.arguments = [...rest, ...result];
   },
