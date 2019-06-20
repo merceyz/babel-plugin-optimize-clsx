@@ -66,7 +66,14 @@ const transforms = [
     if (args.length !== 1) return;
 
     const [arg] = args;
-    if (t.isLogicalExpression(arg, { operator: '&&' }) && isStringLike(arg.right)) {
+    if (
+      t.isLogicalExpression(arg, { operator: '&&' }) &&
+      (isStringLike(arg.right) ||
+        isSafeConditionalExpression(arg.right) ||
+        (t.isBinaryExpression(arg.right, { operator: '+' }) &&
+          isStringLike(arg.right.left) &&
+          isSafeConditionalExpression(arg.right.right)))
+    ) {
       return t.conditionalExpression(arg.left, arg.right, t.stringLiteral(''));
     } else if (t.isLogicalExpression(arg, { operator: '||' }) && isStringLike(arg.right)) {
       // Assume that arg.left returns a string value
@@ -96,12 +103,27 @@ const transforms = [
   },
 ];
 
+const arrayVisitor = {
+  ArrayExpression(path) {
+    for (const t of transforms) {
+      const result = t(path.node.elements);
+
+      if (result !== undefined) {
+        path.replaceWith(result);
+        break;
+      }
+    }
+  },
+};
+
 const visitor = {
   CallExpression(path) {
     const c = path.node.callee;
     if (!t.isIdentifier(c) || !this.options.functionNames.includes(c.name)) {
       return;
     }
+
+    path.traverse(arrayVisitor);
 
     for (const t of transforms) {
       const result = t(path.node.arguments);
