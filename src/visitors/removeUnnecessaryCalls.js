@@ -1,5 +1,6 @@
 import * as t from '@babel/types';
 import { isSafeConditionalExpression } from '../utils/helpers';
+import { isStringLike, combineStringLike, isStringLikeEmpty } from '../utils/strings';
 
 const transforms = [
   function noArgumentsToString(args) {
@@ -9,7 +10,7 @@ const transforms = [
   },
 
   function singleStringLiteral(args) {
-    if (args.length === 1 && (t.isStringLiteral(args[0]) || t.isTemplateLiteral(args[0]))) {
+    if (args.length === 1 && isStringLike(args[0])) {
       return args[0];
     }
   },
@@ -25,11 +26,11 @@ const transforms = [
 
     const [arg1, arg2] = args;
 
-    if (isSafeConditionalExpression(arg1) && isSafeConditionalExpression(arg2)) {
+    if (args.every(isSafeConditionalExpression)) {
       const newCond = t.conditionalExpression(
         arg1.test,
-        t.stringLiteral(arg1.consequent.value + ' '),
-        t.stringLiteral(arg1.alternate.value + ' '),
+        combineStringLike(arg1.consequent, t.stringLiteral('')),
+        combineStringLike(arg1.alternate, t.stringLiteral('')),
       );
 
       return t.binaryExpression('+', newCond, arg2);
@@ -41,14 +42,23 @@ const transforms = [
 
     const [arg1, arg2] = args;
 
-    if (
-      (t.isStringLiteral(arg1) || t.isStringLiteral(arg2)) &&
-      (isSafeConditionalExpression(arg1) || isSafeConditionalExpression(arg2))
-    ) {
-      const string = t.isStringLiteral(arg1) ? arg1 : arg2;
-      const conditional = t.isStringLiteral(arg2) ? arg1 : arg2;
+    if (args.some(isStringLike) && args.some(isSafeConditionalExpression)) {
+      const string = isStringLike(arg1) ? arg1 : arg2;
+      const conditional = isStringLike(arg2) ? arg1 : arg2;
 
-      return t.binaryExpression('+', t.stringLiteral(string.value + ' '), conditional);
+      if (isStringLikeEmpty(conditional.consequent) || isStringLikeEmpty(conditional.alternate)) {
+        return t.binaryExpression(
+          '+',
+          string,
+          t.conditionalExpression(
+            conditional.test,
+            combineStringLike(t.stringLiteral(''), conditional.consequent),
+            combineStringLike(t.stringLiteral(''), conditional.alternate),
+          ),
+        );
+      }
+
+      return t.binaryExpression('+', combineStringLike(string, t.stringLiteral('')), conditional);
     }
   },
 
@@ -56,9 +66,9 @@ const transforms = [
     if (args.length !== 1) return;
 
     const [arg] = args;
-    if (t.isLogicalExpression(arg, { operator: '&&' }) && t.isStringLiteral(arg.right)) {
+    if (t.isLogicalExpression(arg, { operator: '&&' }) && isStringLike(arg.right)) {
       return t.conditionalExpression(arg.left, arg.right, t.stringLiteral(''));
-    } else if (t.isLogicalExpression(arg, { operator: '||' }) && t.isStringLiteral(arg.right)) {
+    } else if (t.isLogicalExpression(arg, { operator: '||' }) && isStringLike(arg.right)) {
       // Assume that arg.left returns a string value
       return arg;
     }
@@ -69,16 +79,16 @@ const transforms = [
 
     const [arg1, arg2] = args;
     if (
-      t.isStringLiteral(arg1) &&
+      isStringLike(arg1) &&
       t.isLogicalExpression(arg2, { operator: '&&' }) &&
-      t.isStringLiteral(arg2.right)
+      isStringLike(arg2.right)
     ) {
       return t.binaryExpression(
         '+',
         arg1,
         t.conditionalExpression(
           arg2.left,
-          t.stringLiteral(' ' + arg2.right.value),
+          combineStringLike(t.stringLiteral(''), arg2.right),
           t.stringLiteral(''),
         ),
       );

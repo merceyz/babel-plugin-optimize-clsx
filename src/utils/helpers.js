@@ -4,6 +4,7 @@ import path from 'path';
 import generate from '@babel/generator';
 import _ from 'lodash';
 import hash from 'object-hash';
+import { isStringLike } from './strings';
 
 export function flattenLogicalExpression(rootNode) {
   const result = [];
@@ -130,22 +131,13 @@ export function isSafeConditionalExpression(node) {
 
   const { consequent, alternate } = node;
 
-  if (
-    t.isStringLiteral(consequent) &&
-    t.isStringLiteral(alternate) &&
-    consequent.value.length > 0 &&
-    alternate.value.length > 0
-  ) {
+  if (isStringLike(consequent) && isStringLike(alternate)) {
     return true;
   }
 
   if (
-    (t.isStringLiteral(consequent) &&
-      consequent.value.length > 0 &&
-      isSafeConditionalExpression(alternate)) ||
-    (t.isStringLiteral(alternate) &&
-      alternate.value.length > 0 &&
-      isSafeConditionalExpression(consequent))
+    (isStringLike(consequent) && isSafeConditionalExpression(alternate)) ||
+    (isStringLike(alternate) && isSafeConditionalExpression(consequent))
   ) {
     return true;
   }
