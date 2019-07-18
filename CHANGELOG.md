@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.3.0](https://github.com/merceyz/babel-plugin-optimize-clsx/compare/v2.2.0...v2.3.0) (2019-07-18)
+
+### Bug Fixes
+
+- handle template and string literals correctly ([f90ddaf](https://github.com/merceyz/babel-plugin-optimize-clsx/commit/f90ddaf))
+
+### Build System
+
+- rimraf dist before each build ([d3f9f1f](https://github.com/merceyz/babel-plugin-optimize-clsx/commit/d3f9f1f))
+
+### Features
+
+- **removecalls:** handle arrays ([524fa51](https://github.com/merceyz/babel-plugin-optimize-clsx/commit/524fa51))
+- **stripliterals:** handle conditionalExpressions ([18e35ba](https://github.com/merceyz/babel-plugin-optimize-clsx/commit/18e35ba))
+- collect calls before optimizing ([c2537e5](https://github.com/merceyz/babel-plugin-optimize-clsx/commit/c2537e5))
+- **combinestrings:** support template literals ([3d63596](https://github.com/merceyz/babel-plugin-optimize-clsx/commit/3d63596))
+- **removecalls:** handle template literal ([7ccf15f](https://github.com/merceyz/babel-plugin-optimize-clsx/commit/7ccf15f))
+- **stripliterals:** remove empty strings ([8672550](https://github.com/merceyz/babel-plugin-optimize-clsx/commit/8672550))
+
+### Tests
+
+- **stripliterals:** improve coverage ([8b5c717](https://github.com/merceyz/babel-plugin-optimize-clsx/commit/8b5c717))
+
 ## [2.2.0](https://github.com/merceyz/babel-plugin-optimize-clsx/compare/v2.1.0...v2.2.0) (2019-05-31)
 
 ### Features
