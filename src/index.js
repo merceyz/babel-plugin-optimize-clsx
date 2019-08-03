@@ -9,9 +9,10 @@ import createConditionalExpression from './visitors/createConditionalExpression'
 import removeUnnecessaryCalls from './visitors/removeUnnecessaryCalls';
 import createObjectKeyLookups from './visitors/createObjectKeyLookups';
 import collectCalls from './visitors/collectCalls';
+import combineVisitors from './combineVisitors';
+import { performance } from 'perf_hooks';
 
-const visitors = [
-  findFunctionNames,
+const visitors = combineVisitors([
   collectCalls,
   extractObjectProperties,
   propTypes,
@@ -22,24 +23,37 @@ const visitors = [
   removeUnnecessaryCalls,
   createObjectKeyLookups,
   (path, options) => findFunctionNames(path, { ...options, _removeUnusedImports: true }),
-];
+]);
+
+let totalTime = 0;
+let totalCount = 0;
+function profile(func) {
+  const before = performance.now();
+  func();
+  const after = performance.now();
+  totalTime += after - before;
+  console.log('Run: %d - Total time: %d', ++totalCount, totalTime);
+}
 
 export default () => ({
   visitor: {
     Program(path, state) {
       const options = getOptions(state.opts);
+      findFunctionNames(path, options);
 
-      try {
-        for (const visitor of visitors) {
-          visitor(path, options);
-
-          if (options.functionNames.length === 0) {
-            return;
-          }
-        }
-      } catch (err) {
-        throw path.buildCodeFrameError(err);
+      if (options.functionNames.length === 0) {
+        return;
       }
+
+      profile(() => {
+        try {
+          for (const visitor of visitors) {
+            visitor(path, options);
+          }
+        } catch (err) {
+          throw err;
+        }
+      });
     },
   },
 });

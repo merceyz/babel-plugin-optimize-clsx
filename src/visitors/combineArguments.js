@@ -2,13 +2,8 @@ import * as t from '@babel/types';
 import _ from 'lodash';
 import * as helpers from '../utils/helpers';
 
-const visitor = {
+export default {
   CallExpression(path) {
-    const c = path.node.callee;
-    if (!t.isIdentifier(c) || !this.options.functionNames.includes(c.name)) {
-      return;
-    }
-
     // Not enough arguments to optimize
     if (path.node.arguments.length < 2) return;
 
@@ -99,8 +94,4 @@ const visitor = {
       }
     }
   },
-};
-
-export default (path, options) => {
-  path.traverse(visitor, { options });
 };

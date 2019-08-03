@@ -101,18 +101,9 @@ const arrayVisitor = {
   },
 };
 
-const visitor = {
+export default {
   CallExpression(path) {
-    const c = path.node.callee;
-    if (!t.isIdentifier(c) || !this.options.functionNames.includes(c.name)) {
-      return;
-    }
-
     path.traverse(arrayVisitor);
     path.node.arguments = combineFromArray(path.node.arguments);
   },
-};
-
-export default (path, options) => {
-  path.traverse(visitor, { options });
 };
