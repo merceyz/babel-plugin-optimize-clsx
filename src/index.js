@@ -10,7 +10,6 @@ import removeUnnecessaryCalls from './visitors/removeUnnecessaryCalls';
 import createObjectKeyLookups from './visitors/createObjectKeyLookups';
 import collectCalls from './visitors/collectCalls';
 import combineVisitors from './combineVisitors';
-import { performance } from 'perf_hooks';
 
 const visitors = combineVisitors([
   collectCalls,
@@ -25,16 +24,6 @@ const visitors = combineVisitors([
   (path, options) => findFunctionNames(path, { ...options, _removeUnusedImports: true }),
 ]);
 
-let totalTime = 0;
-let totalCount = 0;
-function profile(func) {
-  const before = performance.now();
-  func();
-  const after = performance.now();
-  totalTime += after - before;
-  console.log('Run: %d - Total time: %d', ++totalCount, totalTime);
-}
-
 export default () => ({
   visitor: {
     Program(path, state) {
@@ -45,15 +34,13 @@ export default () => ({
         return;
       }
 
-      profile(() => {
-        try {
-          for (const visitor of visitors) {
-            visitor(path, options);
-          }
-        } catch (err) {
-          throw err;
+      try {
+        for (const visitor of visitors) {
+          visitor(path, options);
         }
-      });
+      } catch (err) {
+        throw err;
+      }
     },
   },
 });
