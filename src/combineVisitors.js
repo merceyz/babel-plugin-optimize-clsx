@@ -72,8 +72,9 @@ export default function combineVisitors(rawVisitors) {
 
             for (const x of visitorLookup[key]) {
               x.call(this, path, ...args);
-              if (path.shouldSkip) {
-                // If the visitor calls path.skip, skip all other visitors in the group
+              // If the visitor calls path.skip, path.remove, or the type changes (path.replace*)
+              // then skip all other visitors in the group
+              if (path.shouldSkip || path.type !== key) {
                 return;
               }
             }
