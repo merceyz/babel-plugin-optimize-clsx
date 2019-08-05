@@ -1,12 +1,7 @@
 import * as t from '@babel/types';
 
-const visitor = {
+export default {
   CallExpression(path) {
-    const c = path.node.callee;
-    if (!t.isIdentifier(c) || !this.options.functionNames.includes(c.name)) {
-      return;
-    }
-
     const args = path.node.arguments;
     const newArguments = [];
 
@@ -28,8 +23,4 @@ const visitor = {
 
     path.node.arguments = newArguments;
   },
-};
-
-export default (path, options) => {
-  path.traverse(visitor, { options });
 };

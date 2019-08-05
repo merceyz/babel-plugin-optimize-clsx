@@ -105,8 +105,8 @@ const transforms = [
 
 const arrayVisitor = {
   ArrayExpression(path) {
-    for (const t of transforms) {
-      const result = t(path.node.elements);
+    for (const tr of transforms) {
+      const result = tr(path.node.elements);
 
       if (result !== undefined) {
         path.replaceWith(result);
@@ -116,30 +116,22 @@ const arrayVisitor = {
   },
 };
 
-const visitor = {
+export default {
   CallExpression(path) {
-    const c = path.node.callee;
-    if (!t.isIdentifier(c) || !this.options.functionNames.includes(c.name)) {
+    if (!this.options.removeUnnecessaryCalls) {
       return;
     }
 
     path.traverse(arrayVisitor);
 
-    for (const t of transforms) {
-      const result = t(path.node.arguments);
+    for (const tr of transforms) {
+      const result = tr(path.node.arguments);
 
       if (result !== undefined) {
         path.replaceWith(result);
+        path.skip();
         break;
       }
     }
   },
-};
-
-export default (path, options) => {
-  if (!options.removeUnnecessaryCalls) {
-    return;
-  }
-
-  path.traverse(visitor, { options });
 };

@@ -1,4 +1,3 @@
-import * as t from '@babel/types';
 import _ from 'lodash';
 import { isStringLike, combineStringLike } from '../utils/strings';
 
@@ -27,18 +26,9 @@ const arrayVisitor = {
   },
 };
 
-const visitor = {
+export default {
   CallExpression(path) {
-    const c = path.node.callee;
-    if (!t.isIdentifier(c) || !this.options.functionNames.includes(c.name)) {
-      return;
-    }
-
     path.node.arguments = combineStringsInArray(path.node.arguments);
     path.traverse(arrayVisitor);
   },
-};
-
-export default (path, options) => {
-  path.traverse(visitor, { options });
 };

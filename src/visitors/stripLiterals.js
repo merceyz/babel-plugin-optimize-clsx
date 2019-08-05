@@ -3,13 +3,8 @@ import _ from 'lodash';
 import * as helpers from '../utils/helpers';
 import { isStringLikeEmpty } from '../utils/strings';
 
-const visitor = {
+export default {
   CallExpression(path) {
-    const c = path.node.callee;
-    if (!t.isIdentifier(c) || !this.options.functionNames.includes(c.name)) {
-      return;
-    }
-
     const [match, noMatch] = _.partition(path.node.arguments, helpers.isNestedLogicalAndExpression);
 
     const result = match
@@ -71,8 +66,4 @@ const visitor = {
 
     path.node.arguments = [...rest, ...result];
   },
-};
-
-export default (path, options) => {
-  path.traverse(visitor, { options });
 };

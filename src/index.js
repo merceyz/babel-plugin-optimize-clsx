@@ -9,9 +9,9 @@ import createConditionalExpression from './visitors/createConditionalExpression'
 import removeUnnecessaryCalls from './visitors/removeUnnecessaryCalls';
 import createObjectKeyLookups from './visitors/createObjectKeyLookups';
 import collectCalls from './visitors/collectCalls';
+import combineVisitors from './combineVisitors';
 
-const visitors = [
-  findFunctionNames,
+const visitors = combineVisitors([
   collectCalls,
   extractObjectProperties,
   propTypes,
@@ -22,23 +22,24 @@ const visitors = [
   removeUnnecessaryCalls,
   createObjectKeyLookups,
   (path, options) => findFunctionNames(path, { ...options, _removeUnusedImports: true }),
-];
+]);
 
 export default () => ({
   visitor: {
     Program(path, state) {
       const options = getOptions(state.opts);
+      findFunctionNames(path, options);
+
+      if (options.functionNames.length === 0) {
+        return;
+      }
 
       try {
         for (const visitor of visitors) {
           visitor(path, options);
-
-          if (options.functionNames.length === 0) {
-            return;
-          }
         }
       } catch (err) {
-        throw path.buildCodeFrameError(err);
+        throw err;
       }
     },
   },

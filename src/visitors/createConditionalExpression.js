@@ -2,13 +2,8 @@ import * as t from '@babel/types';
 import _ from 'lodash';
 import * as helpers from '../utils/helpers';
 
-const visitor = {
+export default {
   CallExpression(path) {
-    const c = path.node.callee;
-    if (!t.isIdentifier(c) || !this.options.functionNames.includes(c.name)) {
-      return;
-    }
-
     path.node.arguments = combine(path.node.arguments);
 
     function combine(args) {
@@ -97,8 +92,4 @@ const visitor = {
       return [...result, ...operators.map(helpers.createLogicalAndExpression)];
     }
   },
-};
-
-export default (path, options) => {
-  path.traverse(visitor, { options });
 };
