@@ -138,6 +138,7 @@ const functionVisitor = {
         }
 
         path.traverse(replaceVisitor, { types: propType.values });
+        path.skip();
       }
     }
   },
