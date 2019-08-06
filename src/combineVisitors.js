@@ -57,10 +57,13 @@ export default function combineVisitors(visitors) {
             combinedVisitors = {
               ...combinedVisitors,
               [key](path, ...args) {
+                let functionName = null;
                 // Skip CallExpression visitors if it isn't clsx, classnames, etc.
                 if (key === 'CallExpression') {
                   const c = path.node.callee;
-                  if (!t.isIdentifier(c) || !this.options.functionNames.includes(c.name)) {
+                  if (t.isIdentifier(c) && this.options.functionNames.includes(c.name)) {
+                    functionName = c.name;
+                  } else {
                     return;
                   }
                 }
@@ -70,6 +73,17 @@ export default function combineVisitors(visitors) {
                   // If the visitor calls path.skip, path.remove, or the type changes (path.replace*)
                   // then skip all other visitors in the group
                   if (path.shouldSkip || path.type !== key) {
+                    // If the function was a match in options.functionNames and the type changed,
+                    // decrement the counter so that the import can be removed without crawling the AST
+                    if (
+                      functionName !== null &&
+                      key === 'CallExpression' &&
+                      path.type !== 'CallExpression' &&
+                      this.functionCounters !== undefined &&
+                      this.functionCounters[functionName]
+                    ) {
+                      this.functionCounters[functionName] -= 1;
+                    }
                     return;
                   }
                 }
@@ -79,7 +93,10 @@ export default function combineVisitors(visitors) {
         }
 
         return (path, options) => {
-          path.traverse(combinedVisitors, { options });
+          path.traverse(combinedVisitors, {
+            options,
+            functionCounters: path.functionCounters,
+          });
         };
       })
   );

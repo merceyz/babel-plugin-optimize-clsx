@@ -1,4 +1,5 @@
 import * as t from '@babel/types';
+import _ from 'lodash';
 
 export default (path, options) => {
   if (
@@ -6,6 +7,29 @@ export default (path, options) => {
     (options._removeUnusedImports && !options.removeUnnecessaryCalls)
   ) {
     return;
+  }
+
+  if (options._removeUnusedImports && options.removeUnnecessaryCalls) {
+    _.forOwn(path.functionCounters, (value, key) => {
+      if (value === 0) {
+        path.importPaths[key].remove();
+      }
+    });
+    return;
+  }
+
+  function addNameToState(itemPath, name) {
+    options.functionNames.push(name);
+
+    path.functionCounters = {
+      ...(path.functionCounters || {}),
+      [name]: itemPath.scope.getBinding(name).references,
+    };
+
+    path.importPaths = {
+      ...(path.importPaths || {}),
+      [name]: itemPath,
+    };
   }
 
   path.get('body').forEach(nodePath => {
@@ -18,7 +42,7 @@ export default (path, options) => {
       item.specifiers.length === 1 &&
       t.isImportDefaultSpecifier(item.specifiers[0])
     ) {
-      addOrRemoveNode(nodePath, item.specifiers[0].local.name);
+      addNameToState(nodePath, item.specifiers[0].local.name);
     }
     // const x = require('y');
     else if (t.isVariableDeclaration(item)) {
@@ -32,22 +56,9 @@ export default (path, options) => {
           t.isLiteral(dec.init.arguments[0]) &&
           options.libraries.includes(dec.init.arguments[0].value)
         ) {
-          addOrRemoveNode(decPath, dec.id.name);
+          addNameToState(decPath, dec.id.name);
         }
       });
-    }
-
-    function addOrRemoveNode(itemPath, name) {
-      if (!options._removeUnusedImports) {
-        options.functionNames.push(name);
-        return;
-      }
-
-      // Need to refresh references
-      itemPath.scope.crawl();
-      if (!itemPath.scope.getBinding(name).referenced) {
-        itemPath.remove();
-      }
     }
   });
 };
