@@ -104,16 +104,18 @@ export function dumpData(obj, name = 'dump', generateCode = false) {
 }
 
 export function compareNodes(obj1, obj2) {
-  if (t.isLiteral(obj1) && t.isLiteral(obj2)) {
+  if (obj1.type !== obj2.type) {
+    return false;
+  } else if (t.isLiteral(obj1)) {
     return obj1.value === obj2.value;
-  } else if (t.isMemberExpression(obj1) && t.isMemberExpression(obj2)) {
+  } else if (t.isMemberExpression(obj1)) {
     return compareNodes(obj1.object, obj2.object) && compareNodes(obj1.property, obj2.property);
-  } else if (t.isIdentifier(obj1) && t.isIdentifier(obj2)) {
+  } else if (t.isIdentifier(obj1)) {
     return obj1.name === obj2.name;
   }
 
   return _.isEqualWith(obj1, obj2, (v1, v2, key) => {
-    return key === 'start' || key === 'end' || key === 'loc' ? true : undefined;
+    return key === 'type' || key === 'start' || key === 'end' || key === 'loc' ? true : undefined;
   });
 }
 
