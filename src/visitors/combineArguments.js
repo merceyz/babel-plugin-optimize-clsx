@@ -46,7 +46,7 @@ export default {
 
       if (node.next !== undefined) {
         const r = convertToAST(node.next);
-        _.isArray(r) ? result.push(...r) : result.push(r);
+        Array.isArray(r) ? result.push(...r) : result.push(r);
       }
 
       return result;
@@ -72,7 +72,7 @@ export default {
       newNode.next = checkSub(newNode.next);
 
       const child = checkSub(newNode.child);
-      if (_.isArray(child)) {
+      if (Array.isArray(child)) {
         newNode.child = child.length === 1 ? child[0] : t.arrayExpression(child);
       } else {
         newNode.child = child;

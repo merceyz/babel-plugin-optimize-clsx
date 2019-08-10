@@ -46,7 +46,7 @@ const functionVisitor = {
         getObjectPattern(node.params[0], null);
 
         function getObjectPattern(item, matcher) {
-          if (_.isArray(item)) {
+          if (Array.isArray(item)) {
             for (const obj of item) {
               getObjectPattern(obj, matcher);
             }
