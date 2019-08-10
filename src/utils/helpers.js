@@ -41,34 +41,27 @@ export function isNestedLogicalAndExpression(node) {
 export function getMostFrequentNode(operators) {
   let maxNode = null;
   let maxCount = 0;
+  let operators_n = operators.length;
 
-  operators.forEach((row, row_index) => {
-    row.forEach((col, col_index) => {
-      if (col_index === row.length - 1) return;
+  for (let y = 0, y_n = operators_n - 1; y < y_n; y++) {
+    for (let x = 0, row = operators[y], x_n = row.length - 1; x < x_n; x++) {
+      let col = row[x];
       let count = 0;
 
-      operators.forEach((row2, row2_index) => {
-        row2.forEach((col2, col2_index) => {
-          // Don't compare against the last item (class) or row, col
-          if (
-            col2_index === row2.length - 1 ||
-            (row_index === row2_index && col_index === col2_index)
-          ) {
-            return;
-          }
-
-          if (compareNodes(col, col2)) {
+      for (let y2 = y + 1; y2 < operators_n; y2++) {
+        for (let x2 = 0, row2 = operators[y2]; x2 < row2.length - 1; x2++) {
+          if (compareNodes(col, row2[x2])) {
             count += 1;
           }
-        });
-      });
+        }
+      }
 
       if (count > maxCount) {
         maxNode = col;
         maxCount = count;
       }
-    });
-  });
+    }
+  }
 
   return maxNode;
 }
