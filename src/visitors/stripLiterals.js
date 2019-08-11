@@ -20,18 +20,12 @@ export default {
           return true;
         }),
       )
-      .map(expression =>
-        expression.some(item => {
-          if (t.isBooleanLiteral(item, { value: false })) {
-            return true;
-          }
-          if (t.isStringLiteral(item) && item.value.length === 0) {
-            return true;
-          }
-          return false;
-        })
-          ? []
-          : expression,
+      // Remove expressions that will always be false
+      .filter(
+        expression =>
+          !expression.some(
+            item => t.isBooleanLiteral(item, { value: false }) || isStringLikeEmpty(item),
+          ),
       )
       .filter(expression => expression.length !== 0)
       .map(helpers.createLogicalAndExpression);
