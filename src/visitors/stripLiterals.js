@@ -21,42 +21,24 @@ export default {
         }),
       )
       // Remove expressions that will always be false
-      .filter(
-        expression =>
-          !expression.some(
-            item => t.isBooleanLiteral(item, { value: false }) || isStringLikeEmpty(item),
-          ),
-      )
-      .filter(expression => expression.length !== 0)
+      .filter(expression => !(expression.length === 0 || expression.some(helpers.isNodeFalsy)))
       .map(helpers.createLogicalAndExpression);
 
     const rest = noMatch
       .map(item => {
-        if (isStringLikeEmpty(item)) {
-          return false;
-        }
-
         if (t.isConditionalExpression(item)) {
-          if (t.isNullLiteral(item.consequent)) {
+          if (helpers.isNodeFalsy(item.consequent)) {
             item.consequent = t.stringLiteral('');
           }
 
-          if (t.isNullLiteral(item.alternate)) {
-            item.alternate = t.stringLiteral('');
-          }
-
-          if (t.isIdentifier(item.consequent, { name: 'undefined' })) {
-            item.consequent = t.stringLiteral('');
-          }
-
-          if (t.isIdentifier(item.alternate, { name: 'undefined' })) {
+          if (helpers.isNodeFalsy(item.alternate)) {
             item.alternate = t.stringLiteral('');
           }
         }
 
         return item;
       })
-      .filter(item => item !== false);
+      .filter(item => !helpers.isNodeFalsy(item));
 
     path.node.arguments = [...rest, ...result];
   },

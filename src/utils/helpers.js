@@ -4,7 +4,7 @@ import path from 'path';
 import generate from '@babel/generator';
 import _ from 'lodash';
 import hash from 'object-hash';
-import { isStringLike } from './strings';
+import { isStringLike, isStringLikeEmpty } from './strings';
 
 export function flattenLogicalExpression(rootNode) {
   const result = [];
@@ -145,4 +145,14 @@ export function isSafeConditionalExpression(node) {
 
 export function createLogicalAndExpression(items) {
   return items.reduce((prev, curr) => t.logicalExpression('&&', prev, curr));
+}
+
+export function isNodeFalsy(node) {
+  return (
+    isStringLikeEmpty(node) ||
+    t.isNullLiteral(node) ||
+    t.isIdentifier(node, { name: 'undefined' }) ||
+    t.isBooleanLiteral(node, { value: false }) ||
+    t.isNumericLiteral(node, { value: 0 })
+  );
 }
