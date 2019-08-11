@@ -10,9 +10,11 @@ import removeUnnecessaryCalls from './visitors/removeUnnecessaryCalls';
 import createObjectKeyLookups from './visitors/createObjectKeyLookups';
 import collectCalls from './visitors/collectCalls';
 import combineVisitors from './combineVisitors';
+import flattenArrays from './visitors/flattenArrays';
 
 const visitors = combineVisitors([
   collectCalls,
+  flattenArrays,
   extractObjectProperties,
   propTypes,
   stripLiterals,
