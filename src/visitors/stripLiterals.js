@@ -1,7 +1,7 @@
 import * as t from '@babel/types';
 import _ from 'lodash';
 import * as helpers from '../utils/helpers';
-import { isStringLikeEmpty } from '../utils/strings';
+import { isStringLike, isStringLikeEmpty } from '../utils/strings';
 
 export default {
   CallExpression(path) {
@@ -10,15 +10,15 @@ export default {
     const result = match
       .map(helpers.flattenLogicalExpression)
       .map(expression =>
-        expression.filter((item, index) => {
-          if (t.isBooleanLiteral(item, { value: true })) {
-            return false;
-          }
-          if (index !== expression.length - 1 && t.isStringLiteral(item) && item.value.length > 0) {
-            return false;
-          }
-          return true;
-        }),
+        // Remove values that will always be true
+        expression.filter(
+          (item, index) =>
+            !(
+              t.isBooleanLiteral(item, { value: true }) ||
+              (index !== expression.length - 1 && t.isNumericLiteral(item) && item.value !== 0) ||
+              (index !== expression.length - 1 && isStringLike(item) && !isStringLikeEmpty(item))
+            ),
+        ),
       )
       // Remove expressions that will always be false
       .filter(expression => !(expression.length === 0 || expression.some(helpers.isNodeFalsy)))
