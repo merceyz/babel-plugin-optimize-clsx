@@ -106,12 +106,18 @@ export function compareNodes(obj1, obj2) {
       return obj1.name === obj2.name;
     case 'MemberExpression':
       return compareNodes(obj1.object, obj2.object) && compareNodes(obj1.property, obj2.property);
+    case 'BinaryExpression':
+      return (
+        obj1.operator === obj2.operator &&
+        compareNodes(obj1.left, obj2.left) &&
+        compareNodes(obj1.right, obj2.right)
+      );
     default: {
       if (t.isLiteral(obj1)) {
         return obj1.value === obj2.value;
       }
       return _.isEqualWith(obj1, obj2, (v1, v2, key) =>
-        key === 'type' || key === 'start' || key === 'end' || key === 'loc' ? true : undefined,
+        key === 'start' || key === 'end' || key === 'loc' ? true : undefined,
       );
     }
   }

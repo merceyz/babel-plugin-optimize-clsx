@@ -24,21 +24,7 @@ export default {
       .filter(expression => !(expression.length === 0 || expression.some(helpers.isNodeFalsy)))
       .map(helpers.createLogicalAndExpression);
 
-    const rest = noMatch
-      .map(item => {
-        if (t.isConditionalExpression(item)) {
-          if (helpers.isNodeFalsy(item.consequent)) {
-            item.consequent = t.stringLiteral('');
-          }
-
-          if (helpers.isNodeFalsy(item.alternate)) {
-            item.alternate = t.stringLiteral('');
-          }
-        }
-
-        return item;
-      })
-      .filter(item => !helpers.isNodeFalsy(item));
+    const rest = noMatch.filter(item => !helpers.isNodeFalsy(item));
 
     path.node.arguments = [...rest, ...result];
   },

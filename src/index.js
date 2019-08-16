@@ -11,12 +11,14 @@ import createObjectKeyLookups from './visitors/createObjectKeyLookups';
 import collectCalls from './visitors/collectCalls';
 import combineVisitors from './combineVisitors';
 import flattenArrays from './visitors/flattenArrays';
+import optimizeExpressions from './visitors/optimizeExpressions';
 
 const visitors = combineVisitors([
   collectCalls,
   flattenArrays,
   extractObjectProperties,
   propTypes,
+  optimizeExpressions,
   stripLiterals,
   combineArguments,
   combineStringLiterals,
