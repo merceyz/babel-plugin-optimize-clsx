@@ -40,7 +40,8 @@ export default (path, options) => {
       t.isImportDeclaration(item) &&
       options.libraries.includes(item.source.value) &&
       item.specifiers.length === 1 &&
-      t.isImportDefaultSpecifier(item.specifiers[0])
+      (t.isImportDefaultSpecifier(item.specifiers[0]) ||
+        t.isImportNamespaceSpecifier(item.specifiers[0]))
     ) {
       addNameToState(nodePath, item.specifiers[0].local.name);
     }
