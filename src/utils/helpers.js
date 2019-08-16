@@ -104,14 +104,16 @@ export function compareNodes(obj1, obj2) {
   switch (obj1.type) {
     case 'Identifier':
       return obj1.name === obj2.name;
-    case 'StringLiteral':
-      return obj1.value === obj2.value;
     case 'MemberExpression':
       return compareNodes(obj1.object, obj2.object) && compareNodes(obj1.property, obj2.property);
-    default:
+    default: {
+      if (t.isLiteral(obj1)) {
+        return obj1.value === obj2.value;
+      }
       return _.isEqualWith(obj1, obj2, (v1, v2, key) =>
         key === 'type' || key === 'start' || key === 'end' || key === 'loc' ? true : undefined,
       );
+    }
   }
 }
 
