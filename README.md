@@ -10,6 +10,13 @@ or
 npm install babel-plugin-optimize-clsx --save-dev
 ```
 
+## Requirements
+
+| Name  | Version |
+| ----- | ------- |
+| Babel | ^7.0.0  |
+| Node  | >=8     |
+
 ## Examples
 
 ### Object properties
