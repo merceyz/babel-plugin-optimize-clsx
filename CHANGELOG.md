@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.4.0](https://github.com/merceyz/babel-plugin-optimize-clsx/compare/v2.3.0...v2.4.0) (2019-08-18)
+
+### Bug Fixes
+
+- **helper:** compare literals correctly ([d728a45](https://github.com/merceyz/babel-plugin-optimize-clsx/commit/d728a45))
+- **stripliterals:** handle all falsy values ([721af56](https://github.com/merceyz/babel-plugin-optimize-clsx/commit/721af56))
+- **stripliterals:** handle empty template literals ([1e9295c](https://github.com/merceyz/babel-plugin-optimize-clsx/commit/1e9295c))
+- **stripliterals:** remove more unnecessary truthy values ([98d2a9d](https://github.com/merceyz/babel-plugin-optimize-clsx/commit/98d2a9d))
+
+### Features
+
+- flatten and remove arrays ([5ca8e7a](https://github.com/merceyz/babel-plugin-optimize-clsx/commit/5ca8e7a))
+- optimize expressions ([236071e](https://github.com/merceyz/babel-plugin-optimize-clsx/commit/236071e))
+- support namespace imports ([d6c5597](https://github.com/merceyz/babel-plugin-optimize-clsx/commit/d6c5597))
+
 ## [2.3.0](https://github.com/merceyz/babel-plugin-optimize-clsx/compare/v2.2.0...v2.3.0) (2019-07-18)
 
 ### Bug Fixes
