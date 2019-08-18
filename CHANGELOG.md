@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### [2.4.1](https://github.com/merceyz/babel-plugin-optimize-clsx/compare/v2.4.0...v2.4.1) (2019-08-18)
 
+### Build System
+
+- **babel:** target node 8 ([a888c69](https://github.com/merceyz/babel-plugin-optimize-clsx/commit/a888c69))
+
 ## [2.4.0](https://github.com/merceyz/babel-plugin-optimize-clsx/compare/v2.3.0...v2.4.0) (2019-08-18)
 
 ### Bug Fixes
@@ -13,11 +17,27 @@ All notable changes to this project will be documented in this file. See [standa
 - **stripliterals:** handle empty template literals ([1e9295c](https://github.com/merceyz/babel-plugin-optimize-clsx/commit/1e9295c))
 - **stripliterals:** remove more unnecessary truthy values ([98d2a9d](https://github.com/merceyz/babel-plugin-optimize-clsx/commit/98d2a9d))
 
+### Build System
+
+- **deps:** add babel-plugin-lodash ([cd37d10](https://github.com/merceyz/babel-plugin-optimize-clsx/commit/cd37d10))
+- **deps-dev:** bump husky from 3.0.0 to 3.0.2 ([#3](https://github.com/merceyz/babel-plugin-optimize-clsx/issues/3)) ([de0ff50](https://github.com/merceyz/babel-plugin-optimize-clsx/commit/de0ff50))
+- **deps-dev:** bump rollup from 1.17.0 to 1.19.4 ([#12](https://github.com/merceyz/babel-plugin-optimize-clsx/issues/12)) ([0cb7b7e](https://github.com/merceyz/babel-plugin-optimize-clsx/commit/0cb7b7e))
+- **deps-dev:** bump standard-version from 6.0.1 to 7.0.0 ([#6](https://github.com/merceyz/babel-plugin-optimize-clsx/issues/6)) ([e699d1d](https://github.com/merceyz/babel-plugin-optimize-clsx/commit/e699d1d))
+
 ### Features
 
 - flatten and remove arrays ([5ca8e7a](https://github.com/merceyz/babel-plugin-optimize-clsx/commit/5ca8e7a))
 - optimize expressions ([236071e](https://github.com/merceyz/babel-plugin-optimize-clsx/commit/236071e))
 - support namespace imports ([d6c5597](https://github.com/merceyz/babel-plugin-optimize-clsx/commit/d6c5597))
+
+### Performance Improvements
+
+- **helper:** avoid unnecessary compares ([a5f1312](https://github.com/merceyz/babel-plugin-optimize-clsx/commit/a5f1312))
+- **helper:** compare type of nodes directly ([41ff13f](https://github.com/merceyz/babel-plugin-optimize-clsx/commit/41ff13f))
+- **helper:** use switch statement over if else chain ([b2874ad](https://github.com/merceyz/babel-plugin-optimize-clsx/commit/b2874ad))
+- track removed calls to avoid crawling the AST ([28188a8](https://github.com/merceyz/babel-plugin-optimize-clsx/commit/28188a8))
+- **proptypes:** skip traversing child nodes ([ec883af](https://github.com/merceyz/babel-plugin-optimize-clsx/commit/ec883af))
+- combine visitors ([#8](https://github.com/merceyz/babel-plugin-optimize-clsx/issues/8)) ([d6a9a62](https://github.com/merceyz/babel-plugin-optimize-clsx/commit/d6a9a62))
 
 ## [2.3.0](https://github.com/merceyz/babel-plugin-optimize-clsx/compare/v2.2.0...v2.3.0) (2019-07-18)
 
