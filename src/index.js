@@ -40,7 +40,7 @@ export default () => ({
 
       try {
         for (const visitor of visitors) {
-          visitor(path, options);
+          visitor(path, options, state);
         }
       } catch (err) {
         throw err;

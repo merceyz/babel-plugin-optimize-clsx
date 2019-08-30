@@ -92,8 +92,9 @@ export default function combineVisitors(visitors) {
           });
         }
 
-        return (path, options) => {
+        return (path, options, state) => {
           path.traverse(combinedVisitors, {
+            state,
             options,
             functionCounters: path.functionCounters,
           });

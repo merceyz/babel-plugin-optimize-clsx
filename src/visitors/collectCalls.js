@@ -12,11 +12,19 @@ export default {
     }
 
     if (stream === null) {
-      const filePath = osPath.join(__dirname, 'log.js');
+      const filePath = osPath.join(
+        __dirname,
+        `log-${new Date(Date.now()).toISOString().replace(/:/g, '.')}.js`,
+      );
       stream = fs.createWriteStream(filePath, { flags: 'w' });
       console.log('Writing calls to ' + filePath);
     }
 
-    stream.write(`const x${++count} = ${generate(path.node).code};\n\n`);
+    const location = path.node.loc.start;
+    stream.write(
+      `// ${this.state.filename}:${location.line}:${location.column}\nconst x${++count} = ${
+        generate(path.node).code
+      };\n\n`,
+    );
   },
 };
