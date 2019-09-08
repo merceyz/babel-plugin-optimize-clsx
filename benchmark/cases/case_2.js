@@ -1,4 +1,3 @@
-const clsx = require('clsx');
 const getClassName = require('../getClassName');
 
 const classes = {
@@ -25,9 +24,9 @@ const contained = false;
 const fullWidth = true;
 const disabled = false;
 
-module.exports = [
-  'Extract properties and combine arguments',
-  () => {
+module.exports = {
+  title: 'Extract properties and combine arguments',
+  before(clsx) {
     return clsx(
       classes.root,
       {
@@ -47,28 +46,38 @@ module.exports = [
       classNameProp,
     );
   },
-  () => {
+  after(clsx) {
     return clsx(
       classes.root,
       classNameProp,
       text && [
         classes.text,
-        color === 'primary' && classes.textPrimary,
-        color === 'secondary' && classes.textSecondary,
+        {
+          primary: classes.textPrimary,
+          secondary: classes.textSecondary,
+        }[color],
       ],
       contained && [
         classes.contained,
-        color === 'primary' && classes.containedPrimary,
-        color === 'secondary' && classes.containedSecondary,
-      ],
-      variant === 'outlined' && [
-        classes.outlined,
-        color === 'primary' && classes.outlinedPrimary,
-        color === 'secondary' && classes.outlinedSecondary,
+        {
+          primary: classes.containedPrimary,
+          secondary: classes.containedSecondary,
+        }[color],
       ],
       disabled && classes.disabled,
       fullWidth && classes.fullWidth,
-      color === 'inherit' && classes.colorInherit,
+      {
+        outlined: [
+          classes.outlined,
+          {
+            primary: classes.outlinedPrimary,
+            secondary: classes.outlinedSecondary,
+          }[color],
+        ],
+      }[variant],
+      {
+        inherit: classes.colorInherit,
+      }[color],
     );
   },
-];
+};

@@ -1,4 +1,3 @@
-const clsx = require('clsx');
 const getClassName = require('../getClassName');
 
 const classes = {
@@ -14,9 +13,9 @@ const classes = {
 const variant = 'buffer';
 const color = 'secondary';
 
-module.exports = [
-  'Extract properties, combine arguments, and conditional expression',
-  () => {
+module.exports = {
+  title: 'Extract properties, combine arguments, and conditional expression',
+  before(clsx) {
     return clsx(classes.bar, {
       [classes.barColorPrimary]: color === 'primary' && variant !== 'buffer',
       [classes.colorPrimary]: color === 'primary' && variant === 'buffer',
@@ -26,20 +25,22 @@ module.exports = [
       [classes.bar2Buffer]: variant === 'buffer',
     });
   },
-  () => {
+  after(clsx) {
     return clsx(
       classes.bar,
       (variant === 'indeterminate' || variant === 'query') && classes.bar2Indeterminate,
       variant === 'buffer'
         ? [
             classes.bar2Buffer,
-            color === 'primary' && classes.colorPrimary,
-            color === 'secondary' && classes.colorSecondary,
+            {
+              primary: classes.colorPrimary,
+              secondary: classes.colorSecondary,
+            }[color],
           ]
-        : [
-            color === 'primary' && classes.barColorPrimary,
-            color === 'secondary' && classes.barColorSecondary,
-          ],
+        : {
+            primary: classes.barColorPrimary,
+            secondary: classes.barColorSecondary,
+          }[color],
     );
   },
-];
+};
