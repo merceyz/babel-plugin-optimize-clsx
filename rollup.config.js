@@ -1,4 +1,3 @@
-import commonjs from 'rollup-plugin-commonjs';
 import { terser } from 'rollup-plugin-terser';
 import babel from 'rollup-plugin-babel';
 
@@ -13,7 +12,6 @@ export default {
     babel({
       exclude: 'node_modules/**',
     }),
-    commonjs(),
     terser({
       toplevel: true,
       compress: {
