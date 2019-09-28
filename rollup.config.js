@@ -16,6 +16,10 @@ export default {
     commonjs(),
     terser({
       toplevel: true,
+      compress: {
+        pure_getters: true,
+        pure_funcs: ['path.join'],
+      },
     }),
   ],
 };
