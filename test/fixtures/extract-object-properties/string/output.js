@@ -1,0 +1,1 @@
+clsx(bar && 'foo-bar');

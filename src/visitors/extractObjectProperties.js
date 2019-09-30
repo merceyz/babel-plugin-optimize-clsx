@@ -1,26 +1,30 @@
 import * as t from '@babel/types';
+import _ from 'lodash';
 
 export default {
   CallExpression(path) {
-    const args = path.node.arguments;
-    const newArguments = [];
-
-    for (const argument of args) {
-      if (t.isObjectExpression(argument)) {
-        for (const p of argument.properties) {
-          newArguments.push(
-            t.LogicalExpression(
-              '&&',
-              p.value,
-              p.computed ? p.key : t.isStringLiteral(p.key) ? p.key : t.stringLiteral(p.key.name),
-            ),
-          );
-        }
-      } else {
-        newArguments.push(argument);
+    path.node.arguments = _.flatMap(path.node.arguments, node => {
+      if (!t.isObjectExpression(node)) {
+        return node;
       }
-    }
 
-    path.node.arguments = newArguments;
+      return node.properties.map(p => {
+        function getKey() {
+          return p.computed
+            ? p.key
+            : t.isStringLiteral(p.key)
+            ? p.key
+            : t.stringLiteral(p.key.name);
+        }
+
+        if (t.isSpreadElement(p)) {
+          return p.argument;
+        } else if (t.isObjectMethod(p)) {
+          return getKey();
+        } else {
+          return t.logicalExpression('&&', p.value, getKey());
+        }
+      });
+    });
   },
 };

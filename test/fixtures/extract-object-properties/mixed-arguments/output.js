@@ -1,1 +1,0 @@
-clsx('baz', foo && bar);
