@@ -1,4 +1,5 @@
 import * as t from '@babel/types';
+import template from '@babel/template';
 
 export function isStringLike(node) {
   return t.isStringLiteral(node) || t.isTemplateLiteral(node);
@@ -70,11 +71,9 @@ function templateOrStringLiteral(quasis, expressions) {
 }
 
 function templateElement(value, tail = false) {
-  return {
-    type: 'TemplateElement',
-    value: {
-      raw: value,
-    },
-    tail,
-  };
+  // Workaround to get the cooked value
+  // https://github.com/babel/babel/issues/9242
+  const valueAST = template.ast(`\`${value}\``).expression.quasis[0].value;
+
+  return t.templateElement(valueAST, tail);
 }

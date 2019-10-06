@@ -18,9 +18,9 @@ const options = {
   plugin: optimizeClsx,
   endOfLine: 'preserve',
   babelOptions: {
-    babelrc: false,
     configFile: false,
     compact: false,
+    comments: false,
   },
   formatResult: format,
   fixtures: path.join(__dirname, 'fixtures'),
