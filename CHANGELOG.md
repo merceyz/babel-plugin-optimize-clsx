@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.5.0](https://github.com/merceyz/babel-plugin-optimize-clsx/compare/v2.4.1...v2.5.0) (2019-10-07)
+
+### Bug Fixes
+
+- **combinestrings:** set cooked value for templateelement ([5e25580](https://github.com/merceyz/babel-plugin-optimize-clsx/commit/5e25580)), closes [#15](https://github.com/merceyz/babel-plugin-optimize-clsx/issues/15)
+- **extract:** handle spread and method properties ([51c8ced](https://github.com/merceyz/babel-plugin-optimize-clsx/commit/51c8ced))
+- **optimize:** handle ConditionalExpression in LogicalExpression ([fa05e72](https://github.com/merceyz/babel-plugin-optimize-clsx/commit/fa05e72))
+
+### Build System
+
+- **deps:** upgrade dependencies ([cd02789](https://github.com/merceyz/babel-plugin-optimize-clsx/commit/cd02789))
+- improve terser output ([11ca28b](https://github.com/merceyz/babel-plugin-optimize-clsx/commit/11ca28b))
+- remove rollup-plugin-commonjs ([b994f88](https://github.com/merceyz/babel-plugin-optimize-clsx/commit/b994f88))
+
+### Features
+
+- **collectcalls:** include the location of the code ([1ab1eab](https://github.com/merceyz/babel-plugin-optimize-clsx/commit/1ab1eab))
+
 ### [2.4.1](https://github.com/merceyz/babel-plugin-optimize-clsx/compare/v2.4.0...v2.4.1) (2019-08-18)
 
 ### Build System
