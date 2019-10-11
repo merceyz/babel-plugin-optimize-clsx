@@ -21,6 +21,7 @@ const options = {
     configFile: false,
     compact: false,
     comments: false,
+    babelrc: true,
   },
   formatResult: format,
   fixtures: path.join(__dirname, 'fixtures'),

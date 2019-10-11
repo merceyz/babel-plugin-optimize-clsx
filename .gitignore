@@ -44,6 +44,8 @@ build/Release
 # Dependency directories
 node_modules/
 jspm_packages/
+.yarn
+.pnp*
 
 # TypeScript v1 declaration files
 typings/
