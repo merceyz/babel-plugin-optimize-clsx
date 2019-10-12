@@ -1773,7 +1773,6 @@ __metadata:
     benchmark: "npm:^2.1.4"
     classnames: "npm:^2.2.6"
     clsx: "npm:^1.0.4"
-    cross-env: "npm:^6.0.3"
     husky: "npm:next"
     jest: "npm:^24.9.0"
     lodash: "npm:^4.17.15"
@@ -2516,18 +2515,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cross-env@npm:^6.0.3":
-  version: 6.0.3
-  resolution: "cross-env@npm:6.0.3"
-  dependencies:
-    cross-spawn: "npm:^7.0.0"
-  bin:
-    cross-env: src/bin/cross-env.js
-    cross-env-shell: src/bin/cross-env-shell.js
-  checksum: 837f5d56a34efd6cce32f32178bd0a9045de3dd82137281bdf0dc4c9c1e4b57ddf37f64c6efe2afeb18eead718711825ea35170bb75b99348bc93864d4e530ce
-  languageName: node
-  linkType: hard
-
 "cross-spawn@npm:^5.0.1":
   version: 5.1.0
   resolution: "cross-spawn@npm:5.1.0"
@@ -2549,17 +2536,6 @@ __metadata:
     shebang-command: "npm:^1.2.0"
     which: "npm:^1.2.9"
   checksum: 5103fd3ec3c3d914d78190d1b7021bcca3f66d1c35008f67a696884a7d8c74a415158110436610abaae044d7351ecf8d71bb66872e88bbd80525b013b5b44256
-  languageName: node
-  linkType: hard
-
-"cross-spawn@npm:^7.0.0":
-  version: 7.0.0
-  resolution: "cross-spawn@npm:7.0.0"
-  dependencies:
-    path-key: "npm:^3.1.0"
-    shebang-command: "npm:^1.2.0"
-    which: "npm:^1.2.9"
-  checksum: 172e05c4bf4deac5768519b03410dc3122c89c1511763726457de57049d224681e08e32233e4235a7c78b4e6e082c149a21e1639047e1caac6ee20939ae174c0
   languageName: node
   linkType: hard
 
@@ -5700,13 +5676,6 @@ __metadata:
   version: 2.0.1
   resolution: "path-key@npm:2.0.1"
   checksum: c89ee103cdc74ba8a5772cb56e9f1346cc7eae0789c4f9cb01ba5e6d501c2642900538e444ba26284a3a52fc01b9f1d70c7270d638c3cf37c25958ebf860be4e
-  languageName: node
-  linkType: hard
-
-"path-key@npm:^3.1.0":
-  version: 3.1.0
-  resolution: "path-key@npm:3.1.0"
-  checksum: 5ca8c83ee44ce9f93dc230a3faa2afa496cf4badd1547d08507dc6ad62cb3da8180bc39c7e0bcc94ee9db72d4549b9bfdd0559e857ddc15f5f984c8ab0665cbd
   languageName: node
   linkType: hard
 

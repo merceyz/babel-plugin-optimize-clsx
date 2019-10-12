@@ -18,8 +18,8 @@
   "description": "Babel plugin to optimize the use of clsx, classnames, and all libraries with a compatible API",
   "scripts": {
     "test": "jest",
-    "test:dev": "cross-env DEV_MODE=true jest",
-    "test:build": "cross-env TEST_BUILD=true jest",
+    "test:dev": "DEV_MODE=true jest",
+    "test:build": "TEST_BUILD=true jest",
     "build": "rimraf dist && rollup -c",
     "release": "yarn build && standard-version",
     "benchmark": "node benchmark/index.js"
@@ -38,7 +38,6 @@
     "benchmark": "^2.1.4",
     "classnames": "^2.2.6",
     "clsx": "^1.0.4",
-    "cross-env": "^6.0.3",
     "husky": "next",
     "jest": "^24.9.0",
     "prettier": "^1.18.2",
