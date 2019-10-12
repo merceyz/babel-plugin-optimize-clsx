@@ -20,7 +20,7 @@
     "test": "jest",
     "test:dev": "DEV_MODE=true jest",
     "test:build": "TEST_BUILD=true jest",
-    "build": "rm -r dist && rollup -c",
+    "build": "rm -rf dist && rollup -c",
     "release": "yarn build && standard-version",
     "benchmark": "node benchmark/index.js"
   },
