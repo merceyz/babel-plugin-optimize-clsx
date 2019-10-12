@@ -31,7 +31,6 @@
     "@berry/pnpify": "^0.1.0",
     "@commitlint/cli": "^8.2.0",
     "@commitlint/config-conventional": "^8.2.0",
-    "@types/jest": "^24.0.18",
     "babel-jest": "^24.9.0",
     "babel-plugin-lodash": "^3.3.4",
     "babel-plugin-tester": "^7.0.1",

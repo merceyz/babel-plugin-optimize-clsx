@@ -1332,22 +1332,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/jest-diff@npm:*":
-  version: 20.0.1
-  resolution: "@types/jest-diff@npm:20.0.1"
-  checksum: 2b1e0938d2d0a17752a2c64f4e391242489f543ca5da07ba9904d717929deb07a188a936699d9597bf3afdc57824e13caa780fc2582ee09f151f237f8ffba1a3
-  languageName: node
-  linkType: hard
-
-"@types/jest@npm:^24.0.18":
-  version: 24.0.18
-  resolution: "@types/jest@npm:24.0.18"
-  dependencies:
-    "@types/jest-diff": "npm:*"
-  checksum: 496aeddf1c449c01cca146420ff587d15b783508397e6dd3b25f2b7e16831f423280e64dba0389ba5d7b32b84ca43ed3d20f4e7576066a4240838bf800d997c0
-  languageName: node
-  linkType: hard
-
 "@types/node@npm:*, @types/node@npm:^12.0.2":
   version: 12.7.11
   resolution: "@types/node@npm:12.7.11"
@@ -1766,7 +1750,6 @@ __metadata:
     "@berry/pnpify": "npm:^0.1.0"
     "@commitlint/cli": "npm:^8.2.0"
     "@commitlint/config-conventional": "npm:^8.2.0"
-    "@types/jest": "npm:^24.0.18"
     babel-jest: "npm:^24.9.0"
     babel-plugin-lodash: "npm:^3.3.4"
     babel-plugin-tester: "npm:^7.0.1"
