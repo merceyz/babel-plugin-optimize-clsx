@@ -1779,7 +1779,6 @@ __metadata:
     object-hash: "npm:^1.3.1"
     prettier: "npm:^1.18.2"
     pretty-quick: "npm:^1.11.1"
-    rimraf: "npm:^3.0.0"
     rollup: "npm:^1.23.1"
     rollup-plugin-babel: "npm:^4.3.3"
     rollup-plugin-terser: "npm:^5.1.2"
@@ -6337,17 +6336,6 @@ __metadata:
   bin:
     rimraf: ./bin.js
   checksum: 580678159cca56caf1a5600414716c66ffae68e2c8e31991080f304cf19a3c6b84983cd11405da22bd8b508dd60d492d573bb4e76b7ac8c080cf03f54fcb529e
-  languageName: node
-  linkType: hard
-
-"rimraf@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "rimraf@npm:3.0.0"
-  dependencies:
-    glob: "npm:^7.1.3"
-  bin:
-    rimraf: ./bin.js
-  checksum: 52b17e319f8efd5c428a5a9a47337821d862719feedad08f817a0cb2f69ddcfb657a1a660b8b821af86ed32448f58800e1cae9f3557dfacd3e51d7a545574871
   languageName: node
   linkType: hard
 
