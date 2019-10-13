@@ -6,8 +6,8 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Update yarn
-          command: yarn policies set-version v2
+          name: Set yarn config
+          command: echo "yarn-path \".yarn/releases/yarn-berry.js\"" > .yarnrc
       - run:
           name: Install dependencies
           command: yarn
