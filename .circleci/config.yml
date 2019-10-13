@@ -6,6 +6,9 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Install yarn
+          command: sudo apt-get install yarn
+      - run:
           name: Install dependencies
           command: yarn
       - run:
