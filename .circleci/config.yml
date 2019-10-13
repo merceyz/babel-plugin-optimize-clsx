@@ -6,8 +6,8 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Install yarn
-          command: sudo apt-get install yarn
+          name: Update yarn
+          command: yarn policies set-version v2
       - run:
           name: Install dependencies
           command: yarn
