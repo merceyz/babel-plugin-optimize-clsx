@@ -869,42 +869,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@berry/fslib@npm:0.1.0":
-  version: 0.1.0
-  resolution: "@berry/fslib@npm:0.1.0"
-  dependencies:
-    "@berry/libzip": "npm:0.1.0"
-  checksum: c2169304f4d103859ab52d0a27fc3a5471f4bc7b538e02770f9771a9aacbf4d2e7f977930ffa35edf4f952057a3f30b5736c0c3f6b9efe670e8433a3e95ab5e6
-  languageName: node
-  linkType: hard
-
-"@berry/libzip@npm:0.1.0":
-  version: 0.1.0
-  resolution: "@berry/libzip@npm:0.1.0"
-  checksum: 28a7867bf4c1e1ecffe964ad9b2d4a9d4d48695a12c79e547ce76cc8d581a96dffe5dfcffedbb0a8a929dc68274755f30a25a3974251ea66b6bfac6b026cdccc
-  languageName: node
-  linkType: hard
-
-"@berry/pnpify@npm:^0.1.0":
-  version: 0.1.0
-  resolution: "@berry/pnpify@npm:0.1.0"
-  dependencies:
-    "@berry/fslib": "npm:0.1.0"
-    cross-spawn: "npm:^6.0.5"
-  peerDependencies:
-    eslint: "*"
-    typescript: "*"
-  peerDependenciesMeta:
-    eslint:
-      optional: true
-    typescript:
-      optional: true
-  bin:
-    pnpify: ./lib/bin.js
-  checksum: 30348480611457cfe4be05bb2e420c63828b171fcf90fae4d8d76e26cabfbabb89c8b8781ed6099d264af3cb8ecec9ca437019137c85ce08fe81dba9eecf93f4
-  languageName: node
-  linkType: hard
-
 "@cnakazawa/watch@npm:^1.0.3":
   version: 1.0.3
   resolution: "@cnakazawa/watch@npm:1.0.3"
@@ -1376,6 +1340,44 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@yarnpkg/fslib@npm:2.0.0-rc.5":
+  version: 2.0.0-rc.5
+  resolution: "@yarnpkg/fslib@npm:2.0.0-rc.5"
+  dependencies:
+    "@yarnpkg/libzip": "npm:2.0.0-rc.3"
+    tmp: "npm:^0.0.33"
+  checksum: ad83f0e1d63c5ba8e3be8a2db16514e5304571812e8b6b6b95a642ef50dae98e9cc9cdd4b4fa20fd1f24bceb3f59e9b70fb023c627af5cd512fb881b339ba8f2
+  languageName: node
+  linkType: hard
+
+"@yarnpkg/libzip@npm:2.0.0-rc.3":
+  version: 2.0.0-rc.3
+  resolution: "@yarnpkg/libzip@npm:2.0.0-rc.3"
+  checksum: a6d26355ccee4e0fe477abcf95741eed9e741ff1727147fed22c0cb29bf2ae83f1191bb17083e30afd6bfb04c951b3e7ec30afcad01b12e70e178e0843e412a3
+  languageName: node
+  linkType: hard
+
+"@yarnpkg/pnpify@npm:^2.0.0-rc.7":
+  version: 2.0.0-rc.7
+  resolution: "@yarnpkg/pnpify@npm:2.0.0-rc.7"
+  dependencies:
+    "@yarnpkg/fslib": "npm:2.0.0-rc.5"
+    cross-spawn: "npm:^6.0.5"
+    json5: "npm:^2.1.0"
+  peerDependencies:
+    eslint: "*"
+    typescript: "*"
+  peerDependenciesMeta:
+    eslint:
+      optional: true
+    typescript:
+      optional: true
+  bin:
+    pnpify: ./lib/cli.js
+  checksum: 4b205fa8c5cf1f94585b35e54e1ba528268813e4513c4d4e1b93ecfd3e62aecf953d6877ec11cbf4009dd20f8ed1b42e8ea54e02d01a1bc3687837af9006bfed
+  languageName: node
+  linkType: hard
+
 "JSONStream@npm:^1.0.4":
   version: 1.3.5
   resolution: "JSONStream@npm:1.3.5"
@@ -1747,9 +1749,9 @@ __metadata:
     "@babel/preset-env": "npm:^7.6.2"
     "@babel/template": "npm:^7.6.0"
     "@babel/types": "npm:^7.6.1"
-    "@berry/pnpify": "npm:^0.1.0"
     "@commitlint/cli": "npm:^8.2.0"
     "@commitlint/config-conventional": "npm:^8.2.0"
+    "@yarnpkg/pnpify": "npm:^2.0.0-rc.7"
     babel-jest: "npm:^24.9.0"
     babel-plugin-lodash: "npm:^3.3.4"
     babel-plugin-tester: "npm:^7.0.1"
@@ -5464,7 +5466,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"os-tmpdir@npm:^1.0.0":
+"os-tmpdir@npm:^1.0.0, os-tmpdir@npm:~1.0.2":
   version: 1.0.2
   resolution: "os-tmpdir@npm:1.0.2"
   checksum: 755d9c21ad7e5155978247cbdab470427e035b507bb6cc9cc2730b027dce1e7f649f2044d81fa280ccdf9293c4f4e51b21bb9657d32893ff3d9f4bbff1522506
@@ -7061,6 +7063,15 @@ __metadata:
   version: 2.3.8
   resolution: "through@npm:2.3.8"
   checksum: ab0e84b0ad6587f12411f1d205728beb362f5586f20b3f6208ea3b076f942f78777ec01b92a6ea2cfa743f997c791d2991400c237f516d35967cf19926e241cb
+  languageName: node
+  linkType: hard
+
+"tmp@npm:^0.0.33":
+  version: 0.0.33
+  resolution: "tmp@npm:0.0.33"
+  dependencies:
+    os-tmpdir: "npm:~1.0.2"
+  checksum: 34c8e9a76840b2479e84a526b63a70695072d5926fa504e96bf01c6b51a42797356167d0ced4f7c1e5c3631b41b6aadfb1bddd2d6c9359fc0f81e7bd546aa6c9
   languageName: node
   linkType: hard
 
