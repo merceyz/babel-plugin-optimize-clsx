@@ -1756,7 +1756,7 @@ __metadata:
     "@yarnpkg/pnpify": "npm:^2.0.0-rc.7"
     babel-jest: "npm:^24.9.0"
     babel-plugin-lodash: "npm:^3.3.4"
-    babel-plugin-tester: "npm:^7.0.1"
+    babel-plugin-tester: "npm:^7.0.3"
     benchmark: "npm:^2.1.4"
     classnames: "npm:^2.2.6"
     clsx: "npm:^1.0.4"
@@ -1774,18 +1774,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"babel-plugin-tester@npm:^7.0.1":
-  version: 7.0.1
-  resolution: "babel-plugin-tester@npm:7.0.1"
+"babel-plugin-tester@npm:^7.0.3":
+  version: 7.0.3
+  resolution: "babel-plugin-tester@npm:7.0.3"
   dependencies:
-    common-tags: "npm:^1.4.0"
-    invariant: "npm:^2.2.2"
     lodash.mergewith: "npm:^4.6.0"
-    path-exists: "npm:^4.0.0"
     strip-indent: "npm:^3.0.0"
   peerDependencies:
     "@babel/core": ^7.0.0
-  checksum: 15c1ec68b0b17d73e8f846609b439019b22092ffc560bcc30226c3d814902331ae0b7cf1352c997c5e020d33247d195113269627ec2a4a01ce12ba56e9d16e41
+  checksum: 4d367bbb66f1419788911e83e233212646ee40acd6e5779263a3072ee28f8059253dcb0322a4a6e6bc2a212d7a69bb5782d132dd88aa15652e306292bce17db1
   languageName: node
   linkType: hard
 
@@ -2165,13 +2162,6 @@ __metadata:
   version: 2.20.1
   resolution: "commander@npm:2.20.1"
   checksum: ad5a12b7723cc644c41ac0c194ee5ad584042968012d139fc5e98503ffd1b90f4942bb9f8ac38b62a882c46cf358ae51fd27d8a41f5efcd6588173a3480cbc98
-  languageName: node
-  linkType: hard
-
-"common-tags@npm:^1.4.0":
-  version: 1.8.0
-  resolution: "common-tags@npm:1.8.0"
-  checksum: 175c05c0d5c8e4ed27655087232747ec5a37334247ecdf9ddf74c5c9f018173c2cacad118423d4ee75eeb626a52cd34d6dceeca49e3dc5c637757d4d9f6d0f7b
   languageName: node
   linkType: hard
 
