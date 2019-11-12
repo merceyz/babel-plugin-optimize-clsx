@@ -15,9 +15,6 @@ jobs:
       - run:
           name: Install dependencies
           command: yarn
-      - store_artifacts:
-          path: .pnp.js
-          destination: artifact-file
       - save_cache:
           name: Save Yarn Package Cache
           key: yarn-packages-2-{{ checksum "yarn.lock" }}
