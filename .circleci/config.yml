@@ -5,12 +5,21 @@ jobs:
       - image: circleci/node:8.15
     steps:
       - checkout
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
       - run:
           name: Set yarn config
           command: echo "yarn-path \".yarn/releases/yarn-berry.js\"" > .yarnrc
       - run:
           name: Install dependencies
           command: yarn
+      - save_cache:
+          name: Save Yarn Package Cache
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
       - run:
           name: Check formatting
           command: yarn pretty-quick --check
