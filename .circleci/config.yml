@@ -20,9 +20,9 @@ jobs:
           destination: artifact-file
       - save_cache:
           name: Save Yarn Package Cache
-          key: yarn-packages-{{ checksum "yarn.lock" }}
+          key: yarn-packages-2-{{ checksum "yarn.lock" }}
           paths:
-            - ~/.cache/yarn
+            - ~/.yarn/berry/cache
       - run:
           name: Check formatting
           command: yarn pretty-quick --check
