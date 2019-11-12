@@ -8,7 +8,7 @@ jobs:
       - restore_cache:
           name: Restore Yarn Package Cache
           keys:
-            - yarn-packages-{{ checksum "yarn.lock" }}
+            - yarn-packages-2-{{ checksum "yarn.lock" }}
       - run:
           name: Set yarn config
           command: echo "yarn-path \".yarn/releases/yarn-berry.js\"" > .yarnrc
