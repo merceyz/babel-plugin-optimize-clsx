@@ -1771,6 +1771,9 @@ __metadata:
     rollup-plugin-terser: "npm:^5.1.2"
     standard-version: "npm:^7.0.0"
     typescript: "npm:^3.6.4"
+  dependenciesMeta:
+    core-js:
+      built: false
   languageName: unknown
   linkType: soft
 
