@@ -44,7 +44,7 @@
     "rollup": "^1.23.1",
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-terser": "^5.1.2",
-    "standard-version": "^7.0.0",
+    "standard-version": "https://github.com/merceyz/standard-version.git#pnp",
     "typescript": "^3.6.4"
   },
   "dependencies": {
