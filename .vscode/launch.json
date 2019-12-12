@@ -8,8 +8,9 @@
       "type": "node",
       "request": "launch",
       "name": "Debug test",
-      "program": "${workspaceRoot}/node_modules/jest/bin/jest.js",
-      "skipFiles": ["${workspaceFolder}/node_modules/**/*.js", "<node_internals>/**/*.js"]
+      "skipFiles": ["<node_internals>/**", "node_modules/**"],
+      "runtimeArgs": ["-r", "./.pnp.js", "-r", "jest/bin/jest.js"],
+      "cwd": "${workspaceFolder}"
     }
   ]
 }
