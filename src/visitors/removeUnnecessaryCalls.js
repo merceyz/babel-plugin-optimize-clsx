@@ -116,22 +116,19 @@ const arrayVisitor = {
   },
 };
 
-export default {
-  CallExpression(path) {
-    if (!this.options.removeUnnecessaryCalls) {
-      return;
+export const removeUnnecessaryCalls = ({ expression: path, options }) => {
+  if (!options.removeUnnecessaryCalls) {
+    return;
+  }
+
+  path.traverse(arrayVisitor);
+
+  for (const tr of transforms) {
+    const result = tr(path.node.arguments);
+
+    if (result !== undefined) {
+      path.replaceWith(result);
+      break;
     }
-
-    path.traverse(arrayVisitor);
-
-    for (const tr of transforms) {
-      const result = tr(path.node.arguments);
-
-      if (result !== undefined) {
-        path.replaceWith(result);
-        path.skip();
-        break;
-      }
-    }
-  },
+  }
 };

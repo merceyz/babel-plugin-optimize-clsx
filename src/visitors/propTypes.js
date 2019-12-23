@@ -225,9 +225,16 @@ function getPropTypesName(body) {
   }
 }
 
-export default (path, options) => {
+export const propTypes = ({ program: path, state }) => {
+  // This visitor should only run once
+  if (state.has('proptypes')) {
+    return;
+  }
+
+  state.set('proptypes', true);
+
   const propTypes = getPropTypes(path.node.body);
   if (propTypes.length === 0) return;
 
-  path.traverse(functionVisitor, { options, propTypes });
+  path.traverse(functionVisitor, { propTypes });
 };

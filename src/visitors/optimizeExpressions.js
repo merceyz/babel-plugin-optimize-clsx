@@ -56,8 +56,6 @@ function optimizeExpression(node) {
   return node;
 }
 
-export default {
-  CallExpression({ node }) {
-    node.arguments = node.arguments.map(optimizeExpression);
-  },
+export const optimizeExpressions = ({ expression }) => {
+  expression.node.arguments = expression.node.arguments.map(optimizeExpression);
 };

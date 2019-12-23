@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es2017",
+    "lib": ["es2017"],
+    "allowJs": true,
+    "esModuleInterop": true,
+    "strict": true,
+    "noEmit": true
+  },
+  "include": ["src"]
+}

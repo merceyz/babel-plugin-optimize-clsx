@@ -101,9 +101,7 @@ const arrayVisitor = {
   },
 };
 
-export default {
-  CallExpression(path) {
-    path.traverse(arrayVisitor);
-    path.node.arguments = combineFromArray(path.node.arguments);
-  },
+export const createObjectKeyLookups = ({ expression: path }) => {
+  path.traverse(arrayVisitor);
+  path.node.arguments = combineFromArray(path.node.arguments);
 };

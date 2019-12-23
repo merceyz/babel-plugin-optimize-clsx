@@ -26,9 +26,7 @@ const arrayVisitor = {
   },
 };
 
-export default {
-  CallExpression(path) {
-    path.node.arguments = combineStringsInArray(path.node.arguments);
-    path.traverse(arrayVisitor);
-  },
+export const combineStringLiterals = ({ expression: path }) => {
+  path.node.arguments = combineStringsInArray(path.node.arguments);
+  path.traverse(arrayVisitor);
 };
