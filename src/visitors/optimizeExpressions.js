@@ -32,6 +32,11 @@ const optimizations = {
     }
   },
   LogicalExpression(node) {
+    // foo || '' -> foo
+    if (node.operator === '||' && helpers.isNodeFalsy(node.right)) {
+      return node.left;
+    }
+
     if (helpers.isNestedLogicalAndExpression(node)) {
       return _.flow(
         helpers.flattenLogicalExpression,
