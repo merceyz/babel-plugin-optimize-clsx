@@ -75,9 +75,6 @@ const transforms = [
           isSafeConditionalExpression(arg.right.right)))
     ) {
       return t.conditionalExpression(arg.left, arg.right, t.stringLiteral(''));
-    } else if (t.isLogicalExpression(arg, { operator: '||' }) && isStringLike(arg.right)) {
-      // Assume that arg.left returns a string value
-      return arg;
     }
   },
 
