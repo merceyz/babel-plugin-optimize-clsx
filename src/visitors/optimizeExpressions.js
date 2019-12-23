@@ -55,7 +55,9 @@ function optimizeExpression(node) {
   if (node.type in optimizations) {
     let result = optimizations[node.type](node);
     if (result) {
-      return result.type !== node.type ? optimizeExpression(result) : result;
+      return result.type !== node.type || result.operator !== node.operator
+        ? optimizeExpression(result)
+        : result;
     }
   }
   return node;
