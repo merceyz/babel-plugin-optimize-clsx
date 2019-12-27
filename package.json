@@ -47,7 +47,6 @@
     "pretty-quick": "^1.11.1",
     "rollup": "^1.23.1",
     "rollup-plugin-babel": "^4.3.3",
-    "rollup-plugin-terser": "^5.1.2",
     "standard-version": "https://github.com/merceyz/standard-version.git#pnp",
     "ts-jest": "^24.2.0",
     "typescript": "^3.6.4"

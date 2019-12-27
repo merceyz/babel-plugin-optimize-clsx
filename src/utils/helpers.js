@@ -79,8 +79,8 @@ export function stringify(object) {
 
 // Used during testing and debugging,
 const counts = new Map();
-const rootPath = path.join(__dirname, '../../dumps');
 export function dumpData(obj, name = 'dump', generateCode = false) {
+  const rootPath = path.join(__dirname, '../../dumps');
   const data = generateCode ? generate(obj).code : stringify(obj);
 
   const count = counts.get(name) || 0;

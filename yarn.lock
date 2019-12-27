@@ -1961,7 +1961,6 @@ __metadata:
     pretty-quick: "npm:^1.11.1"
     rollup: "npm:^1.23.1"
     rollup-plugin-babel: "npm:^4.3.3"
-    rollup-plugin-terser: "npm:^5.1.2"
     standard-version: "https://github.com/merceyz/standard-version.git#pnp"
     ts-jest: "npm:^24.2.0"
     typescript: "npm:^3.6.4"
@@ -2366,7 +2365,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"commander@npm:^2.20.0, commander@npm:~2.20.0":
+"commander@npm:~2.20.0":
   version: 2.20.1
   resolution: "commander@npm:2.20.1"
   checksum: ad5a12b7723cc644c41ac0c194ee5ad584042968012d139fc5e98503ffd1b90f4942bb9f8ac38b62a882c46cf358ae51fd27d8a41f5efcd6588173a3480cbc98
@@ -6552,21 +6551,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rollup-plugin-terser@npm:^5.1.2":
-  version: 5.1.2
-  resolution: "rollup-plugin-terser@npm:5.1.2"
-  dependencies:
-    "@babel/code-frame": "npm:^7.0.0"
-    jest-worker: "npm:^24.6.0"
-    rollup-pluginutils: "npm:^2.8.1"
-    serialize-javascript: "npm:^1.7.0"
-    terser: "npm:^4.1.0"
-  peerDependencies:
-    rollup: ">=0.66.0 <2"
-  checksum: 1b8371bcefea248edf301b88e6f89fa5d45b69dbdd9471fe0b0f7f8950fca2e82b52e3e3d24cbede7f3ca313bd3afd2c1303531fdfc7c519a1a1fa7a1855546d
-  languageName: node
-  linkType: hard
-
 "rollup-pluginutils@npm:^2.8.1":
   version: 2.8.2
   resolution: "rollup-pluginutils@npm:2.8.2"
@@ -6695,13 +6679,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"serialize-javascript@npm:^1.7.0":
-  version: 1.9.1
-  resolution: "serialize-javascript@npm:1.9.1"
-  checksum: 33f0541a1414baf97a4a9145e9ba370667518cc54d1cf3708895a8fd0d564deb82df9b4b9433aca73786906a24eeeb78c19bf1339f9b6b863f8ccc88b4817d21
-  languageName: node
-  linkType: hard
-
 "set-blocking@npm:^2.0.0, set-blocking@npm:~2.0.0":
   version: 2.0.0
   resolution: "set-blocking@npm:2.0.0"
@@ -6821,7 +6798,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"source-map-support@npm:^0.5.6, source-map-support@npm:~0.5.12":
+"source-map-support@npm:^0.5.6":
   version: 0.5.13
   resolution: "source-map-support@npm:0.5.13"
   dependencies:
@@ -7198,19 +7175,6 @@ __metadata:
     safe-buffer: "npm:^5.1.2"
     yallist: "npm:^3.0.3"
   checksum: a21f56df0aecd47fc2c847199e99eb96b959bc02fe64e0816bb1746ed83263e7f8c60477b104b0a86058c2852172d0ca85215c10ba80025a477a5052791d3d03
-  languageName: node
-  linkType: hard
-
-"terser@npm:^4.1.0":
-  version: 4.3.8
-  resolution: "terser@npm:4.3.8"
-  dependencies:
-    commander: "npm:^2.20.0"
-    source-map: "npm:~0.6.1"
-    source-map-support: "npm:~0.5.12"
-  bin:
-    terser: bin/terser
-  checksum: 978d1bd9ca354306bc77c6a7cb24a7a8a1c87934b417d07b74b0da4b990bcffe5807930373dd5c92c51379db8e75fe1963dfed24b873295d8c638c76897fc8c5
   languageName: node
   linkType: hard
 

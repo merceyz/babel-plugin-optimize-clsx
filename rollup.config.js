@@ -1,4 +1,3 @@
-import { terser } from 'rollup-plugin-terser';
 import babel from 'rollup-plugin-babel';
 import { DEFAULT_EXTENSIONS } from '@babel/core';
 import { existsSync } from 'fs';
@@ -29,13 +28,6 @@ export default {
     babel({
       exclude: 'node_modules/**',
       extensions: [...DEFAULT_EXTENSIONS, '.ts'],
-    }),
-    terser({
-      toplevel: true,
-      compress: {
-        pure_getters: true,
-        pure_funcs: ['path.join'],
-      },
     }),
   ],
 };
