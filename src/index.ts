@@ -15,6 +15,7 @@ import { combineStringLiterals } from './visitors/combineStringLiterals';
 import { createConditionalExpression } from './visitors/createConditionalExpression';
 import { removeUnnecessaryCalls } from './visitors/removeUnnecessaryCalls';
 import { createObjectKeyLookups } from './visitors/createObjectKeyLookups';
+import { referencedObjects } from './visitors/referencedObjects';
 
 const visitors = [
   collectCalls,
@@ -28,6 +29,7 @@ const visitors = [
   createConditionalExpression,
   removeUnnecessaryCalls,
   createObjectKeyLookups,
+  referencedObjects,
 ];
 
 export default (): babel.PluginObj<{ opts?: Partial<PluginOptions>; filename: string }> => ({
@@ -43,7 +45,10 @@ export default (): babel.PluginObj<{ opts?: Partial<PluginOptions>; filename: st
 
       const internalState = new Map<string, any>();
 
-      const runVisitors = (expression: babel.NodePath<t.CallExpression>) => {
+      const runVisitors = (
+        expression: babel.NodePath<t.CallExpression>,
+        pushToQueue: (expression: babel.NodePath<t.CallExpression>) => void,
+      ) => {
         for (const visitor of visitors) {
           visitor({
             program: path,
@@ -51,6 +56,7 @@ export default (): babel.PluginObj<{ opts?: Partial<PluginOptions>; filename: st
             state: internalState,
             options,
             filename: state.filename,
+            pushToQueue,
           });
 
           if (!expression.isCallExpression()) {
@@ -64,7 +70,12 @@ export default (): babel.PluginObj<{ opts?: Partial<PluginOptions>; filename: st
 
         if (isImportMap(item)) {
           for (let y = 0; y < item.expressions.length; y++) {
-            if (runVisitors(item.expressions[y]) === false) {
+            if (
+              runVisitors(item.expressions[y], newExpression => {
+                item.expressions.push(newExpression);
+                item.referenceCount += 1;
+              }) === false
+            ) {
               item.expressions.splice(y, 1);
               item.referenceCount -= 1;
               y -= 1;
@@ -77,7 +88,11 @@ export default (): babel.PluginObj<{ opts?: Partial<PluginOptions>; filename: st
               break;
             }
           }
-        } else if (runVisitors(item) === false) {
+        } else if (
+          runVisitors(item, newExpression => {
+            expressions.push(newExpression);
+          }) === false
+        ) {
           expressions.splice(x, 1);
           x -= 1;
         }

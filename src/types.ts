@@ -8,4 +8,5 @@ export type VisitorFunction = (params: {
   options: PluginOptions;
   state: Map<string, any>;
   filename: string;
+  pushToQueue: (expression: babel.NodePath<t.CallExpression>) => void;
 }) => void;
