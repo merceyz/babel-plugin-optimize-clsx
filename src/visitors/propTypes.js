@@ -231,7 +231,7 @@ export const propTypes = ({ program: path, state }) => {
     return;
   }
 
-  state.set('proptypes', true);
+  state.add('proptypes');
 
   const propTypes = getPropTypes(path.node.body);
   if (propTypes.length === 0) return;

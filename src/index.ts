@@ -43,7 +43,7 @@ export default (): babel.PluginObj<{ opts?: Partial<PluginOptions>; filename: st
         return;
       }
 
-      const internalState = new Map<string, any>();
+      const internalState = new Set<string>();
 
       const runVisitors = (
         expression: babel.NodePath<t.CallExpression>,
