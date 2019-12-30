@@ -72,6 +72,7 @@ export default (): babel.PluginObj<{ opts?: Partial<PluginOptions>; filename: st
           for (let y = 0; y < item.expressions.length; y++) {
             if (
               runVisitors(item.expressions[y], newExpression => {
+                newExpression.setData('is_optimizable', true);
                 item.expressions.push(newExpression);
                 item.referenceCount += 1;
               }) === false
@@ -90,6 +91,7 @@ export default (): babel.PluginObj<{ opts?: Partial<PluginOptions>; filename: st
           }
         } else if (
           runVisitors(item, newExpression => {
+            newExpression.setData('is_optimizable', true);
             expressions.push(newExpression);
           }) === false
         ) {

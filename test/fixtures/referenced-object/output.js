@@ -8,3 +8,4 @@ const itemStyles = clsx(
   searchHidden && styles.searchHidden,
 );
 clsx('foo', itemStyles);
+clsx('bar', itemStyles);

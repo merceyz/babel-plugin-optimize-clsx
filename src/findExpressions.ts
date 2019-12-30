@@ -14,6 +14,7 @@ const getFunctions: babel.Visitor<{ options: PluginOptions; functions: FindFunct
   CallExpression(path) {
     const { callee } = path.node;
     if (t.isIdentifier(callee) && this.options.functionNames.includes(callee.name)) {
+      path.setData('is_optimizable', true);
       this.functions.push(path);
     }
   },
@@ -46,6 +47,7 @@ export function findExpressions(program: babel.NodePath<t.Program>, options: Plu
     for (const ref of refPaths) {
       const call = ref.parentPath;
       if (call.isCallExpression()) {
+        call.setData('is_optimizable', true);
         expressions.push(call);
       }
     }

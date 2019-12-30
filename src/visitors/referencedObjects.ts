@@ -15,10 +15,13 @@ export const referencedObjects: VisitorFunction = ({ expression, pushToQueue }) 
     }
 
     if (
-      binding.references === 1 &&
       binding.constant &&
       binding.path.isVariableDeclarator() &&
-      t.isObjectExpression(binding.path.node.init)
+      t.isObjectExpression(binding.path.node.init) &&
+      binding.referencePaths.every(
+        ref =>
+          ref.parentPath.isCallExpression() && ref.parentPath.getData('is_optimizable') === true,
+      )
     ) {
       const init = binding.path.get('init');
 
