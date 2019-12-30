@@ -34,6 +34,7 @@
     "@types/babel__template": "^7.0.2",
     "@types/lodash": "^4.14.149",
     "@types/node": "^12.12.17",
+    "@types/object-hash": "^1.3.0",
     "babel-plugin-lodash": "^3.3.4",
     "babel-plugin-tester": "^7.0.3",
     "benchmark": "^2.1.4",

@@ -6,12 +6,12 @@ import _ from 'lodash';
 import hash from 'object-hash';
 import { isStringLike, isStringLikeEmpty } from './strings';
 
-export function flattenLogicalExpression(rootNode) {
-  const result = [];
+export function flattenLogicalExpression(rootNode: t.LogicalExpression) {
+  const result: t.Expression[] = [];
   checkNode(rootNode);
   return result;
 
-  function checkNode(node) {
+  function checkNode(node: t.Expression) {
     if (t.isLogicalExpression(node)) {
       checkNode(node.left);
       result.push(node.right);
@@ -21,7 +21,7 @@ export function flattenLogicalExpression(rootNode) {
   }
 }
 
-export function isNestedLogicalAndExpression(node) {
+export function isNestedLogicalAndExpression(node: any): node is t.LogicalExpression {
   if (!t.isLogicalExpression(node, { operator: '&&' })) {
     return false;
   }
@@ -38,7 +38,7 @@ export function isNestedLogicalAndExpression(node) {
   return true;
 }
 
-export function getMostFrequentNode(operators) {
+export function getMostFrequentNode(operators: t.Expression[][]) {
   let maxNode = null;
   let maxCount = 0;
   let operators_n = operators.length;
@@ -66,8 +66,8 @@ export function getMostFrequentNode(operators) {
   return maxNode;
 }
 
-export function stringify(object) {
-  function replacer(name, val) {
+export function stringify(object: any) {
+  function replacer(name: string, val: any) {
     if (name === 'start' || name === 'loc' || name === 'end') {
       return undefined;
     }
@@ -79,7 +79,7 @@ export function stringify(object) {
 
 // Used during testing and debugging,
 const counts = new Map();
-export function dumpData(obj, name = 'dump', generateCode = false) {
+export function dumpData(obj: any, name = 'dump', generateCode = false) {
   const rootPath = path.join(__dirname, '../../dumps');
   const data = generateCode ? generate(obj).code : stringify(obj);
 
@@ -96,26 +96,36 @@ export function dumpData(obj, name = 'dump', generateCode = false) {
   );
 }
 
-export function compareNodes(obj1, obj2) {
+export function compareNodes(obj1: t.Node, obj2: t.Node): boolean {
   if (obj1.type !== obj2.type) {
     return false;
   }
 
   switch (obj1.type) {
+    case 'NullLiteral': {
+      return true;
+    }
+    case 'RegExpLiteral': {
+      return t.isNodesEquivalent(obj1, obj2);
+    }
     case 'Identifier':
-      return obj1.name === obj2.name;
+      return obj1.name === (obj2 as typeof obj1).name;
     case 'MemberExpression':
-      return compareNodes(obj1.object, obj2.object) && compareNodes(obj1.property, obj2.property);
+      return (
+        compareNodes(obj1.object, (obj2 as typeof obj1).object) &&
+        compareNodes(obj1.property, (obj2 as typeof obj1).property)
+      );
     case 'BinaryExpression':
       return (
-        obj1.operator === obj2.operator &&
-        compareNodes(obj1.left, obj2.left) &&
-        compareNodes(obj1.right, obj2.right)
+        obj1.operator === (obj2 as typeof obj1).operator &&
+        compareNodes(obj1.left, (obj2 as typeof obj1).left) &&
+        compareNodes(obj1.right, (obj2 as typeof obj1).right)
       );
     default: {
-      if (t.isLiteral(obj1)) {
-        return obj1.value === obj2.value;
+      if (t.isLiteral(obj1) && !t.isTemplateLiteral(obj1)) {
+        return obj1.value === (obj2 as typeof obj1).value;
       }
+
       return _.isEqualWith(obj1, obj2, (v1, v2, key) =>
         key === 'start' || key === 'end' || key === 'loc' ? true : undefined,
       );
@@ -123,14 +133,14 @@ export function compareNodes(obj1, obj2) {
   }
 }
 
-export function hashNode(node) {
+export function hashNode(node: any) {
   return hash(node, {
     excludeKeys: key =>
       key === 'start' || key === 'end' || key === 'loc' || key === 'extra' ? true : false,
   });
 }
 
-export function isSafeConditionalExpression(node) {
+export function isSafeConditionalExpression(node: any): node is t.ConditionalExpression {
   if (!t.isConditionalExpression(node)) {
     return false;
   }
@@ -151,11 +161,11 @@ export function isSafeConditionalExpression(node) {
   return false;
 }
 
-export function createLogicalAndExpression(items) {
+export function createLogicalAndExpression(items: t.Expression[]) {
   return items.reduce((prev, curr) => t.logicalExpression('&&', prev, curr));
 }
 
-export function isNodeFalsy(node) {
+export function isNodeFalsy(node: any) {
   return (
     isStringLikeEmpty(node) ||
     t.isNullLiteral(node) ||
