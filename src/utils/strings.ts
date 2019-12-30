@@ -1,11 +1,14 @@
 import * as t from '@babel/types';
 import template from '@babel/template';
 
-export function isStringLike(node) {
+export function isStringLike(node: any): node is t.StringLiteral | t.TemplateLiteral {
   return t.isStringLiteral(node) || t.isTemplateLiteral(node);
 }
 
-export function combineStringLike(a, b) {
+export function combineStringLike(
+  a: t.StringLiteral | t.TemplateLiteral,
+  b: t.StringLiteral | t.TemplateLiteral,
+) {
   if (isStringLikeEmpty(a) && isStringLikeEmpty(b)) {
     return t.stringLiteral('');
   }
@@ -50,7 +53,7 @@ export function combineStringLike(a, b) {
   throw new Error('Unable to handle that input');
 }
 
-export function isStringLikeEmpty(node) {
+export function isStringLikeEmpty(node: t.StringLiteral | t.TemplateLiteral) {
   if (t.isStringLiteral(node)) {
     return node.value.length === 0;
   }
@@ -62,7 +65,7 @@ export function isStringLikeEmpty(node) {
   return false;
 }
 
-function templateOrStringLiteral(quasis, expressions) {
+function templateOrStringLiteral(quasis: t.TemplateElement[], expressions: t.Expression[]) {
   if (expressions.length === 0) {
     return t.stringLiteral(quasis[0].value.raw);
   }
@@ -70,10 +73,11 @@ function templateOrStringLiteral(quasis, expressions) {
   return t.templateLiteral(quasis, expressions);
 }
 
-function templateElement(value, tail = false) {
+function templateElement(value: string, tail = false) {
   // Workaround to get the cooked value
   // https://github.com/babel/babel/issues/9242
-  const valueAST = template.ast(`\`${value}\``).expression.quasis[0].value;
+  const valueAST = ((template.ast(`\`${value}\``) as t.ExpressionStatement)
+    .expression as t.TemplateLiteral).quasis[0].value;
 
   return t.templateElement(valueAST, tail);
 }
