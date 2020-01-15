@@ -11,7 +11,7 @@ jobs:
             - yarn-packages-2-{{ checksum "yarn.lock" }}
       - run:
           name: Set yarn config
-          command: echo "yarn-path \".yarn/releases/yarn-berry.js\"" > .yarnrc
+          command: echo "yarn-path \".yarn/releases/yarn-sources.js\"" > .yarnrc
       - run:
           name: Install dependencies
           command: yarn
