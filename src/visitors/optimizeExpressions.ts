@@ -1,8 +1,17 @@
 import * as t from '@babel/types';
+import * as babel from '@babel/core';
 import * as helpers from '../utils/helpers';
 import _ from 'lodash/fp';
+import { VisitorFunction } from '../types';
 
-const optimizations = {
+type ExtractPathType<P> = P extends babel.NodePath<infer T> ? T : never;
+
+type VisitorWithoutPath = {
+  // @ts-ignore - Works perfectly fine
+  [P in keyof babel.Visitor]: (node: ExtractPathType<Parameters<babel.Visitor[P]>[0]>) => any;
+};
+
+const optimizations: VisitorWithoutPath = {
   ConditionalExpression(node) {
     // foo ? bar : '' --> foo && bar
     if (helpers.isNodeFalsy(node.alternate)) {
@@ -51,18 +60,21 @@ const optimizations = {
   },
 };
 
-function optimizeExpression(node) {
+function optimizeExpression(node: t.Node): any {
   if (node.type in optimizations) {
-    let result = optimizations[node.type](node);
+    // @ts-ignore
+    const result = optimizations[node.type](node);
     if (result) {
+      // @ts-ignore
       return result.type !== node.type || result.operator !== node.operator
         ? optimizeExpression(result)
         : result;
     }
   }
+
   return node;
 }
 
-export const optimizeExpressions = ({ expression }) => {
+export const optimizeExpressions: VisitorFunction = ({ expression }) => {
   expression.node.arguments = expression.node.arguments.map(optimizeExpression);
 };

@@ -5,10 +5,7 @@ export function isStringLike(node: any): node is t.StringLiteral | t.TemplateLit
   return t.isStringLiteral(node) || t.isTemplateLiteral(node);
 }
 
-export function combineStringLike(
-  a: t.StringLiteral | t.TemplateLiteral,
-  b: t.StringLiteral | t.TemplateLiteral,
-) {
+export function combineStringLike(a: t.Expression, b: t.Expression) {
   if (isStringLikeEmpty(a) && isStringLikeEmpty(b)) {
     return t.stringLiteral('');
   }
@@ -53,7 +50,7 @@ export function combineStringLike(
   throw new Error('Unable to handle that input');
 }
 
-export function isStringLikeEmpty(node: t.StringLiteral | t.TemplateLiteral) {
+export function isStringLikeEmpty(node: t.Expression): node is t.StringLiteral | t.TemplateLiteral {
   if (t.isStringLiteral(node)) {
     return node.value.length === 0;
   }
