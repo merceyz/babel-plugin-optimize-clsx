@@ -42,13 +42,15 @@ function combineFromArray(arr) {
     // Set the string to always be on the right side of ===
     // Simplifies the rest of the code
     _.map(row => {
-      let tempNode = { ...row[0] };
+      const tempNode = row[0];
 
       if (t.isStringLiteral(tempNode.left)) {
-        tempNode = t.binaryExpression('===', tempNode.right, tempNode.left);
+        const strNode = tempNode.left;
+        tempNode.left = tempNode.right;
+        tempNode.right = strNode;
       }
 
-      return [tempNode, ...row.slice(1)];
+      return row;
     }),
 
     // Group on whatever the strings are compared to
