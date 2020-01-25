@@ -63,18 +63,15 @@ function combineFromArray(arr) {
         return createLogicalAndExpression(group[0]);
       }
 
-      const properties = group.reduce((acc, row) => {
-        let key = row[0].right;
-        // If possible, use a identifier as the key, saves 2 characters
-        if (/[^A-Za-z]/.test(row[0].right.value) === false) {
-          key = t.identifier(row[0].right.value);
-        }
-
-        acc.push(t.objectProperty(key, createLogicalAndExpression(row.slice(1))));
-        return acc;
-      }, []);
-
-      return t.memberExpression(t.objectExpression(properties), group[0][0].left, true);
+      return t.memberExpression(
+        t.objectExpression(
+          group.map(row =>
+            t.objectProperty(row[0].right, createLogicalAndExpression(row.slice(1))),
+          ),
+        ),
+        group[0][0].left,
+        true,
+      );
     }),
   )(match);
 
