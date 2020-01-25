@@ -1,7 +1,7 @@
 clsx(
   {
     up: foo.a,
-    down: foo.b,
+    down: !inProp && collapsedHeight === '0px' && foo.b,
   }[bar],
   {
     left: foo.c,

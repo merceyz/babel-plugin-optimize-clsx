@@ -6,7 +6,6 @@ import {
   createLogicalAndExpression,
   isNestedLogicalAndExpression,
 } from '../utils/helpers';
-import generate from '@babel/generator';
 
 function matchLeftOrRight(node, check) {
   return check(node.left) || check(node.right);
@@ -60,6 +59,10 @@ function combineFromArray(arr) {
 
     // Create the objects
     _.map(group => {
+      if (group.length === 1) {
+        return createLogicalAndExpression(group[0]);
+      }
+
       const properties = group.reduce((acc, row) => {
         let key = row[0].right;
         // If possible, use a identifier as the key, saves 2 characters
@@ -71,20 +74,7 @@ function combineFromArray(arr) {
         return acc;
       }, []);
 
-      const lookupExpression = t.memberExpression(
-        t.objectExpression(properties),
-        group[0][0].left,
-        true,
-      );
-      if (group.length > 1) {
-        return lookupExpression;
-      }
-
-      // If the size is the same, use the original
-      const original = createLogicalAndExpression(group[0]);
-      const a = generate(original, { compact: true }).code;
-      const b = generate(lookupExpression, { compact: true }).code;
-      return a.length <= b.length ? original : lookupExpression;
+      return t.memberExpression(t.objectExpression(properties), group[0][0].left, true);
     }),
   )(match);
 

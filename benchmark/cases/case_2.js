@@ -66,18 +66,14 @@ module.exports = {
       ],
       disabled && classes.disabled,
       fullWidth && classes.fullWidth,
-      {
-        outlined: [
-          classes.outlined,
-          {
-            primary: classes.outlinedPrimary,
-            secondary: classes.outlinedSecondary,
-          }[color],
-        ],
-      }[variant],
-      {
-        inherit: classes.colorInherit,
-      }[color],
+      variant === 'outlined' && [
+        classes.outlined,
+        {
+          primary: classes.outlinedPrimary,
+          secondary: classes.outlinedSecondary,
+        }[color],
+      ],
+      color === 'inherit' && classes.colorInherit,
     );
   },
 };
