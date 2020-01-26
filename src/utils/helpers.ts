@@ -6,7 +6,7 @@ import _ from 'lodash';
 import hash from 'object-hash';
 import { isStringLike, isStringLikeEmpty } from './strings';
 
-export function flattenLogicalExpression(rootNode: t.LogicalExpression) {
+export function flattenLogicalExpression(rootNode: t.Expression) {
   const result: t.Expression[] = [];
   checkNode(rootNode);
   return result;

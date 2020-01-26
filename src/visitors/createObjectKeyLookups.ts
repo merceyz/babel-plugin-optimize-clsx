@@ -1,3 +1,4 @@
+import * as babel from '@babel/core';
 import * as t from '@babel/types';
 import _ from 'lodash/fp';
 import {
@@ -6,17 +7,18 @@ import {
   createLogicalAndExpression,
   isNestedLogicalAndExpression,
 } from '../utils/helpers';
+import { VisitorFunction } from '../types';
 
-function matchLeftOrRight(node, check) {
+function matchLeftOrRight(node: t.BinaryExpression, check: (node: t.Expression) => boolean) {
   return check(node.left) || check(node.right);
 }
 
-function combineFromArray(arr) {
+function combineFromArray(arr: t.Expression[]) {
   // x === 'foo', 'foo' === x, x.y === 'foo', 'foo' === x.y
   const [match, noMatch] = _.partition(itm => {
     return checkItem(itm);
 
-    function checkItem(item) {
+    function checkItem(item: t.Expression): boolean {
       if (isNestedLogicalAndExpression(item)) {
         return checkItem(item.left);
       }
@@ -42,7 +44,7 @@ function combineFromArray(arr) {
     // Set the string to always be on the right side of ===
     // Simplifies the rest of the code
     _.map(row => {
-      const tempNode = row[0];
+      const tempNode = row[0] as t.BinaryExpression;
 
       if (t.isStringLiteral(tempNode.left)) {
         const strNode = tempNode.left;
@@ -54,13 +56,13 @@ function combineFromArray(arr) {
     }),
 
     // Group on whatever the strings are compared to
-    _.groupBy(row => hashNode(row[0].left)),
+    _.groupBy(row => hashNode((row[0] as t.BinaryExpression).left)),
 
     // Removes the key created by groupBy
     _.values,
 
     // Create the objects
-    _.map(group => {
+    _.map((group: t.Expression[][]) => {
       if (group.length === 1) {
         return createLogicalAndExpression(group[0]);
       }
@@ -68,10 +70,13 @@ function combineFromArray(arr) {
       return t.memberExpression(
         t.objectExpression(
           group.map(row =>
-            t.objectProperty(row[0].right, createLogicalAndExpression(row.slice(1))),
+            t.objectProperty(
+              (row[0] as t.BinaryExpression).right,
+              createLogicalAndExpression(row.slice(1)),
+            ),
           ),
         ),
-        group[0][0].left,
+        (group[0][0] as t.BinaryExpression).left,
         true,
       );
     }),
@@ -80,17 +85,17 @@ function combineFromArray(arr) {
   return [...noMatch, ...newArgs];
 }
 
-const arrayVisitor = {
+const arrayVisitor: babel.Visitor = {
   ArrayExpression(path) {
-    path.node.elements = combineFromArray(path.node.elements);
+    path.node.elements = combineFromArray(path.node.elements as t.Expression[]);
 
     if (path.node.elements.length === 1) {
-      path.replaceWith(path.node.elements[0]);
+      path.replaceWith(path.node.elements[0]!);
     }
   },
 };
 
-export const createObjectKeyLookups = ({ expression: path }) => {
+export const createObjectKeyLookups: VisitorFunction = ({ expression: path }) => {
   path.traverse(arrayVisitor);
-  path.node.arguments = combineFromArray(path.node.arguments);
+  path.node.arguments = combineFromArray(path.node.arguments as t.Expression[]);
 };
