@@ -4,12 +4,19 @@ import { existsSync } from 'fs';
 import path from 'path';
 
 export default {
-  input: 'src/index.ts',
-  output: {
-    file: 'dist/index.js',
-    sourcemap: true,
-    format: 'cjs',
-  },
+  input: './src/index.ts',
+  output: [
+    {
+      file: './dist/index.js',
+      sourcemap: true,
+      format: 'cjs',
+    },
+    {
+      file: './dist/index.mjs',
+      sourcemap: true,
+      format: 'es',
+    },
+  ],
   plugins: [
     {
       name: 'local-resolve',
