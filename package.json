@@ -22,7 +22,8 @@
     "test:dev": "DEV_MODE=true jest",
     "test:build": "TEST_BUILD=true jest",
     "build": "rm -rf dist && rollup -c",
-    "release": "yarn build && standard-version",
+    "release": "run build && run test:build && standard-version",
+    "prepack": "run build",
     "benchmark": "node benchmark/index.js"
   },
   "devDependencies": {
