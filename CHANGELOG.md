@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.6.0](https://github.com/merceyz/babel-plugin-optimize-clsx/compare/v2.5.0...v2.6.0) (2020-02-15)
+
+### Features
+
+- **referenced-objects:** handle multiple references ([14a2e97](https://github.com/merceyz/babel-plugin-optimize-clsx/commit/14a2e97eb97c713b118c7cf3a2ee5017f5050f26))
+- optimize referenced objects ([20575e9](https://github.com/merceyz/babel-plugin-optimize-clsx/commit/20575e9675e0e0381cee2d9205b7486e217f20ba))
+- **optimize:** handle unnecessary "or" statements ([fcdb75e](https://github.com/merceyz/babel-plugin-optimize-clsx/commit/fcdb75e6b229d663d493bc00fa605bf1031be855))
+- use scope to get expressions ([68becac](https://github.com/merceyz/babel-plugin-optimize-clsx/commit/68becacd5776a112a920f0ce32fd0accb2fb774d))
+
+### Bug Fixes
+
+- **optimize:** handle the operator changing ([3e92ddb](https://github.com/merceyz/babel-plugin-optimize-clsx/commit/3e92ddb2aa629dd7a6e018368e016cca2e663e44))
+- **removecalls:** remove unsafe optimization ([b0deb61](https://github.com/merceyz/babel-plugin-optimize-clsx/commit/b0deb61a0da8ed63e561b4a1999ddedc4f2d9c3a))
+
+### Performance Improvements
+
+- **createlookup:** modify node instead of recreating it ([4800a6b](https://github.com/merceyz/babel-plugin-optimize-clsx/commit/4800a6b1cd6668e2450feea9812c78b4f37cb85e))
+- **createlookup:** skip lookup for just one item ([f8d089d](https://github.com/merceyz/babel-plugin-optimize-clsx/commit/f8d089ddfbf67ac451fd720c1dfc3a41b7528f28))
+
+### Build System
+
+- include a esm version ([8a590ef](https://github.com/merceyz/babel-plugin-optimize-clsx/commit/8a590efc398a65a4f3ae3d7e88a3ba3ddd4ac1cb))
+- remove terser ([dceb1e8](https://github.com/merceyz/babel-plugin-optimize-clsx/commit/dceb1e8af92fb83144b6772cce6fa32730a392bb))
+
 ## [2.5.0](https://github.com/merceyz/babel-plugin-optimize-clsx/compare/v2.4.1...v2.5.0) (2019-10-07)
 
 ### Bug Fixes
