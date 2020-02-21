@@ -241,6 +241,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/helper-plugin-utils@npm:^7.8.0":
+  version: 7.8.3
+  resolution: "@babel/helper-plugin-utils@npm:7.8.3"
+  checksum: 2/56f09626f24511aadd36a96aacd8658274ededc2e94f5e85bb6e51c9e6ad72eb1dd9f9a28a4ee5a8691de7601cf2a8e63ce235db01dda8964779940281f2787f
+  languageName: node
+  linkType: hard
+
 "@babel/helper-regex@npm:^7.0.0, @babel/helper-regex@npm:^7.4.4":
   version: 7.5.5
   resolution: "@babel/helper-regex@npm:7.5.5"
@@ -516,6 +523,17 @@ __metadata:
   peerDependencies:
     "@babel/core": ^7.0.0-0
   checksum: 2/65dd0199cdf967a1f83ad85c5e3250aab5955364138cd6026a4a536e110de9a52ff4a5e1f866333c459932dfbc01b5c41d8f86aa7069d556ed8a9fe4af24e2a4
+  languageName: node
+  linkType: hard
+
+"@babel/plugin-syntax-optional-chaining@npm:^7.8.3":
+  version: 7.8.3
+  resolution: "@babel/plugin-syntax-optional-chaining@npm:7.8.3"
+  dependencies:
+    "@babel/helper-plugin-utils": ^7.8.0
+  peerDependencies:
+    "@babel/core": ^7.0.0-0
+  checksum: 2/2a50685d023bc609b01a3fd7ed3af03bc36c575da8d02199ed51cb24e8e068f26a128a20486cd502abe9e1d4c02e0264b8a58f1a5143e1291ca3508a948ada97
   languageName: node
   linkType: hard
 
@@ -1783,6 +1801,7 @@ __metadata:
     "@babel/core": ^7.6.2
     "@babel/generator": ^7.6.2
     "@babel/plugin-proposal-nullish-coalescing-operator": ^7.7.4
+    "@babel/plugin-syntax-optional-chaining": ^7.8.3
     "@babel/plugin-transform-template-literals": ^7.4.4
     "@babel/plugin-transform-typescript": ^7.7.4
     "@babel/preset-env": ^7.6.2

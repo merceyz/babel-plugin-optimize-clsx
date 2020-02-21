@@ -9,12 +9,27 @@ import {
 } from '../utils/helpers';
 import { VisitorFunction } from '../types';
 
-function matchLeftOrRight(node: t.BinaryExpression, check: (node: t.Expression) => boolean) {
-  return check(node.left) || check(node.right);
+function matchLeftOrRight(
+  node: t.BinaryExpression,
+  checkOrChecks: ((node: t.Expression) => boolean) | Array<(node: t.Expression) => boolean>,
+) {
+  if (!Array.isArray(checkOrChecks)) {
+    return checkOrChecks(node.left) || checkOrChecks(node.right);
+  }
+
+  for (const _check of checkOrChecks) {
+    if (_check(node.left) || _check(node.right)) {
+      return true;
+    }
+  }
+
+  return false;
 }
 
 function combineFromArray(arr: t.Expression[]) {
-  // x === 'foo', 'foo' === x, x.y === 'foo', 'foo' === x.y
+  // x === 'foo', 'foo' === x
+  // x.y === 'foo', 'foo' === x.y
+  // x?.y === 'foo', 'foo' === x?.y
   const [match, noMatch] = _.partition(itm => {
     return checkItem(itm);
 
@@ -23,14 +38,11 @@ function combineFromArray(arr: t.Expression[]) {
         return checkItem(item.left);
       }
 
-      if (
+      return (
         t.isBinaryExpression(item, { operator: '===' }) &&
         matchLeftOrRight(item, t.isStringLiteral) &&
-        (matchLeftOrRight(item, t.isMemberExpression) || matchLeftOrRight(item, t.isIdentifier))
-      ) {
-        return true;
-      }
-      return false;
+        matchLeftOrRight(item, [t.isMemberExpression, t.isIdentifier, t.isOptionalMemberExpression])
+      );
     }
   }, arr);
 
