@@ -1,9 +1,5 @@
 module.exports = {
-  plugins: [
-    'babel-plugin-lodash',
-    '@babel/plugin-transform-typescript',
-    '@babel/plugin-proposal-nullish-coalescing-operator',
-  ],
+  plugins: ['babel-plugin-lodash', '@babel/plugin-transform-typescript'],
   presets: [
     [
       '@babel/preset-env',

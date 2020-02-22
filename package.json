@@ -27,13 +27,11 @@
     "benchmark": "node benchmark/index.js"
   },
   "devDependencies": {
-    "@babel/core": "^7.6.2",
-    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.7.4",
-    "@babel/plugin-syntax-optional-chaining": "^7.8.3",
-    "@babel/plugin-transform-template-literals": "^7.4.4",
-    "@babel/plugin-transform-typescript": "^7.7.4",
-    "@babel/preset-env": "^7.6.2",
-    "@types/babel__core": "^7.1.3",
+    "@babel/core": "^7.8.4",
+    "@babel/plugin-transform-template-literals": "^7.8.3",
+    "@babel/plugin-transform-typescript": "^7.8.3",
+    "@babel/preset-env": "^7.8.4",
+    "@types/babel__core": "^7.1.5",
     "@types/babel__generator": "^7.6.1",
     "@types/babel__template": "^7.0.2",
     "@types/lodash": "^4.14.149",
