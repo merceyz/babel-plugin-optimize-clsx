@@ -1942,7 +1942,7 @@ __metadata:
     husky: ^4.2.3
     jest: ^24.9.0
     lodash: ^4.17.15
-    object-hash: ^1.3.1
+    object-hash: ^2.0.3
     prettier: ^1.19.1
     pretty-quick: ^1.11.1
     rollup: ^1.23.1
@@ -5476,10 +5476,10 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"object-hash@npm:^1.3.1":
-  version: 1.3.1
-  resolution: "object-hash@npm:1.3.1"
-  checksum: 2/035cb0b0e66b34611ec5a6bf723380b7f4b3b1292ef44aa9ba93258334a2dca8cf91be28021e9ffa5edf737f97fc54b66d0605bf62db3a63f05191b0002be7bf
+"object-hash@npm:^2.0.3":
+  version: 2.0.3
+  resolution: "object-hash@npm:2.0.3"
+  checksum: 2/e633ae67cd6c5f3cd52af5bef0fe7f25d597b415a6d92a601be0b97a47642908cf333cedfc9e848d25b6c51fd6cf6e64ff6eb3af710eae249a42f6a69ad6b12d
   languageName: node
   linkType: hard
 
