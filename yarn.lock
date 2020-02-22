@@ -1445,6 +1445,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/find-cache-dir@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "@types/find-cache-dir@npm:2.0.0"
+  checksum: 2/41b57ddeabf1e6b35d176ef583aea6b41447f4f096fb8f57bd9b20ac9a9f7569893ef34ab3f101c068e9b65c6dfca1e273f11aa82e68e7741354afa3e317856e
+  languageName: node
+  linkType: hard
+
 "@types/istanbul-lib-coverage@npm:*, @types/istanbul-lib-coverage@npm:^2.0.0":
   version: 2.0.1
   resolution: "@types/istanbul-lib-coverage@npm:2.0.1"
@@ -1931,6 +1938,7 @@ __metadata:
     "@types/babel__core": ^7.1.5
     "@types/babel__generator": ^7.6.1
     "@types/babel__template": ^7.0.2
+    "@types/find-cache-dir": ^2.0.0
     "@types/lodash": ^4.14.149
     "@types/node": ^12.12.17
     "@types/object-hash": ^1.3.0
@@ -1939,6 +1947,7 @@ __metadata:
     benchmark: ^2.1.4
     classnames: ^2.2.6
     clsx: ^1.0.4
+    find-cache-dir: ^3.2.0
     husky: ^4.2.3
     jest: ^24.9.0
     lodash: ^4.17.15
@@ -2346,6 +2355,13 @@ __metadata:
   version: 2.20.1
   resolution: "commander@npm:2.20.1"
   checksum: 2/7d95cadc345b549799c3b7726919e65c4c2939df3f0590e5ef767b53dfe3cdaa53f3e6428e208794aa2084b86b60e6f9a152338b19a37b2de6ca54cd6c1f0310
+  languageName: node
+  linkType: hard
+
+"commondir@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "commondir@npm:1.0.1"
+  checksum: 2/98f18ad14f0ea38e0866db365bc8496f2a74250cf47ec96b94913e1b0574c99b4ff837a9f05dbc68d82505fd06b52dfba4f6bbe6fbda43094296cfaf33b475a0
   languageName: node
   linkType: hard
 
@@ -3245,6 +3261,17 @@ __metadata:
     repeat-string: ^1.6.1
     to-regex-range: ^2.1.0
   checksum: 2/4a1491ee292f3d4a3d073c34cff0d7ba00dad8ad0de12d0a973c5aefb3f3f54971508cbc4b1c4923f6278b692b7695f9561086571fbee9f24cf3435ab92e8d50
+  languageName: node
+  linkType: hard
+
+"find-cache-dir@npm:^3.2.0":
+  version: 3.2.0
+  resolution: "find-cache-dir@npm:3.2.0"
+  dependencies:
+    commondir: ^1.0.1
+    make-dir: ^3.0.0
+    pkg-dir: ^4.1.0
+  checksum: 2/8c45c3b15db71d54027ef8ab3f96ba52e1238cb8bc5125b2da1ed69e71e931448818278523324855316bed23ec61810e8cbf48e54b2d6209a649ec57268dde9d
   languageName: node
   linkType: hard
 
@@ -4951,6 +4978,15 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"make-dir@npm:^3.0.0":
+  version: 3.0.2
+  resolution: "make-dir@npm:3.0.2"
+  dependencies:
+    semver: ^6.0.0
+  checksum: 2/ed464f083653c71e9045781d302942cfabcb6e7282aa3410857d7556b3d78ad5e50a75598111c2eab9531d3ec8c5ec3fe11275b5a6c83748f6a48025a0b40518
+  languageName: node
+  linkType: hard
+
 "make-error@npm:1.x":
   version: 1.3.5
   resolution: "make-error@npm:1.3.5"
@@ -5879,7 +5915,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"pkg-dir@npm:^4.2.0":
+"pkg-dir@npm:^4.1.0, pkg-dir@npm:^4.2.0":
   version: 4.2.0
   resolution: "pkg-dir@npm:4.2.0"
   dependencies:

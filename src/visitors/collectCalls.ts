@@ -1,4 +1,5 @@
 import generate from '@babel/generator';
+import findCacheDir from 'find-cache-dir';
 import fs from 'fs';
 import path from 'path';
 import { VisitorFunction } from '../types';
@@ -12,12 +13,17 @@ export const collectCalls: VisitorFunction = ({ expression, options, filename })
   }
 
   if (stream === null) {
+    const cacheDir = findCacheDir({ name: 'optimize-clsx', create: true });
+    if (!cacheDir) {
+      throw new Error('Unable to locate cache directory');
+    }
+
     const filePath = path.join(
-      __dirname,
+      cacheDir,
       `log-${new Date(Date.now()).toISOString().replace(/:/g, '.')}.js`,
     );
     stream = fs.createWriteStream(filePath, { flags: 'w' });
-    console.log('Writing calls to ' + filePath);
+    console.log('Writing CallExpressions to ' + filePath);
   }
 
   let locationStr = '';
