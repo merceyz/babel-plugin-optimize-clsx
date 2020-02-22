@@ -8,12 +8,10 @@ export default {
   output: [
     {
       file: './dist/index.js',
-      sourcemap: true,
       format: 'cjs',
     },
     {
       file: './dist/index.mjs',
-      sourcemap: true,
       format: 'es',
     },
   ],
