@@ -1,4 +1,4 @@
 {
-  "functionNames": ["clsx"],
-  "removeUnnecessaryCalls": false
+	"functionNames": ["clsx"],
+	"removeUnnecessaryCalls": false
 }

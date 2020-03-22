@@ -1,3 +1,3 @@
 clsx({
-  foo: true,
+	foo: true,
 });

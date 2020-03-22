@@ -2,5 +2,5 @@
 
 let count = 0;
 module.exports = () => {
-  return `jss${String(count++)}`;
+	return `jss${String(count++)}`;
 };

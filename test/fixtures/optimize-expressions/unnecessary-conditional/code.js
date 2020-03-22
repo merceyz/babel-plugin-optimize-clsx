@@ -1,3 +1,3 @@
 clsx(foo ? 'foo' : '', bar ? null : 'not-bar', {
-  [baz]: isBaz ? true : false,
+	[baz]: isBaz ? true : false,
 });

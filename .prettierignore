@@ -1,1 +1,4 @@
 .yarn
+.pnp.*
+dist
+coverage

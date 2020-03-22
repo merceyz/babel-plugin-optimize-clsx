@@ -1,9 +1,9 @@
 clsx(
-  text && [
-    classes.text,
-    {
-      primary: [classes.text, classes.textPrimary],
-      secondary: classes.textSecondary,
-    }[color],
-  ],
+	text && [
+		classes.text,
+		{
+			primary: [classes.text, classes.textPrimary],
+			secondary: classes.textSecondary,
+		}[color],
+	]
 );

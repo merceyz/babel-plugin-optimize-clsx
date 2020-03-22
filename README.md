@@ -23,8 +23,8 @@ npm install babel-plugin-optimize-clsx --save-dev
 
 ```javascript
 clsx({
-  [classes.disabled]: disabled,
-  [classes.focusVisible]: focusVisible && !disabled,
+	[classes.disabled]: disabled,
+	[classes.focusVisible]: focusVisible && !disabled,
 });
 
 // Transforms to
@@ -36,8 +36,8 @@ clsx(disabled && classes.disabled, focusVisible && !disabled && classes.focusVis
 
 ```javascript
 clsx({
-  [classes.disabled]: disabled,
-  [classes.focusVisible]: focusVisible && !disabled,
+	[classes.disabled]: disabled,
+	[classes.focusVisible]: focusVisible && !disabled,
 });
 
 // Transforms to
@@ -49,8 +49,8 @@ clsx(disabled ? classes.disabled : focusVisible && classes.focusVisible);
 
 ```javascript
 clsx({
-  [classes.focusVisible]: this.state.focusVisible,
-  [focusVisibleClassName]: this.state.focusVisible,
+	[classes.focusVisible]: this.state.focusVisible,
+	[focusVisibleClassName]: this.state.focusVisible,
 });
 
 // Transforms to
@@ -62,26 +62,26 @@ clsx(this.state.focusVisible && [classes.focusVisible, focusVisibleClassName]);
 
 ```javascript
 function foo(props) {
-  const { position: p } = props;
-  const x = clsx({
-    [classes.x]: p === 'top',
-    [classes.y]: p === 'bottom',
-  });
+	const { position: p } = props;
+	const x = clsx({
+		[classes.x]: p === 'top',
+		[classes.y]: p === 'bottom',
+	});
 }
 
 foo.propTypes = {
-  position: PropTypes.oneOf(['top', 'bottom']),
+	position: PropTypes.oneOf(['top', 'bottom']),
 };
 
 // Transforms to
 
 function foo(props) {
-  const { position: p } = props;
-  const x = clsx(p === 'top' ? classes.x : classes.y);
+	const { position: p } = props;
+	const x = clsx(p === 'top' ? classes.x : classes.y);
 }
 
 foo.propTypes = {
-  position: PropTypes.oneOf(['top', 'bottom']),
+	position: PropTypes.oneOf(['top', 'bottom']),
 };
 ```
 
@@ -89,9 +89,9 @@ foo.propTypes = {
 
 ```javascript
 const x = clsx({
-  btn: true,
-  'col-md-1': true,
-  ['btn-primary']: true,
+	btn: true,
+	'col-md-1': true,
+	['btn-primary']: true,
 });
 
 // Transforms to
@@ -103,9 +103,9 @@ const x = 'btn col-md-1 btn-primary';
 
 ```javascript
 const x = clsx({
-  btn: true,
-  'btn-foo': isDisabled,
-  'btn-bar': !isDisabled,
+	btn: true,
+	'btn-foo': isDisabled,
+	'btn-bar': !isDisabled,
 });
 
 // Transforms to
@@ -127,14 +127,14 @@ By default the plugin looks for `import` and `require` statements for `clsx` and
 
 ```json
 {
-  "plugins": [
-    [
-      "babel-plugin-optimize-clsx",
-      {
-        "libraries": ["clsx", "classnames", "my-custom-library"]
-      }
-    ]
-  ]
+	"plugins": [
+		[
+			"babel-plugin-optimize-clsx",
+			{
+				"libraries": ["clsx", "classnames", "my-custom-library"]
+			}
+		]
+	]
 }
 ```
 
@@ -148,14 +148,14 @@ If you want the plugin to match on all functions with a specific name, no matter
 
 ```json
 {
-  "plugins": [
-    [
-      "babel-plugin-optimize-clsx",
-      {
-        "functionNames": ["myClsxImplementation"]
-      }
-    ]
-  ]
+	"plugins": [
+		[
+			"babel-plugin-optimize-clsx",
+			{
+				"functionNames": ["myClsxImplementation"]
+			}
+		]
+	]
 }
 ```
 
@@ -174,10 +174,10 @@ import clsx from 'clsx';
 const x = clsx('foo', 'bar');
 const y = clsx({ classA: foo === 'a', classB: foo !== 'a' });
 const z = clsx({
-  classA: foo === 'a',
-  classB: foo !== 'a',
-  classC: bar === 'c',
-  classD: bar !== 'c',
+	classA: foo === 'a',
+	classB: foo !== 'a',
+	classC: bar === 'c',
+	classD: bar !== 'c',
 });
 
 // Transforms to

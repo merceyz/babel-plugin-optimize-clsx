@@ -1,3 +1,3 @@
 module.exports = {
-  plugins: [require.resolve('@babel/plugin-transform-template-literals')],
+	plugins: [require.resolve('@babel/plugin-transform-template-literals')],
 };

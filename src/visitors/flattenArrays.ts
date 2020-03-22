@@ -3,11 +3,11 @@ import _ from 'lodash';
 import { VisitorFunction } from '../types';
 
 function unwrapArrayExpression(nodes: any[]): any[] {
-  return nodes.map(item =>
-    t.isArrayExpression(item) ? unwrapArrayExpression(item.elements) : item,
-  );
+	return nodes.map((item) =>
+		t.isArrayExpression(item) ? unwrapArrayExpression(item.elements) : item
+	);
 }
 
 export const flattenArrays: VisitorFunction = ({ expression }) => {
-  expression.node.arguments = _.flattenDeep(unwrapArrayExpression(expression.node.arguments));
+	expression.node.arguments = _.flattenDeep(unwrapArrayExpression(expression.node.arguments));
 };
