@@ -34,6 +34,6 @@ jobs:
       - run: yarn prettier --check .
       - run: yarn test
       - run: yarn build
-      - run: yarn test:build      
+      - run: yarn test:build
         env:
           CI: true
