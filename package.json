@@ -49,7 +49,7 @@
 		"pretty-quick": "^2.0.1",
 		"rollup": "^1.23.1",
 		"rollup-plugin-babel": "^4.3.3",
-		"standard-version": "7.1.0",
+		"standard-version": "^8.0.0",
 		"ts-jest": "^24.2.0",
 		"typescript": "^3.7.4"
 	},
