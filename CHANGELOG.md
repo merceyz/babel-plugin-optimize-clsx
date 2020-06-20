@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.6.1](https://github.com/merceyz/babel-plugin-optimize-clsx/compare/v2.6.0...v2.6.1) (2020-06-20)
+
+### Bug Fixes
+
+- remove peerDependency on babel/core ([744391d](https://github.com/merceyz/babel-plugin-optimize-clsx/commit/744391dabca970d16ce652869a4b740fbbb1a158))
+- **collectCalls:** write CallExpressions to the cache dir ([17405f5](https://github.com/merceyz/babel-plugin-optimize-clsx/commit/17405f54b1ea03ccf2b8d6f556804b9dc04dfe12))
+- **createlookup:** handle optional member expression ([1af84b2](https://github.com/merceyz/babel-plugin-optimize-clsx/commit/1af84b239fc3cbad12ccf822c33679d2a0ff3162))
+
+### Build System
+
+- disable sourcemap ([59b8b9e](https://github.com/merceyz/babel-plugin-optimize-clsx/commit/59b8b9ee976919d5a5bb0cfce4796bbdcd5562a6))
+
 ## [2.6.0](https://github.com/merceyz/babel-plugin-optimize-clsx/compare/v2.5.0...v2.6.0) (2020-02-15)
 
 ### Features
