@@ -1,6 +1,12 @@
 # Rollup output folder
 dist
 
+# Yarn 2
+.yarn/*
+!.yarn/releases
+!.yarn/sdks
+.pnp.*
+
 # Fixtures used during debugging and testing
 test/dev_fixture
 
@@ -44,9 +50,6 @@ build/Release
 # Dependency directories
 node_modules/
 jspm_packages/
-/.yarn/*
-!/.yarn/releases
-/.pnp.js
 
 # TypeScript v1 declaration files
 typings/

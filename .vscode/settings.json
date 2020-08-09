@@ -1,4 +1,5 @@
 {
-	"typescript.tsdk": ".vscode/pnpify/typescript/lib",
-	"prettier.prettierPath": ".vscode/pnpify/prettier/index.js"
+	"typescript.tsdk": ".yarn/sdks/typescript/lib",
+	"prettier.prettierPath": ".yarn/sdks/prettier/index.js",
+	"typescript.enablePromptUseWorkspaceTsdk": true
 }

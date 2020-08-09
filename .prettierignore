@@ -1,4 +1,7 @@
-.yarn
-.pnp.*
 dist
 coverage
+
+# Yarn 2
+.yarn/*
+!.yarn/sdks
+.pnp.*
