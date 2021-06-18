@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.6.2](https://github.com/merceyz/babel-plugin-optimize-clsx/compare/v2.6.1...v2.6.2) (2021-06-18)
+
+### Bug Fixes
+
+- clone callee when wrapping referenced objects ([16eef18](https://github.com/merceyz/babel-plugin-optimize-clsx/commit/16eef18a0f181989920ad1e05fc0b7ba42b6bc54)), closes [#20](https://github.com/merceyz/babel-plugin-optimize-clsx/issues/20)
+
 ### [2.6.1](https://github.com/merceyz/babel-plugin-optimize-clsx/compare/v2.6.0...v2.6.1) (2020-06-20)
 
 ### Bug Fixes
