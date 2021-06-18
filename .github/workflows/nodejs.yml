@@ -6,10 +6,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [10.x, 12.x]
-
     env:
       YARN_ENABLE_MIRROR: 'false'
       YARN_ENABLE_GLOBAL_CACHE: 'false'
@@ -17,15 +13,16 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+      - uses: actions/setup-node@v2
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 14.x
 
-      - uses: actions/cache@v1
+      - uses: actions/cache@v2
         with:
           path: .yarn/cache
-          key: ${{ matrix.node-version }}-yarn2-${{ hashFiles('yarn.lock') }}
+          key: yarn2-${{ hashFiles('yarn.lock') }}
+          restore-keys: |
+            yarn2-
 
       - run: yarn --immutable
       - run: yarn prettier --check .
