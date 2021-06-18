@@ -25,7 +25,10 @@ export const referencedObjects: VisitorFunction = ({ expression, pushToQueue }) 
 		) {
 			const init = binding.path.get('init');
 
-			init.replaceWith(t.callExpression(expression.node.callee, [binding.path.node.init]));
+			init.replaceWith(
+				t.callExpression(t.cloneNode(expression.node.callee), [binding.path.node.init])
+			);
+
 			pushToQueue(init as babel.NodePath<t.CallExpression>);
 		}
 	}
