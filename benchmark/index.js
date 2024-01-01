@@ -1,7 +1,7 @@
 const Benchmark = require('benchmark');
 const path = require('path');
 const fs = require('fs');
-const clsx = require('clsx');
+const clsx = require('clsx/lite');
 const classnames = require('classnames');
 
 function bench(name, { title, before, after }) {

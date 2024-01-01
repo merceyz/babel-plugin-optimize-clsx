@@ -1,5 +1,5 @@
 const DefaultSettings = {
-	libraries: ['clsx', 'classnames'],
+	libraries: ['clsx/lite', 'classnames'],
 	functionNames: [] as string[],
 	removeUnnecessaryCalls: true,
 	collectCalls: false,
