@@ -1967,7 +1967,7 @@ __metadata:
     babel-plugin-tester: ^7.0.3
     benchmark: ^2.1.4
     classnames: ^2.2.6
-    clsx: ^1.0.4
+    clsx: ^2.1.0
     find-cache-dir: ^3.2.0
     husky: ^4.2.3
     jest: ^24.9.0
@@ -2316,10 +2316,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"clsx@npm:^1.0.4":
-  version: 1.0.4
-  resolution: "clsx@npm:1.0.4"
-  checksum: bd2a74dbc2fa10d44c5cb083d2ed65da098fd9bc502af767c723becd2f2acb9f09824aac13ed871e93d4afa7c8af5c68b9f3ec99581de157aae7aeee2aca7d2e
+"clsx@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "clsx@npm:2.1.0"
+  checksum: 43fefc29b6b49c9476fbce4f8b1cc75c27b67747738e598e6651dd40d63692135dc60b18fa1c5b78a2a9ba8ae6fd2055a068924b94e20b42039bd53b78b98e1d
   languageName: node
   linkType: hard
 

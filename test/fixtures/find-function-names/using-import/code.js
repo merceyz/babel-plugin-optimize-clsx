@@ -1,3 +1,3 @@
-import fooFunction from 'clsx';
+import fooFunction from 'clsx/lite';
 
 fooFunction({ foo: true });

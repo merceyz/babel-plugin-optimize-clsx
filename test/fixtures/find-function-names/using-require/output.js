@@ -1,3 +1,3 @@
-const fooFunction = require('clsx');
+const fooFunction = require('clsx/lite');
 
 fooFunction('foo');

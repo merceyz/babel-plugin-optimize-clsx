@@ -1,2 +1,2 @@
-import * as clsx from 'clsx';
+import * as clsx from 'clsx/lite';
 clsx('foo');

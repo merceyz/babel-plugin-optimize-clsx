@@ -170,7 +170,7 @@ By default the plugin will remove unnecessary function calls and if all calls ar
 Example of some unnecessary calls
 
 ```javascript
-import clsx from 'clsx';
+import clsx from 'clsx/lite';
 const x = clsx('foo', 'bar');
 const y = clsx({ classA: foo === 'a', classB: foo !== 'a' });
 const z = clsx({
