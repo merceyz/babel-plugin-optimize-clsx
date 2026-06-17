@@ -7,6 +7,10 @@
 		"dist"
 	],
 	"repository": "https://github.com/merceyz/babel-plugin-optimize-clsx.git",
+	"homepage": "https://github.com/merceyz/babel-plugin-optimize-clsx#readme",
+	"bugs": {
+		"url": "https://github.com/merceyz/babel-plugin-optimize-clsx/issues"
+	},
 	"author": "merceyz <merceyz@users.noreply.github.com>",
 	"license": "MIT",
 	"keywords": [
